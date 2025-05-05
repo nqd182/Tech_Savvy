@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Security.Claims;
 using TechSavvy.Models;
 using TechSavvy.Repository;
@@ -26,6 +27,14 @@ namespace TechSavvy.Controllers
                 var orderCode = Guid.NewGuid().ToString();
                 var orderItem = new OrderModel();
                 orderItem.OrderCode = orderCode;
+                var shippingPriceCookie = Request.Cookies["ShippingPrice"];
+                decimal shippingPrice = 0;
+                if (shippingPriceCookie != null)
+                {
+                    var shippingPriceJson = shippingPriceCookie;
+                    shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
+                }
+                orderItem.ShippingCost = shippingPrice;
                 orderItem.UserName = userEmail;
                 orderItem.Status = 1;
                 orderItem.CreatedDate = DateTime.Now;

@@ -507,3 +507,4 @@ D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\refint\TechSavvy.dll
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.pdb
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.genruntimeconfig.cache
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\ref\TechSavvy.dll
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.sourcelink.json

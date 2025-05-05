@@ -22,6 +22,9 @@ namespace TechSavvy.Areas.Admin.Controllers
         public async Task<IActionResult> ViewOrder(string ordercode)
         {
             var detailsOrder = await _dataContext.OrderDetails.Include(od => od.Product).Where(od=>od.OrderCode == ordercode).ToListAsync();
+            // lấy giá ship
+            var shippingCost = _dataContext.Orders.Where(o => o.OrderCode == ordercode).First();
+            ViewBag.ShippingCost = shippingCost.ShippingCost;
             return View(detailsOrder);
         }
         [HttpPost]

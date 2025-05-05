@@ -11,6 +11,7 @@
             <th scope="col">Id</th>
             <th scope="col">Mã đơn hàng</th>
             <th scope="col">Tên người đặt</th>
+            <th scope="col">Giá ship</th>
             <th scope="col">Ngày tạo</th>
             <th scope="col">Trạng thái</th>
             <th>Hành động</th>
@@ -23,6 +24,7 @@
                 <th scope="row">@item.Id</th>
                 <td>@item.OrderCode</td>
                 <td>@item.UserName</td>
+                <td>@item.ShippingCost.ToString("#,##0 VNĐ" )</td>
                 <td>@item.CreatedDate</td>
                 <td>
                     @if (item.Status == 1)

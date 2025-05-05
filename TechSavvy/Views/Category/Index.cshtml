@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ProductModel>
 
 <div class="col-sm-3">
-    @Html.Partial("_SidebarPartial")
+    <partial name="_SidebarPartial"/>
 </div>
 
 <style>
@@ -83,6 +83,7 @@
 </style>
 
 <div class="col-sm-9 padding-right">
+    <partial name="_FilterProductsPartial" />
     <div class="features_items">
         <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm</h2>
 
@@ -152,7 +153,7 @@
             });
         });
     </script>
-    <!---Add to Wishlish Script--->
+    <!---Thêm sản phẩm yêu thích--->
     <script>
         $(document).ready(function () {
             $('.add-btn-wishlist').click(function () {
@@ -176,6 +177,22 @@
 
                 });
             });
+        });
+    </script>
+    <!---Truyền đường dẫn-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#sort_by').on('change', function () {
+
+                var url = $(this).val();
+                // alert(url);
+                if (url) {
+                    window.location = url;
+                }
+                return false;
+            });
+
         });
     </script>
 }
