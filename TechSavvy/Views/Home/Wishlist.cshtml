@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["title"] = "List Wishlist";
+    var key = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+</head>
+<body>
+    <h3>List Wishlist</h3>
+
+    <table class="table" id="myTable">
+        <thead>
+            <tr>
+                <th>Stt</th>
+                <th>Tên sản phẩm</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var wishlist_product in Model)
+            {
+                key++;
+                <a asp-action="Details" asp-controller="Product" >
+                <tr>
+                    <td>@key</td>
+                    <td>@wishlist_product.Product.Name</td>
+                    <td>@Html.Raw(@wishlist_product.Product.Description)</td>
+                    <td>@wishlist_product.Product.Price.ToString("#,##0 VNĐ")</td>
+                    <td> <img src="~/media/products/@wishlist_product.Product.Image" width="120px" height="150px" /> </td>
+                    <td><a class="btn btn-danger btn-sm confirmDeletion" asp-action="DeleteWishlist" asp-controller="Home" asp-route-Id="@wishlist_product.Wishlists.Id">Delete</a></td>
+                </tr>
+                </a>
+
+            }
+        </tbody>
+    </table>
+</body>
+
+</html>
