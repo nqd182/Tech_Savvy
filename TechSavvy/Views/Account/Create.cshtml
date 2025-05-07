@@ -1,41 +1,114 @@
 ﻿@model UserModel
 @{
-	ViewData["Title"] = "Register User";
+    ViewData["Title"] = "Tạo tài khoản";
+    Layout = null;
 }
-<section id="form">
-	<!--form-->
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-1">
-				<div class="signup-form">
-					<!--sign up form-->
-					<h2>Tạo tài khoản người dùng mới</h2>
-					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-					<form asp-action="Create" asp-controller="Account">
-						<div class="form-group">
-							<label>Tên đăng nhập</label>
-							<input asp-for="UserName" class="form-control" />
-							<span asp-validation-for="UserName" class="text-danger" />
-						</div>
-						<div class="form-group">
-							<label>Email</label>
-							<input asp-for="Email" class="form-control" />
-							<span asp-validation-for="Email" class="text-danger" />
-						</div>
-						<div class="form-group">
-							<label>Mật khẩu</label>
-							<input asp-for="Password" class="form-control" />
-							<span asp-validation-for="Password" class="text-danger" />
-						</div>
-						<button type="submit" class="btn btn-default">Tạo tài khoản</button>
-					</form>
-				</div><!--/sign up form-->
-			</div>
-		</div>
-	</div>
-</section><!--/form-->
-@section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - MyBook</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        body {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1rem;
+            text-decoration: none;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+            .back-button:hover {
+                background-color: rgba(0, 0, 0, 0.5);
+                text-decoration: none;
+                color: white;
+            }
+        .register-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+        }
+
+            .register-card h2 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+        .btn-primary {
+            background-color: #ff5e9c;
+            border-color: #ff5e9c;
+        }
+
+            .btn-primary:hover {
+                background-color: #e54884;
+                border-color: #e54884;
+            }
+
+        .text-danger {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nút quay về -->
+    <a href="/" class="back-button">
+        <i class="fa fa-arrow-left"></i> Trang chính
+    </a>
+    <div class="register-card">
+        <h2>Tạo tài khoản mới</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3"></div>
+        <form asp-action="Create" asp-controller="Account" method="post">
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label">Tên đăng nhập</label>
+                <input asp-for="UserName" class="form-control" placeholder="Nhập tên đăng nhập" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" placeholder="Nhập địa chỉ email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Mật khẩu</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Tạo tài khoản</button>
+            </div>
+            <div class="text-center mt-3">
+                <a asp-action="Login" asp-controller="Account">Đã có tài khoản? Đăng nhập</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and validation -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+</body>
+</html>

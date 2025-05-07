@@ -20,11 +20,34 @@ public class HomeController : Controller
         _userManager = userManager;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index(string sort_by = "")
     {
-        var products = _dataContext.Products.Include("Category").Include("Brand").ToList();
-        return View(products);
+        IQueryable<ProductModel> products = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand);
+
+        switch (sort_by)
+        {
+            case "price_increase":
+                products = products.OrderBy(p => p.Price);
+                break;
+            case "price_decrease":
+                products = products.OrderByDescending(p => p.Price);
+                break;
+            case "price_newest":
+                products = products.OrderByDescending(p => p.Id);
+                break;
+            case "price_oldest":
+                products = products.OrderBy(p => p.Id);
+                break;
+            default:
+                products = products.OrderBy(p => p.Name); // mặc định
+                break;
+        }
+
+        return View(await products.ToListAsync());
     }
+
 
     public IActionResult Privacy()
     {

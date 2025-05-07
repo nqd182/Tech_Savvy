@@ -21,6 +21,7 @@ D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\lib\jquery-validation\LICENSE.md
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\js\main.js
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\js\jquery.prettyPhoto.js
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\images\favicon.svg
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\css\animate.css
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\wwwroot\lib\jquery\dist\jquery.slim.js
@@ -84,6 +85,8 @@ wwwroot\css\prettyPhoto.css
 wwwroot\css\price-range.css
 wwwroot\css\responsive.css
 wwwroot\favicon.ico
+wwwroot\images\avatardefault.webp
+wwwroot\images\favicon.svg
 wwwroot\js\bootstrap.min.js
 wwwroot\js\contact.js
 wwwroot\js\gmaps.js
@@ -153,13 +156,13 @@ wwwroot\lib\jquery-validation\LICENSE.md
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.js
 wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.js
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
+wwwroot\media\Logo.png
 wwwroot\media\products\150bd77d-cd11-4487-9bb4-5a30078dece7_1.jpg
 wwwroot\media\products\25e312db-23ae-4b32-a122-f84cf2b51ccd_d.webp
 wwwroot\media\products\38851f5b-ca60-4d36-ad2f-2d1edb547751_6.webp
 wwwroot\media\products\3dd4df98-a70e-4c8b-befa-f5b2c46802ca_5.webp
 wwwroot\media\products\6fc84e85-66e2-4620-a7cc-68420100937e_4.webp
 wwwroot\media\products\768c6680-db79-446e-92dd-3a9dc95dc11a_12276_11765_dsc01406_3993a547bac648c1b7e9ce7e1e4afdd2_master.webp
-wwwroot\media\products\7a05f441-7421-47b9-8ed2-f39fb907b4b3_2.webp
 wwwroot\media\products\7cd3a567-bdc2-47aa-a199-e69803416053_12276_11765_dsc01406_3993a547bac648c1b7e9ce7e1e4afdd2_master.webp
 wwwroot\media\products\896677a2-f3d4-4dab-b351-8ab70f07a1f2_a1.webp
 wwwroot\media\products\95288a44-f531-44d6-a0b2-3f2d9445ed43_b.webp

@@ -3,43 +3,56 @@
     TempData["title"] = "Edit User";
 }
 
-<h4>Sửa thông tin người dùng</h4>
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-dark fw-bold"><i class="fa fa-pencil"></i> Sửa thông tin người dùng</h3>
+    </div>
+</div>
+
 <div class="col-md-9">
     <form asp-action="Edit" enctype="multipart/form-data">
         <input type="hidden" asp-for="Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
-            <label>Tên người dùng</label>
+            <label><i class="fa fa-user"></i> Tên người dùng</label>
             <input asp-for="UserName" class="form-control" required />
             <span asp-validation-for="UserName" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <label>Email</label>
+            <label><i class="fa fa-envelope"></i> Email</label>
             <input asp-for="Email" class="form-control" required />
             <span asp-validation-for="Email" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <label>Số điện thoại</label>
+            <label><i class="fa fa-phone"></i> Số điện thoại</label>
             <input asp-for="PhoneNumber" class="form-control" required />
             <span asp-validation-for="PhoneNumber" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <label>Mật khẩu</label>
-            <input asp-for="PasswordHash" readonly class="form-control"  />
+            <label><i class="fa fa-lock"></i> Mật khẩu</label>
+            <input asp-for="PasswordHash" readonly class="form-control" />
             <span asp-validation-for="PasswordHash" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <label>Vai trò</label>
+            <label><i class="fa fa-briefcase"></i> Vai trò</label>
             <select asp-for="RoleId" class="form-control" asp-items="ViewBag.Roles">
             </select>
             <span asp-validation-for="RoleId" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <button class="btn btn-primary">Sửa</button>
+            <button class="btn btn-primary"><i class="fa fa-save"></i> Sửa</button>
         </div>
     </form>
-    <a asp-action="Index">Về trang danh sách tài khoản</a>
+
+    <a asp-action="Index" class="btn btn-secondary mt-3"><i class="fa fa-arrow-left"></i> Về trang danh sách tài khoản</a>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

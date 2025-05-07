@@ -20,8 +20,6 @@ namespace TechSavvy.Models
         public string Image { get; set; } = "test.jpg";
         public int? Quantity { get; set; }
         public int? Sold { get; set; }
-
-
         public CategoryModel Category { get; set; }
         public BrandModel Brand { get; set; }
         public RatingModel Ratings { get; set; }

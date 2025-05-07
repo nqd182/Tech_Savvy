@@ -1,284 +1,185 @@
 ﻿@model ProductDetailsViewModel
+<style>
+    .collapsed-description {
+        max-height: 200px;
+        overflow: hidden;
+        position: relative;
+        transition: max-height 0.4s ease-in-out;
+    }
+
+    .expanded-description {
+        max-height: none;
+    }
+
+    #toggle-description-btn {
+        padding: 8px 24px;
+        font-weight: 500;
+        border-radius: 25px;
+        background-color: white;
+        border: 2px solid;
+        color: darkblue;
+        transition: all 0.3s ease;
+    }
+
+        #toggle-description-btn:hover {
+            background-color: darkblue;
+            color: white;
+        }
+</style>
+
+
 <div class="row">
-	<div class="col-sm-3">
-		@Html.Partial("_SidebarPartial") @* nhúng một Partial View vào View chính*@
-	</div>
+    <!-- Sidebar -->
+    <div class="col-md-3">
+        @Html.Partial("_SidebarPartial") <!-- Sidebar Partial View -->
+    </div>
 
-	<div class="col-sm-9 padding-right">
-		<div class="product-details">
-			<!--product-details-->
-			<div class="col-sm-5">
-				<div class="view-product">
-					<img src="~/media/products/@Model.ProductDetails.Image" alt="PC" width="120" />
-					<h3>ZOOM</h3>
-				</div>
-				<div id="similar-product" class="carousel slide" data-ride="carousel">
+    <!-- Main content -->
+    <div class="col-md-9 padding-right">
+        <div class="product-details">
+            <!-- Product images and zoom -->
+            <div class="col-md-5">
+                <div class="view-product">
+                    <img src="~/media/products/@Model.ProductDetails.Image" alt="@Model.ProductDetails.Name" class="img-fluid" />
+                </div>
+                <div id="similar-product" class="carousel slide mt-4" data-ride="carousel">
+                    <a class="carousel-control-prev" href="#similar-product" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#similar-product" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
 
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner">
-						<div class="item active">
-							<a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-							<a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-							<a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-						</div>
-					</div>
+            <!-- Product details -->
+            <div class="col-md-7">
+                <div class="product-information">
+                    <h2 class="font-weight-bold">@Model.ProductDetails.Name</h2>
+                    <span>
+                        <span class="price">@Model.ProductDetails.Price.ToString("#,##0 vnđ")</span>
+                        <label class="ml-3">Sản phẩm trong kho:</label>
+                        <input type="text" class="form-control d-inline-block w-auto" value="@Model.ProductDetails.Quantity" readonly />
+                    </span>
+                    <div class="mt-3">
+                        @if (Model.ProductDetails.Quantity > 0)
+                        {
+                            <form asp-action="Add" asp-controller="Cart" method="post">
+                                <input type="hidden" name="id" value="@Model.ProductDetails.Id" />
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Thêm vào giỏ</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <button class="btn btn-danger" disabled><i class="fa fa-times"></i> Hết hàng</button>
+                        }
+                    </div>
+                    <div class="mt-3">
+                        <p><strong>Chất lượng:</strong> Mới</p>
+                        <p><strong>Danh mục:</strong> @Model.ProductDetails.Category.Name</p>
+                        <p><strong>Thương hiệu:</strong> @Model.ProductDetails.Brand.Name</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-					<!-- Controls -->
-					@* <a class="left item-control" href="#similar-product" data-slide="prev"> *@
-					@* 	<i class="fa fa-angle-left"></i> *@
-					@* </a> *@
-					@* <a class="right item-control" href="#similar-product" data-slide="next"> *@
-					@* 	<i class="fa fa-angle-right"></i> *@
-					@* </a> *@
-				</div>
-
-			</div>
-			<div class="col-sm-7">
-				<div class="product-information">
-					<!--/product-information-->
-					<h2>@Model.ProductDetails.Name</h2>
-					<span>
-						<span>@Model.ProductDetails.Price.ToString("#,##0 vnđ")</span>
-						<label>Sản phẩm trong kho:</label>
-						<input type="text" value="@Model.ProductDetails.Quantity" />
-						@if (Model.ProductDetails.Quantity > 0)
-						{
-							<form asp-action="Add" asp-controller="Cart" method="post">
-								<input type="hidden" name="id" value="@Model.ProductDetails.Id" />
-								<button type="submit" class="btn btn-default cart">
-									<i class="fa fa-shopping-cart"></i> Thêm vào giỏ
-								</button>
-							</form>
-						}
-						else
-						{
-							<button class="btn btn-default">
-								Hết hàng
-							</button>
-						}
-					</span>
-					@if (Model.ProductDetails.Quantity > 0)
-					{
-						<p><b>Sản phẩm trong kho:</b>@Model.ProductDetails.Quantity</p>
-
-					}
-					else
-					{
-						<p><b>Sản phẩm đã hết hàng</b></p>
-					}
-					<p><b>Chất lượng:</b> Mới</p>
-					<p><b>Danh mục</b> @Model.ProductDetails.Category.Name</p>
-					<p><b>Thương hiệu:</b> @Model.ProductDetails.Brand.Name</p>
-					<a href=""><img src="images/product-details/share.png" class="share img-responsive" alt="" /></a>
-				</div><!--/product-information-->
-			</div>
-		</div><!--/product-details-->
-
-		<div class="category-tab shop-details-tab">
-			<!--category-tab-->
-			<div class="col-sm-12">
-				<ul class="nav nav-tabs">
-					<li ><a href="#details" data-toggle="tab">Details</a></li>
-					<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-					<li><a href="#tag" data-toggle="tab">Tag</a></li>
-					<li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
-				</ul>
-			</div>
-			<div class="tab-content">
-				<div class="tab-pane fade active in" id="details">
+        <!-- Product tabs -->
+        <div class="category-tab shop-details-tab mt-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item active"><a class="nav-link" href="#details" data-toggle="tab">Chi tiết sản phẩm</a></li>
+                @* <li class="nav-item"><a class="nav-link" href="#companyprofile" data-toggle="tab">Company Profile</a></li> *@
+                @* <li class="nav-item"><a class="nav-link" href="#tag" data-toggle="tab">Tag</a></li> *@
+                <li class="nav-item "><a class="nav-link active" href="#reviews" data-toggle="tab">Đánh giá</a></li>
+            </ul>
+            <div class="tab-content mt-3">
+                <!-- Details tab -->
+                <div class="tab-pane active" id="details">
+                    <div id="product-description" class="collapsed-description">
+                        @Html.Raw(Model.ProductDetails.Description)
+                    </div>
+                    <div class="text-center mt-3">
+                        <button id="toggle-description-btn" >Xem thêm</button>
+                    </div>
+                </div>
 
 
-					@Html.Raw(@Model.ProductDetails.Description)
 
-				</div>
+                <!-- Reviews tab -->
+                <div class="tab-pane" id="reviews">
+                    <div class="col-md-12 ">
+                        <ul>
+                            @* <li><a href=""><i class="fa fa-user"></i> EUGEN</a></li> *@
+                            @* <li><a href=""><i class="fa fa-clock-o"></i> 12:41 PM</a></li> *@
+                            @* <li><a href=""><i class="fa fa-calendar-o"></i> 31 DEC 2014</a></li> *@
+                        </ul>
+                        <p><strong>Viết đánh giá của bạn:</strong></p>
+                        <form asp-action="CommentProduct" asp-controller="Product" method="POST">
+                            <input asp-for="@Model.ProductDetails.Id" name="ProductId" type="hidden" />
+                            <input name="Star" type="hidden" value="4" />
+                            <input asp-for="@Model.Name" class="form-control" type="text" placeholder="Tên của bạn" />
+                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                            <input asp-for="@Model.Email" class="form-control mt-2" type="email" placeholder="Email của bạn" />
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            <textarea asp-for="@Model.Comment" class="form-control mt-2" placeholder="Viết đánh giá"></textarea>
+                            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+                            <button type="submit" class="btn btn-primary mt-3 pull-right">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				<div class="tab-pane fade" id="companyprofile">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery1.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery3.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery2.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery4.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+        <!-- Recommended products -->
+        <div class="recommended_items mt-5">
+            <h2 class="title text-center">Sản phẩm liên quan</h2>
+            <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        @foreach (var relatedProduct in ViewBag.RelatedProducts as IEnumerable<ProductModel>)
+                        {
+                            <div class="col-md-3 col-sm-6 mb-4">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <a asp-action="Details" asp-controller="Product" asp-route-Id="@relatedProduct.Id">
+                                                <img src="~/media/products/@relatedProduct.Image" alt="@relatedProduct.Name" class="img-fluid" />
+                                                <h2>@relatedProduct.Price.ToString("#,##0 VNĐ")</h2>
+                                                <p>@relatedProduct.Name</p>
+                                            </a>
+                                            <p>Danh mục: @relatedProduct.Category.Name</p>
+                                            <p>Thương hiệu: @relatedProduct.Brand.Name</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
 
-				<div class="tab-pane fade" id="tag">
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery1.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery2.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery3.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="product-image-wrapper">
-							<div class="single-products">
-								<div class="productinfo text-center">
-									<img src="images/home/gallery4.jpg" alt="" />
-									<h2>$56</h2>
-									<p>Easy Polo Black Edition</p>
-									<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="tab-pane fade" id="reviews">
-					<div class="col-sm-12">
-						<ul>
-							<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-							<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-							<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-						</ul>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-						<p><b>Viết đánh giá của bạn</b></p>
-
-						<form autocomplete="off" asp-action ="CommentProduct" asp-controller="Product" method="POST">
-							<span>
-								<input asp-for="@Model.ProductDetails.Id" name="ProductId" type="hidden" />
-								<input name="Star" type="hidden" value="4"/>
-								<input asp-for="@Model.Name" type="text" placeholder="Tên của bạn" />
-								<span asp-validation-for="@Model.Name" class="text-danger"></span>
-								<input asp-for="@Model.Email" type="email" placeholder="Email của bạn" />
-								<span asp-validation-for="@Model.Email" class="text-danger"></span>
-							</span>
-							<textarea asp-for="@Model.Comment"></textarea>
-							<span asp-validation-for="@Model.Comment" class="text-danger"></span>
-							<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-							<button type="submit" class="btn btn-default pull-right">
-								Submit
-							</button>	
-						</form>	
-					</div>
-				</div>
-
-			</div>
-		</div><!--/category-tab-->
-
-		<div class="recommended_items">
-			<!--recommended_items-->
-			<h2 class="title text-center">Sản phẩm liên quan</h2>
-
-			<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-				<div class="carousel-inner">
-					<div class="item active">
-						@foreach (var relatedProduct in @ViewBag.RelatedProducts as IEnumerable<ProductModel>)
-						{
-						<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<a asp-action="Detail" asp-controller="Product" asp-route-Id="@relatedProduct.Id">
-												<img src="~/media/products/@relatedProduct.Image" alt="@relatedProduct.Name" width="100px" height="200px" />
-												<h2>@relatedProduct.Price.ToString("#,##0 VNĐ")</h2>
-												<p>@relatedProduct.Name</p>
-												<p>Danh mục: @relatedProduct.Category.Name</p>
-												<p>Thương hiệu: @relatedProduct.Brand.Name</p>
-											</a>
-
-										</div>
-								</div>
-							</div>
-						</div>
-						}
-					</div>
-					
-					@* 
-						//Phân trang danh sách sản phẩm liên quan
-					<div class="item"> *@
-					@* 	<div class="col-sm-4"> *@
-					@* 		<div class="product-image-wrapper"> *@
-					@* 			<div class="single-products"> *@
-					@* 				<div class="productinfo text-center"> *@
-					@* 					<img src="images/home/recommend1.jpg" alt="" /> *@
-					@* 					<h2>$56</h2> *@
-					@* 					<p>Easy Polo Black Edition</p> *@
-					@* 					<button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button> *@
-					@* 				</div> *@
-					@* 			</div> *@
-					@* 		</div> *@
-					@* 	</div> *@
-					@* </div> *@
-				</div>
-				<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-					<i class="fa fa-angle-left"></i>
-				</a>
-				<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-					<i class="fa fa-angle-right"></i>
-				</a>
-			</div>
-		</div><!--/recommended_items-->
-
-	</div>
+                    </div>
+                </div>
+                <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+                <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const description = document.getElementById('product-description');
+            const toggleBtn = document.getElementById('toggle-description-btn');
+
+            toggleBtn.addEventListener('click', function () {
+                description.classList.toggle('expanded-description');
+                if (description.classList.contains('expanded-description')) {
+                    toggleBtn.textContent = 'Rút gọn';
+                } else {
+                    toggleBtn.textContent = 'Xem thêm';
+                }
+            });
+        });
+    </script>
+}

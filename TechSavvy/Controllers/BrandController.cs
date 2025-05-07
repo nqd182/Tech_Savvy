@@ -7,18 +7,42 @@ namespace TechSavvy.Controllers
 {
     public class BrandController : Controller
     {
-        public readonly DataContext _datacontext;
+        public readonly DataContext _dataContext;
         public BrandController (DataContext context)
         {
-            _datacontext = context;
+            _dataContext = context;
         }
-        public async Task<IActionResult> Index(string Slug = "")
+        public async Task<IActionResult> Index(string Slug = "", string sort_by = "")
         {
-            BrandModel brand = _datacontext.Brands.FirstOrDefault(b => b.Slug == Slug);
-            if (brand == null) RedirectToAction("Index");
-            var productsByBrand = _datacontext.Products.Where(p => p.BrandId == brand.Id);
+            var brand = _dataContext.Brands.FirstOrDefault(b => b.Slug == Slug);
+            if (brand == null) return RedirectToAction("Index", "Home");
 
-            return View(await productsByBrand.OrderByDescending(p=>p.Id).ToListAsync());
+            IQueryable<ProductModel> products = _dataContext.Products
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+                .Where(p => p.BrandId == brand.Id);
+
+            switch (sort_by)
+            {
+                case "price_increase":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_decrease":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "price_newest":
+                    products = products.OrderByDescending(p => p.Id);
+                    break;
+                case "price_oldest":
+                    products = products.OrderBy(p => p.Id);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name);
+                    break;
+            }
+
+            return View(await products.ToListAsync());
         }
+
     }
 }

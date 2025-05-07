@@ -2,49 +2,58 @@
 @{
     ViewData["title"] = "Order Listed";
 }
-<h3>Danh sách đơn hàng</h3>
-<a class="btn btn-success" asp-action="Create" asp-controller="Category">Thêm danh mục</a>
-<table class="table" id="myTable">
-    >
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Mã đơn hàng</th>
-            <th scope="col">Tên người đặt</th>
-            <th scope="col">Giá ship</th>
-            <th scope="col">Ngày tạo</th>
-            <th scope="col">Trạng thái</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-dark fw-bold">🧾 Danh sách đơn hàng</h3>
+
+    </div>
+</div>
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover align-middle" id="myTable">
+        <thead class="table-dark text-center">
             <tr>
-                <th scope="row">@item.Id</th>
-                <td>@item.OrderCode</td>
-                <td>@item.UserName</td>
-                <td>@item.ShippingCost.ToString("#,##0 VNĐ" )</td>
-                <td>@item.CreatedDate</td>
-                <td>
-                    @if (item.Status == 1)
-                    {
-                        <span class="text text-success">Đơn hàng mới</span>
-                    }
-                    else
-                    {
-                        <span class="text text-danger">Đơn hàng thành công</span>
-                    }
-                </td>
-
-                <td>
-                    <a class="btn btn-warning" asp-action="ViewOrder" asp-controller="Order" asp-route-ordercode="@item.OrderCode">Xem</a>
-                    <a class="btn btn-danger confirmDeletion" asp-action="Delete" asp-controller="Order" asp-route-Id="@item.Id">Xóa</a>
-                </td>
-
+                <th>Id</th>
+                <th>Mã đơn hàng</th>
+                <th>Tên người đặt</th>
+                <th>Giá ship</th>
+                <th>Ngày tạo</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
             </tr>
-        }
-
-
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.OrderCode</td>
+                    <td>@item.UserName</td>
+                    <td>@item.ShippingCost.ToString("#,##0 VNĐ")</td>
+                    <td>@item.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td class="text-center">
+                        @if (item.Status == 1)
+                        {
+                            <span class="badge bg-success">Đơn hàng mới</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Đã giao</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex gap-2 justify-content-center flex-wrap">
+                            <a class="btn btn-warning btn-sm" asp-action="ViewOrder" asp-controller="Order" asp-route-ordercode="@item.OrderCode">
+                                <i class="fa fa-eye"></i> Xem
+                            </a>
+                            <a class="btn btn-danger btn-sm confirmDeletion" asp-action="Delete" asp-controller="Order" asp-route-Id="@item.Id">
+                                <i class="fa fa-trash"></i> Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

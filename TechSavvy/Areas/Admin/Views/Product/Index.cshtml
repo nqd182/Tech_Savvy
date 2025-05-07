@@ -2,44 +2,58 @@
 @{
     ViewData["title"] = "Product Listed";
 }
-<h3>Danh sách sản phẩm</h3>
-<a class="btn btn-success" asp-action="Create" asp-controller="Product">Thêm sản phẩm</a>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Tên sản phẩm</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Đã bán</th>
-            <th scope="col">Mô tả</th>
-            <th scope="col">Giá</th>
-            <th scope="col">Ảnh</th>
-            <th scope="col">Slug</th>
-            <th scope="col">Danh mục</th>
-            <th scope="col">Thương hiệu</th>
-            <th scope="col">Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
-        {
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="mb-0">📦 Danh sách sản phẩm</h3>
+    <a class="btn btn-success" asp-action="Create" asp-controller="Product">
+        <i class="fa fa-plus"></i> Thêm sản phẩm
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle" id="myTable">
+        <thead class="table-dark" style="text-align:center">
             <tr>
-                <th scope="row">@item.Id</th>
-                <td>@item.Name</td>
-                <td><b>@item.Quantity</b><br /><a asp-action="AddQuantity" asp-controller="Product" asp-route-Id="@item.Id">Thêm</a></td>
-                <td><b>@item.Sold</b><a asp-action="AddQuantity" asp-controller="Product" asp-route-Id="@item.Id">Thêm</a></td>
-                <td>@Html.Raw(item.Description)</td>
-                <td>@item.Price.ToString("#,##0 vnđ")</td>
-                <td><img src="~/media/products/@item.Image" width="120" /></td>
-                <td>@item.Slug</td>
-                <td>@item.Category.Name</td>
-                <td>@item.Brand.Name</td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-controller="Product" asp-route-Id = "@item.Id">Sửa</a>
-                    <a class="btn btn-danger confirmDeletion" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id" >Xóa</a>
-                </td>
-                
+                <th>Id</th>
+                <th>Tên sản phẩm</th>
+                <th width="70px">Còn lại</th>
+                <th width="70px">Đã bán</th>
+                <th>Giá</th>
+                <th>Danh mục</th>
+                <th>Thương hiệu</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td align="center">
+                        <span class="fw-bold" >@item.Quantity</span><br />
+                        <a asp-action="AddQuantity" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-secondary mt-1">Thêm</a>
+                    </td>
+                    <td align ="center" class="fw-bold">@item.Sold</td>
+                    <td>@item.Price.ToString("#,##0 vnđ")</td>
+                    <td>@item.Category?.Name</td>
+                    <td>@item.Brand?.Name</td>
+                    <td>
+                        <img src="~/media/products/@item.Image" alt="Ảnh sản phẩm" width="500" class="img-thumbnail rounded" />
+                    </td>
+                    <td>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id">
+                                <i class="fa fa-pencil"></i> Sửa
+                            </a>
+                            <a class="btn btn-danger btn-sm confirmDeletion" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id">
+                                <i class="fa fa-trash"></i> Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

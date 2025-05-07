@@ -22,6 +22,8 @@ namespace TechSavvy.Controllers
             // Nhận shipping giá từ cookie
             var shippingPriceCookie = Request.Cookies["ShippingPrice"];
             decimal shippingPrice = 0;
+            // Nhận coupon từ cookie
+            var coupon_code = Request.Cookies["CouponTitle"];
 
             if (shippingPriceCookie != null)
             {
@@ -32,7 +34,8 @@ namespace TechSavvy.Controllers
             {
                 CartItems = cartItems,
                 GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
-                ShippingCost = shippingPrice
+                ShippingCost = shippingPrice,
+                CouponCode = coupon_code
             };  
             return View(cartVM);
         }
@@ -45,8 +48,8 @@ namespace TechSavvy.Controllers
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
             List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
-            CartItemModel cartItem = cart.FirstOrDefault(c => c.ProductId == Id); // check san pham co trong gio hang chua
-            if(cartItem == null)
+            CartItemModel cartItem = cart.FirstOrDefault(c => c.ProductId == Id); // tìm kiếm sản phẩm trong giỏ hàng
+            if (cartItem == null)
             {
                 cart.Add(new CartItemModel(product));
             }
@@ -150,7 +153,7 @@ namespace TechSavvy.Controllers
             var existingShipping = await _dataContext.Shippings
                 .FirstOrDefaultAsync(x => x.City == tinh && x.District == quan && x.Ward == phuong);  
 
-            decimal shippingPrice = 0; // Set mặc định giá tiền
+            decimal shippingPrice = 0;
 
             if (existingShipping != null)
             {
@@ -179,6 +182,7 @@ namespace TechSavvy.Controllers
             }
             return Json(new { shippingPrice });
         }
+
         [HttpGet]
         [Route("Cart/DeleteShipping")]
         public IActionResult RemoveShippingCookie()
@@ -186,7 +190,56 @@ namespace TechSavvy.Controllers
             Response.Cookies.Delete("ShippingPrice");
             return RedirectToAction("Index", "Cart");
         }
-    
-}
+        // áp dụng coupon
+        [HttpPost]
+        [Route("Cart/GetCoupon")]
+        public async Task<IActionResult> GetCoupon(CouponModel couponModel, string coupon_value)
+        {
+            var validCoupon = await _dataContext.Coupons
+                .FirstOrDefaultAsync(x => x.Name == coupon_value);
+
+            string couponTitle = validCoupon.Name + " | " + validCoupon?.Description;
+
+            if (couponTitle != null)
+            {
+                TimeSpan remainingTime = validCoupon.DateExpired - DateTime.Now;
+                int daysRemaining = remainingTime.Days;
+
+                if (daysRemaining >= 0)
+                {
+                    try
+                    {
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Expires = DateTimeOffset.UtcNow.AddMinutes(30),// thời gian sống của cookie
+                            Secure = true,
+                            SameSite = SameSiteMode.Strict // Kiểm tra tính tương thích trình duyệt
+                        };
+
+                        Response.Cookies.Append("CouponTitle", couponTitle, cookieOptions);
+                        return Ok(new { success = true, message = "Coupon applied successfully" });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error adding apply coupon cookie: {ex.Message}");
+                        return Ok(new { success = false, message = "Coupon applied failed" });
+                    }
+                }
+                else
+                {
+                    return Ok(new { success = false, message = "Coupon has expired" });
+                }
+
+            }
+            else
+            {
+                // nếu coupon không tồn tại
+                return Ok(new { success = false, message = "Coupon not existed" });
+            }
+
+            return Json(new { CouponTitle = couponTitle });
+        }
+    }
 }
     

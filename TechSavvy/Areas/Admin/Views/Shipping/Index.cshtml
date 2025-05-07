@@ -2,6 +2,7 @@
 @{
     TempData["title"] = "Create Shipping";
 }
+
 <style type="text/css">
     .css_select_div {
         text-align: center;
@@ -15,68 +16,83 @@
         border: solid 1px #686868;
         border-radius: 5px;
     }
-</style>    
-<h4>Thêm danh mục</h4>
+</style>
+
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <h3 class="fw-bold">🚛 Thêm thông tin vận chuyển</h3>
+</div>
+
 <div class="col-md-9">
     <form asp-action="StoreShipping" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
-            <label>Lựa chọn</label>
+            <label>Lựa chọn Tỉnh Thành</label>
             <select class="css_select" id="tinh" name="tinh" title="Chọn Tỉnh Thành">
                 <option value="0">Tỉnh Thành</option>
             </select>
         </div>
+
         <div class="form-group">
-            <label>Lựa chọn</label>
+            <label>Lựa chọn Quận Huyện</label>
             <select class="css_select" id="quan" name="quan" title="Chọn Quận Huyện">
                 <option value="0">Quận Huyện</option>
             </select>
         </div>
+
         <div class="form-group">
-            <label>Lựa chọn</label>
+            <label>Lựa chọn Phường Xã</label>
             <select class="css_select" id="phuong" name="phuong" title="Chọn Phường Xã">
                 <option value="0">Phường Xã</option>
             </select>
         </div>
+
         <div class="form-group">
-            <label>Giá</label>
-            <input asp-asp-for="Price" id="price-shipping" class="form-control"/>
+            <label>Giá vận chuyển</label>
+            <input asp-for="Price" id="price-shipping" class="form-control" placeholder="Nhập giá vận chuyển" />
         </div>
-        <div class="form-group">
-            <button type="button" class="btn btn-primary btn-add-shipping">Tạo</button>
+
+        <div class="form-group text-center">
+            <button type="button" class="btn btn-primary btn-add-shipping"><i class="fa fa-plus"></i> Tạo</button>
         </div>
     </form>
 </div>
-<h2>Shipping List</h2>
 
-<table class="table table-striped" id="myTable">
-    <thead>
-        <tr>
-            <th>City</th>
-            <th>District</th>
-            <th>Ward</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var shipping in ViewBag.Shippings)
-        {
+<div class="mt-5">
+    <h2 class="fw-bold">Danh sách vận chuyển</h2>
+    <table class="table table-striped table-bordered shadow-sm" id="myTable">
+        <thead class="table-dark text-center">
             <tr>
-                <td>@shipping.City</td>
-                <td>@shipping.District</td>
-                <td>@shipping.Ward</td>
-                <td>@shipping.Price.ToString("#,##0 VNĐ")</td>
-                <td>
-
-                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa')" href="@Url.Action("Delete", "Shipping", new { id = shipping.Id })" class="btn btn-danger">Delete</a>
-                </td>
+                <th>Id</th>
+                <th>Thành phố</th>
+                <th>Quận </th>
+                <th>Phường</th>
+                <th>Giá</th>
+                <th>Hành động</th>
             </tr>
-        }
-    </tbody>
-</table>
-<div>
-    <a asp-controller="Shipping" asp-action="Index">Về trang danh sách vận chuyển</a>
+        </thead>
+        <tbody>
+            @foreach (var shipping in ViewBag.Shippings)
+            {
+                <tr>
+                    <td>@shipping.Id</td>
+                    <td>@shipping.City</td>
+                    <td>@shipping.District</td>
+                    <td>@shipping.Ward</td>
+                    <td>@shipping.Price.ToString("#,##0 VNĐ")</td>
+                    <td class="text-center">
+                        <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')" href="@Url.Action("Delete", "Shipping", new { id = shipping.Id })" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Xóa
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-4 text-center">
+    <a asp-controller="Shipping" asp-action="Index" class="btn btn-secondary">Về trang danh sách vận chuyển</a>
 </div>
 @section Scripts {
     @{
@@ -151,4 +167,4 @@
             });
          });
     </script>
-}
+    }

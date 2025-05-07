@@ -2,57 +2,89 @@
 @{
     TempData["title"] = "Edit Product";
 }
-<h4>Cập nhật sản phẩm</h4>
+
+<!-- Header Section with Icon and Separation -->
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 text-dark fw-bold">
+            <i class="fa fa-edit"></i> Cập nhật sản phẩm
+        </h4>
+    </div>
+    <hr class="my-3" />
+</div>
+
 <div class="col-md-9">
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Product Name Section -->
         <div class="form-group">
-            <label>Name</label>
+            <label><i class="fa fa-cube"></i> Tên sản phẩm</label>
             <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger" />
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
+
+        <!-- Price Section -->
         <div class="form-group">
-            <label>Price</label>
+            <label><i class="fa fa-dollar"></i> Giá</label>
             <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger" />
+            <span asp-validation-for="Price" class="text-danger"></span>
         </div>
+
+        <!-- Description Section -->
         <div class="form-group">
-            <label>Description</label>
+            <label><i class="fa fa-align-left"></i> Mô tả</label>
             <textarea asp-for="Description" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger" />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
+
+        <!-- Category Section -->
         <div class="form-group">
-            <label>Category</label>
+            <label><i class="fa fa-list-alt"></i> Danh mục</label>
             <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
                 <option>--Choose category</option>
             </select>
-            <span asp-validation-for="CategoryId" class="text-danger" />
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
+
+        <!-- Brand Section -->
         <div class="form-group">
-            <label>Brands</label>
+            <label><i class="fa fa-tag"></i> Thương hiệu</label>
             <select asp-for="BrandId" class="form-control" asp-items="ViewBag.Brands">
                 <option>--Choose brand</option>
             </select>
-            <span asp-validation-for="BrandId" class="text-danger" />
+            <span asp-validation-for="BrandId" class="text-danger"></span>
         </div>
+
+        <!-- Image Section -->
         <div class="form-group">
-            <label>Image</label>
-            <input asp-for="ImageUpload" class="form-control-file" />
-            <span asp-validation-for="Image" class="text-danger" />
-            <img src="~/media/products/@Model.Image" width="120" />
+            <label><i class="fa fa-image"></i> Ảnh</label>
+            <input asp-for="ImageUpload" id="ImageUpload" class="form-control-file" />
+            <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            <img src="~/media/products/@Model.Image" width="120" class="pt-2" />
         </div>
+
+        <!-- Submit Button -->
         <div class="form-group">
-            <button class="btn btn-primary">Cập nhật</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Cập nhật
+            </button>
         </div>
     </form>
-    <a asp-action="Index">Về trang danh sách sản phẩm</a>
+
+    <!-- Back to Product List -->
+    <a asp-action="Index">
+        <i class="fa fa-arrow-left"></i> Về trang danh sách sản phẩm
+    </a>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
-        CKEDITOR.replace( "Description" );
+        // Chỉnh sửa mô tả bằng CKEditor
+        CKEDITOR.replace("Description");
     </script>
 }

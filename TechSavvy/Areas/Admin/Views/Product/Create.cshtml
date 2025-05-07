@@ -3,77 +3,115 @@
     TempData["title"] = "Create Product";
 }
 
-<h4>Thêm sản phẩm</h4>
+<!-- Header Section with Icon and Separation -->
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-0 text-dark fw-bold">
+            <i class="fa fa-plus-circle"></i> Thêm sản phẩm
+        </h4>
+    </div>
+    <hr class="my-3" />
+</div>
+
 <div class="col-md-9">
     <form asp-action="Create" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div> 
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <!-- Product Name Section -->
         <div class="form-group">
-            <label>Tên sản phẩm</label>
+            <label><i class="fa fa-cube"></i> Tên sản phẩm</label>
             <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
         </div>
+
+        <!-- Price Section -->
         <div class="form-group">
-            <label>Giá</label>
+            <label><i class="fa fa-dollar"></i> Giá</label>
             <input asp-for="Price" class="form-control typing-price" />
-            <span id="price-convert"></span>
-            <span asp-validation-for="Price" class="text-danger" />
+            <span id="price-convert" class="text-muted"></span>
+            <span asp-validation-for="Price" class="text-danger"></span>
         </div>
+
+        <!-- Description Section -->
         <div class="form-group">
-            <label>Mô tả</label>
+            <label><i class="fa fa-align-left"></i> Mô tả</label>
             <textarea asp-for="Description" class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger" />
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
+
+        <!-- Category Section -->
         <div class="form-group">
-            <label>Danh mục</label>
+            <label><i class="fa fa-list-alt"></i> Danh mục</label>
             <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
                 <option>--Choose category</option>
             </select>
-            <span asp-validation-for="CategoryId" class="text-danger" />
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
         </div>
+
+        <!-- Brand Section -->
         <div class="form-group">
-            <label>Thương hiệu</label>
+            <label><i class="fa fa-tag"></i> Thương hiệu</label>
             <select asp-for="BrandId" class="form-control" asp-items="ViewBag.Brands">
                 <option>--Choose brand</option>
             </select>
-            <span asp-validation-for="BrandId" class="text-danger" />
+            <span asp-validation-for="BrandId" class="text-danger"></span>
         </div>
+
+        <!-- Image Section -->
         <div class="form-group">
-            <label>Ảnh</label>
-            <input asp-for="ImageUpload" class="form-control-file" />
-            <span asp-validation-for="ImageUpload" class="text-danger" />
-            <img id="imgpreview" class="pt-2"/>
+            <label><i class="fa fa-image"></i> Ảnh</label>
+            <input asp-for="ImageUpload" id="ImageUpload" class="form-control-file" />
+            <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            <img id="imgpreview" class="pt-2" />
         </div>
+
+        <!-- Submit Button -->
         <div class="form-group">
-            <button class="btn btn-primary">Tạo</button>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save"></i> Tạo
+            </button>
         </div>
     </form>
-    <a asp-action="Index">Về trang danh sách sản phẩm</a>
+
+    <!-- Back to Product List -->
+    <a asp-action="Index">
+        <i class="fa fa-arrow-left"></i> Về trang danh sách sản phẩm
+    </a>
 </div>
-@section Scripts{
+
+@section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
     <script>
-        $("#ImageUpload").change(function(){
+        // Tải ảnh lên và xem trước
+        $("#ImageUpload").change(function() {
             readURL(this);
-        })
-    </script>
-    <script>
-        CKEDITOR.replace( "Description" );
-    </script>
-    <script>
+        });
+
+        // Chỉnh sửa mô tả bằng CKEditor
+        CKEDITOR.replace("Description");
+
+        // Hiển thị giá dưới định dạng VND
         $(".typing-price").on("keyup", function () {
+            var currency_input = $(this).val();
 
-               var currency_input = $(this).val();
+            // Chuyển đổi và hiển thị giá với định dạng VND
+            $("#price-convert").html(
+                new Intl.NumberFormat('vn-VN', { style: 'currency', currency: 'VND' }).format(currency_input)
+            );
+        });
 
-               $("#price-convert").html(
-
-                   new Intl.NumberFormat('vn-VN', { style: 'currency', currency: 'VND' }).format(
-                   currency_input,
-
-                   )
-               );
-           });
+        // Hàm đọc ảnh từ input file và hiển thị trên màn hình
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#imgpreview').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
 }

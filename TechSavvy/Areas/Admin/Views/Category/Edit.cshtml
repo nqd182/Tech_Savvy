@@ -2,35 +2,44 @@
 @{
     TempData["title"] = "Edit Category";
 }
-<h4>Cập nhật sản phẩm</h4>
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-dark fw-bold"><i class="fa fa-edit"></i> Cập nhật danh mục</h3>
+    </div>
+</div>
+
 <div class="col-md-9">
     <form asp-action="Edit" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
         <div class="form-group">
-            <label>Tên danh mục</label>
+            <label><i class="fa fa-tag"></i> Tên danh mục</label>
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger" />
         </div>
 
         <div class="form-group">
-            <label>Mô tả</label>
+            <label><i class="fa fa-align-left"></i> Mô tả</label>
             <textarea asp-for="Description" class="form-control"></textarea>
             <span asp-validation-for="Description" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <label>Trạng thái</label>
+            <label><i class="fa fa-eye"></i> Trạng thái</label>
             <select asp-for="Status" class="form-control">
                 <option value="1">Hiển thị</option>
                 <option value="0">Ẩn</option>
             </select>
             <span asp-validation-for="Status" class="text-danger" />
         </div>
+
         <div class="form-group">
-            <button class="btn btn-primary">Cập nhật</button>
+            <button class="btn btn-primary"><i class="fa fa-save"></i> Cập nhật</button>
         </div>
     </form>
-    <a asp-action="Index">Về trang danh sách danh mục</a>
+    <a asp-action="Index" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Về trang danh sách danh mục</a>
 </div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

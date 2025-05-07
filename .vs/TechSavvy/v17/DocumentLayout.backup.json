@@ -3,72 +3,40 @@
   "WorkspaceRootPath": "D:\\C_Sharp\\TechSavvy_Copy\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\shared\\_filterproductspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\shared\\_filterproductspartial.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\account\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\models\\ordermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\order\\vieworder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\order\\vieworder.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\product\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\product\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\home\\wishlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\home\\wishlist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\order\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\controllers\\checkoutcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\wwwroot\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\models\\productmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\product\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\areas\\admin\\views\\product\\addquantity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\areas\\admin\\views\\product\\addquantity.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|d:\\c_sharp\\techsavvy_copy\\techsavvy\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{11A20892-946F-4027-9D61-E3BE84CB0751}|TechSavvy\\TechSavvy.csproj|solutionrelative:techsavvy\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -95,221 +63,119 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Controllers\\CategoryController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "TechSavvy\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAQwC8AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T14:24:43.342Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T14:23:57.656Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "TechSavvy\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Account\\Login.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Account\\Login.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Account\\Login.cshtml*",
+              "RelativeToolTip": "TechSavvy\\Views\\Account\\Login.cshtml*",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAqwFcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T14:15:36.926Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Category\\Index.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Views\\Category\\Index.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Category\\Index.cshtml",
-              "RelativeToolTip": "TechSavvy\\Views\\Category\\Index.cshtml",
-              "ViewState": "AgIAALAAAAAAAAAAAAAQwMIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T14:10:57.5Z",
+              "WhenOpened": "2025-05-07T08:37:37.803Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\Category\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Wishlist.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Home\\Wishlist.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Home\\Wishlist.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Home\\Wishlist.cshtml*",
+              "RelativeToolTip": "TechSavvy\\Views\\Home\\Wishlist.cshtml*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T14:10:40.057Z",
+              "WhenOpened": "2025-05-07T07:58:06.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Cart\\Index.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Cart\\Index.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Cart\\Index.cshtml",
+              "RelativeToolTip": "TechSavvy\\Views\\Cart\\Index.cshtml",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADEAAABWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-07T07:48:37.172Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "_FilterProductsPartial.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_FilterProductsPartial.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Views\\Shared\\_FilterProductsPartial.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_FilterProductsPartial.cshtml",
-              "RelativeToolTip": "TechSavvy\\Views\\Shared\\_FilterProductsPartial.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAZAAAAAAAAAA==",
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Product\\Details.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Product\\Details.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Product\\Details.cshtml",
+              "RelativeToolTip": "TechSavvy\\Views\\Product\\Details.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwBkAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T14:10:33.196Z",
+              "WhenOpened": "2025-05-07T07:36:40.413Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ViewOrder.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Order\\ViewOrder.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\Order\\ViewOrder.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Order\\ViewOrder.cshtml",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\Order\\ViewOrder.cshtml",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAACcAAABBAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "TechSavvy\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T14:02:51.965Z",
+              "WhenOpened": "2025-05-07T06:40:38.253Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "OrderModel.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Models\\OrderModel.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Models\\OrderModel.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Models\\OrderModel.cs",
-              "RelativeToolTip": "TechSavvy\\Models\\OrderModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T13:51:38.183Z",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-07T06:09:38.773Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "TechSavvy\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "TechSavvy\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAAAOgAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-07T03:57:58.372Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "OrderController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Controllers\\OrderController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Controllers\\OrderController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Controllers\\OrderController.cs",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Controllers\\OrderController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwBgAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T14:01:27.088Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\Order\\Index.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T13:57:41.228Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "CartController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CartController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Controllers\\CartController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CartController.cs",
-              "RelativeToolTip": "TechSavvy\\Controllers\\CartController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAzwB0AAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T13:54:22.129Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CheckOutController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CheckOutController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Controllers\\CheckOutController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\CheckOutController.cs",
-              "RelativeToolTip": "TechSavvy\\Controllers\\CheckOutController.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAYwCMAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T13:53:36.452Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "20250505135247_changeOrderModel.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs",
-              "RelativeToolTip": "TechSavvy\\Migrations\\20250505135247_changeOrderModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T13:52:47.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ProductModel.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Models\\ProductModel.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Models\\ProductModel.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Models\\ProductModel.cs",
-              "RelativeToolTip": "TechSavvy\\Models\\ProductModel.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T13:51:28.537Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Product\\Index.cshtml",
               "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\Product\\Index.cshtml",
               "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Product\\Index.cshtml",
               "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\Product\\Index.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACsAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAuwCcAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T11:59:30.909Z",
+              "WhenOpened": "2025-05-07T06:09:41.606Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "AddQuantity.cshtml",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Product\\AddQuantity.cshtml",
-              "RelativeDocumentMoniker": "TechSavvy\\Areas\\Admin\\Views\\Product\\AddQuantity.cshtml",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Areas\\Admin\\Views\\Product\\AddQuantity.cshtml",
-              "RelativeToolTip": "TechSavvy\\Areas\\Admin\\Views\\Product\\AddQuantity.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-05-05T11:59:29.177Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "TechSavvy\\Controllers\\AccountController.cs",
-              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "TechSavvy\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAkwCYAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-05T08:17:52.067Z"
+              "DocumentIndex": 6,
+              "Title": "main.css",
+              "DocumentMoniker": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\css\\main.css",
+              "RelativeDocumentMoniker": "TechSavvy\\wwwroot\\css\\main.css",
+              "ToolTip": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\css\\main.css",
+              "RelativeToolTip": "TechSavvy\\wwwroot\\css\\main.css",
+              "ViewState": "AgIAAEQJAAAAAAAAAAAIwF4JAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-07T04:01:43.935Z",
+              "EditorCaption": ""
             }
           ]
         }

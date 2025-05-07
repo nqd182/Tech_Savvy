@@ -50,7 +50,7 @@ namespace TechSavvy.Controllers
                     orderdetail.Quantity = cart.Quantity;
                     var product = await _dataContext.Products.Where(p => p.Id == cart.ProductId).FirstAsync();
                     product.Quantity -= cart.Quantity;
-                    product.Sold += cart.Quantity;
+                    product.Sold = (product.Sold ?? 0) + cart.Quantity; ;
                     _dataContext.Add(orderdetail);
                     _dataContext.SaveChanges();
                 }

@@ -4,52 +4,60 @@
     decimal total = 0;
     decimal subtotal = 0;
 }
-<h3>Chi tiết đơn hàng</h3>
-<a class="btn btn-success" asp-action="Create" asp-controller="Category">Thêm danh mục</a>
-<table class="table" id="detail_order">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Mã đơn hàng</th>
-            <th scope="col">Id sản phẩm</th>
-            <th scope="col">Giá</th>
-            <th scope="col">Số lượng</th>
-            <th scope="col">Thành tiền</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            subtotal = item.Quantity * item.Price;
-            total += subtotal;
+
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="mb-0 text-dark fw-bold"><i class="fa fa-info-circle"></i> Chi tiết đơn hàng</h3>
+    </div>
+</div>
+
+<div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover align-middle" id="detail_order">
+        <thead class="table-dark text-center">
             <tr>
-                <input type="hidden" asp-for="@item.OrderCode" class="getId"/>
-                <th scope="row">@item.Id</th>
-                <td>@item.OrderCode</td>
-                <td>@item.ProductId</td>
-                <td>@item.Price.ToString("#,##0 vnđ")</td>
-                <td>@item.Quantity</td>
-                <td>@subtotal.ToString("#,##0 vnđ")</td>
+                <th>Id</th>
+                <th>Mã đơn hàng</th>
+                <th>Id sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Trạng thái</th>
+                <th></th>
             </tr>
-        }
-        <tr>
-            <th colspan="4">Tổng tiền:</th>
-            <td>@total.ToString("#,##0 vnđ")</td>
-            <td>Giá ship: @ViewBag.ShippingCost.ToString("#,##0 vnđ")</td>
-            <td><select class="form-control select-update-order">
-                <option value="1">Đơn hàng mới</option>
-                <option value="0">Đã xử lý</option>
-            </select>
-            </td>
-        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                subtotal = item.Quantity * item.Price;
+                total += subtotal;
+                <tr>
+                    <input type="hidden" asp-for="@item.OrderCode" class="getId" />
+                    <th scope="row">@item.Id</th>
+                    <td>@item.OrderCode</td>
+                    <td>@item.ProductId</td>
+                    <td>@item.Price.ToString("#,##0 vnđ")</td>
+                    <td>@item.Quantity</td>
+                    <td>@subtotal.ToString("#,##0 vnđ")</td>
+                </tr>
+            }
+            <tr>
+                <th colspan="4">Tổng tiền:</th>
+                <td>@total.ToString("#,##0 vnđ")</td>
+                <td>Giá ship: @ViewBag.ShippingCost.ToString("#,##0 vnđ")</td>
+                <td>
+                    <select class="form-control select-update-order">
+                        <option value="1">Đơn hàng mới</option>
+                        <option value="0">Đã xử lý</option>
+                    </select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-
-    </tbody>
-</table>
-@section Scripts{
+@section Scripts {
     <script>
-            let table =  new DataTable('#detail_order', {
+        let table = new DataTable('#detail_order', {
             layout: {
                 topStart: {
                     buttons: ['pdf', 'print']
@@ -58,7 +66,7 @@
         });
     </script>
     <script>
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('.select-update-order').change(function () {
                 var status = $(this).val(); //status = 1
                 var ordercode = $('.getId').val(); //
@@ -73,15 +81,11 @@
                     success: function (result) {
                         // Handle successful update
                         if (result.success) {
-
                             Swal.fire("Cập nhật đơn hàng thành công.");
                         } else {
-
                             Swal.fire("Cập nhật đơn hàng thất bại.");
-
                         }
                     }
-
                 });
             });
         });
