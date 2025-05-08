@@ -41,6 +41,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\images\\TechSavvy-removebg-preview.png",
+      "PackagePath": "staticwebassets\\images\\TechSavvy-removebg-preview.png"
+    },
+    {
       "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\images\\avatardefault.webp",
       "PackagePath": "staticwebassets\\images\\avatardefault.webp"
     },
@@ -325,8 +329,12 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
     },
     {
-      "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\media\\Logo.png",
-      "PackagePath": "staticwebassets\\media\\Logo.png"
+      "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\media\\logo\\3136f539-108b-48eb-a066-eefbe43614b3_2.webp",
+      "PackagePath": "staticwebassets\\media\\logo\\3136f539-108b-48eb-a066-eefbe43614b3_2.webp"
+    },
+    {
+      "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\media\\logo\\430c737c-9ea8-4708-9e94-5f8ae90bd66a_a.webp",
+      "PackagePath": "staticwebassets\\media\\logo\\430c737c-9ea8-4708-9e94-5f8ae90bd66a_a.webp"
     },
     {
       "Id": "D:\\C_Sharp\\TechSavvy_Copy\\TechSavvy\\wwwroot\\media\\products\\150bd77d-cd11-4487-9bb4-5a30078dece7_1.jpg",

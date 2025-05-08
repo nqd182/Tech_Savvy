@@ -115,6 +115,12 @@
                                         <br />
                                         <small class="text-danger">Vui lòng tính phí ship trước</small>
                                     }
+                                    <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment">
+                                        <input type="hidden" name="FullName" value="@User.Identity.Name" />
+                                        <input type="hidden" name="Amount" value="@Model.GrandTotal" />
+                                        <input type="hidden" name="OrderInfo" value="Thanh toán qua Momo Payment tại HieuTanStore" />
+                                        <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

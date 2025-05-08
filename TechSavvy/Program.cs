@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TechSavvy.Models;
 using TechSavvy.Repository;
+using TechSavvy.Services.Momo;
 
 namespace TechSavvy
 {
@@ -11,6 +12,9 @@ namespace TechSavvy
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Connect MomoAPI
+            builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+            //builder.Services.AddScoped<IMomoService, MomoService>();
             // Connection Db 
             builder.Services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectDb")));
@@ -23,7 +27,7 @@ namespace TechSavvy
                 option.IdleTimeout = TimeSpan.FromMinutes(30);
                 option.Cookie.IsEssential = true; // cookie của session là bắt buộc
             });
-
+            // Add Identity
             builder.Services.AddIdentity<AppUserModel, IdentityRole>()
             .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders(); // LoginPath mặc định sAccount/Login
 

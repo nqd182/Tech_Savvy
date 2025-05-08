@@ -1,0 +1,72 @@
+﻿@model ContactModel
+@{
+    ViewData["title"] = "Edit Contact";
+}
+
+
+<h3>Edit Contact</h3>
+
+<div class="col-md-9">
+    <form asp-action="Edit" asp-controller="Contact" method="post" enctype="multipart/form-data">
+
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-for="Id" type="hidden"></div>
+        <div class="form-group">
+            <label>Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Phone</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Map</label>
+            <textarea asp-for="Map" class="form-control"> </textarea>
+            <span asp-validation-for="Map" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <textarea asp-for="Description" class="form-control"> </textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+
+
+
+        <div class="form-group">
+            <label>Image</label>
+            <input asp-for="ImageUpload" class="form-control" />
+
+            <td> <img src="~/media/logo/@Model.LogoImg" width="120px" /> </td>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+
+
+    </form>
+
+    <a asp-action="Index">Back to list contact</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Description');
+    </script>
+
+}

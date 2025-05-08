@@ -107,4 +107,9 @@ public class HomeController : Controller
         TempData["success"] = "Xóa sản phẩm yêu thích thành công";
         return RedirectToAction("Wishlist", "Home");
     }
+    //public async Task<IActionResult> Contact()
+    //{
+    //    var contact = await _dataContext.Contact.FirstAsync();
+    //    return View(contact);
+    //}
 }

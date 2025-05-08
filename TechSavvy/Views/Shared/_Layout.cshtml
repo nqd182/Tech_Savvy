@@ -51,6 +51,7 @@
 			color: #000
 		}
 
+
 		
 	</style>
 	<header id="header">
@@ -70,8 +71,9 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="https://www.facebook.com/nqd1802"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="https://www.instagram.com/_huz0366/?theme=dark"><i class="fa fa-instagram"></i></a></li>
+								<li><a href="https://www.facebook.com/nqd1802" ><i class="fa fa-facebook"></i></a></li>
+								<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-instagram"></i></a></li>
+								<li><a href="http://localhost:5252/admin"><i class="fa fa-user-md"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -79,16 +81,14 @@
 			</div>
 		</div><!--/header_top-->
 
-		<div class="header-middle" style="background: #DCDCDC; padding: 10px 0;">
+		<div class="header-middle" style="background: #DCDCDC;">
 			<div class="container">
 				<div class="row" style="display: flex; align-items: center; justify-content: space-between; border:none;">
 					<!-- Trái -->
-					<div class="col-md-2" style="display: flex; align-items: center; gap: 10px;">
-						@* <a href="/"> *@
-						@* 	<img src="~/media/Logo.png" alt="Logo" style="max-height: 100px;"> *@
-						@* </a> *@
-						<a href="/" class="btn btn-outline-dark" style="font-weight:bold"><i class="fa fa-home"></i> Trang chủ</a>
-						<a href="http://localhost:5252/admin" style="font-weight:bold" class="btn btn-outline-dark"> Admin</a>
+					<div class="col-md-2 d-flex align-items-center">
+						<a href="/" class="d-block w-100">
+							<img src="~/images/TechSavvy-removebg-preview.png" alt="Logo" style=" max-width: 100%; object-fit: contain;">
+						</a>
 					</div>
 
 					<!-- Giữa -->
@@ -137,86 +137,7 @@
 	</section>
 
 	<footer id="footer">
-		<!--Footer-->
-		<div class="footer-top">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="companyinfo">
-							<h2><span>e</span>-shopper</h2>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-
-		<div class="footer-widget">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Service</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Online Help</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Order Status</a></li>
-								<li><a href="#">Change Location</a></li>
-								<li><a href="#">FAQ’s</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Quock Shop</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">T-Shirt</a></li>
-								<li><a href="#">Mens</a></li>
-								<li><a href="#">Womens</a></li>
-								<li><a href="#">Gift Cards</a></li>
-								<li><a href="#">Shoes</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>Policies</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Privecy Policy</a></li>
-								<li><a href="#">Refund Policy</a></li>
-								<li><a href="#">Billing System</a></li>
-								<li><a href="#">Ticket System</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<ul class="nav nav-pills nav-stacked">
-								<li><a href="#">Company Information</a></li>
-								<li><a href="#">Careers</a></li>
-								<li><a href="#">Store Location</a></li>
-								<li><a href="#">Affillate Program</a></li>
-								<li><a href="#">Copyright</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="single-widget">
-							<h2>About Shopper</h2>
-							<form action="#" class="searchform">
-								<input type="text" placeholder="Your email address" />
-								<button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-								<p>Get the most recent updates from <br />our site and be updated your self...</p>
-							</form>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
+		<partial name="_FooterPartial" />
 
 		<div class="footer-bottom">
 			<div class="container">
