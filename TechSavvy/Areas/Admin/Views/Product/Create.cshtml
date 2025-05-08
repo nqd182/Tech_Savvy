@@ -31,7 +31,13 @@
             <span id="price-convert" class="text-muted"></span>
             <span asp-validation-for="Price" class="text-danger"></span>
         </div>
-
+        <!-- Price Capital -->
+        <div class="form-group">
+            <label><i class="fa fa-dollar"></i> Giá vốn</label>
+            <input asp-for="CapitalPrice" class="form-control typing-price" />
+            <span id="price-convert" class="text-muted"></span>
+            <span asp-validation-for="CapitalPrice" class="text-danger"></span>
+        </div>
         <!-- Description Section -->
         <div class="form-group">
             <label><i class="fa fa-align-left"></i> Mô tả</label>

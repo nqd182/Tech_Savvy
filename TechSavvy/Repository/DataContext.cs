@@ -22,6 +22,7 @@ namespace TechSavvy.Repository
         public DbSet<ShippingModel> Shippings { get; set; }
 
         public DbSet<CouponModel> Coupons { get; set; }
+        public DbSet<StatisticalModel> Statisticals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

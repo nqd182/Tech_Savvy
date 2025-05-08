@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechSavvy.Repository;
 
@@ -11,9 +12,11 @@ using TechSavvy.Repository;
 namespace TechSavvy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250507102537_addCouponCodeInOrder")]
+    partial class addCouponCodeInOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -384,9 +387,6 @@ namespace TechSavvy.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("CapitalPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
@@ -503,37 +503,6 @@ namespace TechSavvy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Shippings");
-                });
-
-            modelBuilder.Entity("TechSavvy.Models.StatisticalModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("Profit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Sold")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Statisticals");
                 });
 
             modelBuilder.Entity("TechSavvy.Models.WishlistModel", b =>

@@ -112,6 +112,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                 productInDb.Description = product.Description;
                 productInDb.Slug = product.Name.Replace(" ", "-");
                 productInDb.Price = product.Price;
+                productInDb.CapitalPrice = product.CapitalPrice;
                 productInDb.CategoryId = product.CategoryId;
                 productInDb.BrandId = product.BrandId;
 

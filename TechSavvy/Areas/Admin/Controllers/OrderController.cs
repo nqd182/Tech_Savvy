@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using TechSavvy.Models;
 using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
@@ -37,6 +38,48 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return NotFound();
             }
             order.Status = status;
+            if(status == 0)
+            {
+                var DetailsOrder = await _dataContext.OrderDetails.Where(od => od.OrderCode == ordercode)
+                    .Select(od => new { 
+                        od.Quantity, 
+                        od.Product.Price,
+                        od.Product.CapitalPrice,
+                    })
+                    .ToListAsync();
+                var statiscalModel = await _dataContext.Statisticals.FirstOrDefaultAsync(s => s.DateCreated.Date == order.CreatedDate.Date);
+                if (statiscalModel != null) {
+                    foreach (var item in DetailsOrder)
+                    {
+                        statiscalModel.Quantity += 1;
+                        statiscalModel.Sold += item.Quantity;
+                        statiscalModel.Revenue += item.Quantity * item.Price;
+                        statiscalModel.Profit += item.Quantity * (item.Price - item.CapitalPrice);
+                    }
+                    _dataContext.Update(statiscalModel);
+                }
+                else
+                {
+                    int new_quantity = 0;
+                    int new_sold = 0;
+                    decimal new_profit = 0;
+                    foreach (var item in DetailsOrder)
+                    {
+                        new_quantity += 1;
+                        new_sold += item.Quantity;
+                        new_profit += item.Quantity * (item.Price - item.CapitalPrice);
+                        statiscalModel = new StatisticalModel
+                        {
+                            Quantity = new_quantity,
+                            Sold = new_sold,
+                            Revenue = item.Quantity * item.Price,
+                            Profit = new_profit,
+                            DateCreated = order.CreatedDate,
+                        };
+                    }
+                    _dataContext.Add(statiscalModel);
+                }
+            }
             try
             {
                 await _dataContext.SaveChangesAsync();

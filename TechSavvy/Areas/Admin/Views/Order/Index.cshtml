@@ -18,6 +18,7 @@
                 <th>Mã đơn hàng</th>
                 <th>Tên người đặt</th>
                 <th>Giá ship</th>
+                <th>Mã coupon</th>
                 <th>Ngày tạo</th>
                 <th>Trạng thái</th>
                 <th>Hành động</th>
@@ -31,6 +32,7 @@
                     <td>@item.OrderCode</td>
                     <td>@item.UserName</td>
                     <td>@item.ShippingCost.ToString("#,##0 VNĐ")</td>
+                    <td>@item.CouponCode</td>
                     <td>@item.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
                     <td class="text-center">
                         @if (item.Status == 1)

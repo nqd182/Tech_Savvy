@@ -14,6 +14,9 @@ namespace TechSavvy.Models
         public string Description { get; set; }
         [Required(ErrorMessage = "Yêu cầu nhập giá sản phẩm")]
         public decimal Price { get; set; }
+        [Required(ErrorMessage = "Yêu cầu nhập giá vốn")]
+        public decimal CapitalPrice { get; set; }
+
         public int CategoryId { get; set; }
         public int BrandId { get; set; }
         [Required(ErrorMessage = "Yêu cầu thêm ảnh sản phẩm")]

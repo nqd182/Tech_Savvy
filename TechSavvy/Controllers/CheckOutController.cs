@@ -28,6 +28,8 @@ namespace TechSavvy.Controllers
                 var orderItem = new OrderModel();
                 orderItem.OrderCode = orderCode;
                 var shippingPriceCookie = Request.Cookies["ShippingPrice"];
+                // Nhận coupon từ cookie
+                var coupon_code = Request.Cookies["CouponTitle"];
                 decimal shippingPrice = 0;
                 if (shippingPriceCookie != null)
                 {
@@ -35,6 +37,7 @@ namespace TechSavvy.Controllers
                     shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
                 }
                 orderItem.ShippingCost = shippingPrice;
+                orderItem.CouponCode = coupon_code;
                 orderItem.UserName = userEmail;
                 orderItem.Status = 1;
                 orderItem.CreatedDate = DateTime.Now;
@@ -56,7 +59,7 @@ namespace TechSavvy.Controllers
                 }
                 HttpContext.Session.Remove("Cart");
                 TempData["success"] = "Thanh toán thành công vui lòng chờ duyệt đơn hàng";
-                return RedirectToAction("Index");
+                return RedirectToAction("History", "Account");
             }
             return View();
         }

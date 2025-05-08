@@ -19,6 +19,7 @@
                 <th width="70px">Còn lại</th>
                 <th width="70px">Đã bán</th>
                 <th>Giá</th>
+                <th>Giá vốn</th>
                 <th>Danh mục</th>
                 <th>Thương hiệu</th>
                 <th>Ảnh</th>
@@ -37,6 +38,7 @@
                     </td>
                     <td align ="center" class="fw-bold">@item.Sold</td>
                     <td>@item.Price.ToString("#,##0 vnđ")</td>
+                    <td>@item.CapitalPrice.ToString("#,##0 vnđ")</td>
                     <td>@item.Category?.Name</td>
                     <td>@item.Brand?.Name</td>
                     <td>

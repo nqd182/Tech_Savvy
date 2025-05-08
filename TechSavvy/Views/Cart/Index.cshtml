@@ -37,12 +37,10 @@
 
             <div class="mt-4">
                 <label>Mã giảm giá:</label>
-                <div class="input-group">
-                    <input type="text" class="form-control coupon-value" placeholder="Nhập mã giảm giá">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary btn-sm btn-apply-coupon" type="button">Áp dụng</button>
-                    </div>
-                </div>
+                <form>
+                    Coupon Code: <input type="text" class="form-control coupon-value" /><span class="text text-success">@Model.CouponCode</span> <br />
+                    <input type="button" value="Apply" class="btn btn-sm btn-primary btn-apply-coupon" />
+                </form>
             </div>
         }
     </div>
@@ -138,25 +136,22 @@
 
 @section Scripts {
     <script>
-        //delete shipping cost
-        $(".btn-apply-coupon").click(function () {
-            var coupon_value = $(".coupon-value").val();
-            //alert(coupon_value);
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("GetCoupon", "Cart")",
-                data: { coupon_value: coupon_value },
-                success: function (result) {
-                    if (result.success) {
-
-                        Swal.fire(result.message);
-                        location.reload();
-                    } else {
-
-                        Swal.fire(result.message);
+        $(document).ready(function () {
+            $(".btn-apply-coupon").click(function () {
+                var coupon_value = $(".coupon-value").val();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetCoupon", "Cart")",
+                    data: { coupon_value: coupon_value },
+                    success: function (result) {
+                        if (result.success) {
+                            Swal.fire(result.message);
+                            location.reload();
+                        } else {
+                            Swal.fire(result.message);
+                        }
                     }
-                }
-
+                });
             });
         });
     </script>

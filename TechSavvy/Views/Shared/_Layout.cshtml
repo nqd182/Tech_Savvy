@@ -108,6 +108,7 @@
 							<li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
 							@if (User.Identity?.IsAuthenticated ?? false)
 							{
+								<li><a asp-controller="Account" asp-action="History"><i class="fa fa-shopping-cart"></i> Lịch sử mua hàng</a></li>
 								<li><a asp-controller="Home" asp-action="Wishlist"><i class="fa fa-heart-o"></i> Yêu thích</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
 								<li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechSavvy.Repository;
 
@@ -11,9 +12,11 @@ using TechSavvy.Repository;
 namespace TechSavvy.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20250508075111_addCapitalPrice")]
+    partial class addCapitalPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -516,14 +519,14 @@ namespace TechSavvy.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Profit")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Profit")
+                        .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Revenue")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Revenue")
+                        .HasColumnType("int");
 
                     b.Property<int>("Sold")
                         .HasColumnType("int");

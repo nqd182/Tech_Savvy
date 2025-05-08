@@ -1,0 +1,160 @@
+﻿@model StatisticalModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <h5>Thống kê số lượng</h5>
+            <ul>
+                <li>Tổng đơn hàng : @ViewBag.CountOrder</li>
+                <li>Tổng sản phẩm : @ViewBag.CountProduct</li>
+                <li>Tổng danh mục sản phẩm : @ViewBag.CountCategory</li>
+                <li>Tổng khách hàng : @ViewBag.CountUser</li>
+            </ul>
+        </div>
+        <div class="col-md-12">
+
+            <h5>Thống kê bán hàng</h5>
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Lọc dữ liệu theo</p>
+                    <p>
+                        <select class=" filter-select form-control">
+                            <option value="30">Lựa chọn</option>
+                            <option value="7">Tuần</option>
+                            <option value="30">Tháng</option>
+                            <option value="90">3 Tháng</option>
+                            <option value="365">Năm</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-md-3"> 
+                    <h4>Tùy chọn: </h4>
+                    <label>Từ ngày</label>
+                    <input type="date" class="form-control" id="date_from" asp-for="@Model.DateCreated"/>
+                    <label>Đến ngày</label>
+                    <input type="date" class="form-control" id="date_to" asp-for="@Model.DateCreated" />
+                    <button id="filterButton" class="btn btn-primary">Lọc theo ngày</button>
+                </div>
+            </div>
+
+            <div id="myfirstchart" style="height: 250px;"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var ChartMorris = new Morris.Bar({
+                element: 'myfirstchart',
+                data: [],
+                xkey: 'date',
+                ykeys: ['sold', 'quantity', 'revenue', 'profit'],
+                labels: ['Đơn hàng','Số lượng bán ra', 'Doanh thu', 'Lợi nhuận'],
+                parseTime: false
+            });
+
+            // Fetching data and setting up the chart
+            $.ajax({
+                url: "@Url.Action("GetChartData", "Dashboard")",
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        ChartMorris.setData(data.map(function (item) {
+                            return {
+                                date: item.date,
+                                sold: item.sold,
+                                quantity: item.quantity,
+                                revenue: item.revenue,
+                                profit: item.profit
+                            };
+                        }));
+                    } else {
+                        console.warn("No data available for the chart.");
+                        ChartMorris.setData([]);
+                    }
+                },
+                error: function (error) {
+                    console.error("Error fetching chart data:", error);
+                }
+            });
+
+            // Filter date and update chart
+            $('.filter-select').on('change', function () {
+                var days = $(this).val();
+                var endDate = new Date();
+                var startDate = new Date(endDate.getTime() - days * 24 * 60 * 60 * 1000);
+
+                $.ajax({
+                    url: "@Url.Action("GetChartDataBySelect", "Dashboard")",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        startDate: startDate.toISOString().split('T')[0],
+                        endDate: endDate.toISOString().split('T')[0]
+                    },
+                    success: function (data) {
+                        if (data) {
+                            ChartMorris.setData(data.map(function (item) {
+                                return {
+                                    date: item.date,
+                                    sold: item.sold,
+                                    quantity: item.quantity,
+                                    revenue: item.revenue,
+                                    profit: item.profit
+                                };
+                            }));
+                        } else {
+                            console.warn("No data available for the chart.");
+                            ChartMorris.setData([]);
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error fetching chart data:", error);
+                    }
+                });
+            });
+            $('#filterButton').click(function(){
+                var fromDate = $('#date_from').val();
+                var toDate = $('#date_to').val();
+                $.ajax({
+                    url: "@Url.Action("FilterData", "Dashboard")",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        fromDate: fromDate,
+                        toDate: toDate
+                    },
+                    success: function (data) {
+                        if (data) {
+                            ChartMorris.setData(data.map(function (item) {
+                                return {
+                                    date: item.date,
+                                    sold: item.sold,
+                                    quantity: item.quantity,
+                                    revenue: item.revenue,
+                                    profit: item.profit
+                                };
+                            }));
+                        } else {
+                            console.warn("No data available for the chart.");
+                            ChartMorris.setData([]);
+                        }
+                    },
+                    error: function (error) {
+                        console.error("Error fetching chart data:", error);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
+

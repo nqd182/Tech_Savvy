@@ -218,17 +218,17 @@ namespace TechSavvy.Controllers
                         };
 
                         Response.Cookies.Append("CouponTitle", couponTitle, cookieOptions);
-                        return Ok(new { success = true, message = "Coupon applied successfully" });
+                        return Ok(new { success = true, message = "Apply mã giảm giá thành công" });
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error adding apply coupon cookie: {ex.Message}");
-                        return Ok(new { success = false, message = "Coupon applied failed" });
+                        return Ok(new { success = false, message = "Mã giảm giá không tồn tại" });
                     }
                 }
                 else
                 {
-                    return Ok(new { success = false, message = "Coupon has expired" });
+                    return Ok(new { success = false, message = "Mã giảm giá đã hết hạn" });
                 }
 
             }
@@ -240,6 +240,7 @@ namespace TechSavvy.Controllers
 
             return Json(new { CouponTitle = couponTitle });
         }
+
     }
 }
     

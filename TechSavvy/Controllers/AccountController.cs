@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TechSavvy.Models;
 using TechSavvy.Models.ViewModels;
@@ -11,10 +13,12 @@ namespace TechSavvy.Controllers
     {
         private UserManager<AppUserModel> _userMangage; // quản lý user
         private SignInManager<AppUserModel> _signInManager; // quản lý đăng nhập
-        public AccountController(UserManager<AppUserModel> userMangage, SignInManager<AppUserModel> signInManager)
+        private readonly DataContext _dataContext;
+        public AccountController(UserManager<AppUserModel> userMangage, SignInManager<AppUserModel> signInManager, DataContext context)
         {
             _userMangage = userMangage;
             _signInManager = signInManager;
+            _dataContext = context;
         }
 
         public IActionResult Login(string returnUrl)
@@ -40,6 +44,43 @@ namespace TechSavvy.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+        public async Task<IActionResult> History()
+        {
+            if ((bool)!User.Identity?.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account"); 
+            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            var Orders = await _dataContext.Orders
+                .Where(od => od.UserName == userEmail).OrderByDescending(od => od.Id).ToListAsync();
+            ViewBag.UserEmail = userEmail;
+            return View(Orders);
+        }
+        public async Task<IActionResult> CancelOrder(string ordercode)
+        {
+            if ((bool)!User.Identity?.IsAuthenticated)
+            {
+                // User is not logged in, redirect to login
+                return RedirectToAction("Login", "Account");
+            }
+            try
+            {
+                var order = await _dataContext.Orders.Where(o => o.OrderCode == ordercode).FirstAsync();
+                order.Status = 3;
+                _dataContext.Update(order);
+                await _dataContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("An error occurred while canceling the order.");
+            }
+
+
+            return RedirectToAction("History", "Account");
         }
         [HttpPost]
         public async Task<IActionResult> Create(UserModel user)
