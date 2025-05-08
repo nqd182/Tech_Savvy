@@ -7,7 +7,7 @@
 	<meta name="author" content="">
 	<title>Trang chủ | Tech Savvy</title>
 	<link href="~/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.19.1/dist/sweetalert2.min.css" rel="stylesheet">
 	<link href="~/css/prettyPhoto.css" rel="stylesheet">
 	<link href="~/css/price-range.css" rel="stylesheet">
@@ -71,8 +71,6 @@
 					<div class="col-sm-6">
 						<div class="social-icons pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="https://www.facebook.com/nqd1802" ><i class="fa fa-facebook"></i></a></li>
-								<li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-instagram"></i></a></li>
 								<li><a href="http://localhost:5252/admin"><i class="fa fa-user-md"></i></a></li>
 							</ul>
 						</div>
@@ -108,8 +106,8 @@
 							<li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
 							@if (User.Identity?.IsAuthenticated ?? false)
 							{
-								<li><a asp-controller="Account" asp-action="History"><i class="fa fa-shopping-cart"></i> Lịch sử mua hàng</a></li>
-								<li><a asp-controller="Home" asp-action="Wishlist"><i class="fa fa-heart-o"></i> Yêu thích</a></li>
+								<li><a asp-controller="Account" asp-action="History"><i class="fa-solid fa-cart-flatbed"></i> Đơn hàng</a></li>
+								<li><a asp-controller="Home" asp-action="Wishlist"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
 								<li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
 								<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Xin chào @User.Identity.Name, Đăng xuất</a></li>

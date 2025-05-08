@@ -1,4 +1,81 @@
 ﻿@model IEnumerable<ProductModel>
+<style>
+    .product-card {
+        border: 1px solid #f0f0f0;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        transition: transform 0.2s;
+        background-color: #fff;
+        height: 565px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-card img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+    .product-info {
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    .product-price {
+        font-size: 18px;
+        font-weight: bold;
+        color: red;
+    }
+
+    .btn-group-custom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .add-to-cart, .add-btn-wishlist {
+        width: 100%;
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 14px;
+        transition: all 0.2s;
+    }
+
+    .add-to-cart {
+        background-color: black;
+        color: #fff;
+        border: none;
+    }
+
+        .add-to-cart:hover {
+            background-color: darkblue;
+        }
+
+    .add-btn-wishlist {
+        background-color: #f5f5f5;
+        color: deeppink;
+        border: 1px solid #ddd;
+    }
+
+        .add-btn-wishlist i {
+            margin-right: 5px;
+        }
+
+        .add-btn-wishlist:hover {
+            background-color: #ffe9d6;
+        }
+</style>
 
 <!-- SLIDER ĐƯỢC ĐẶT Ở TRÊN CÙNG -->
 <div class="row">
@@ -44,7 +121,7 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-default">Hết hàng</button>
+                                    <button class="btn btn-danger disabled"><i class="fa fa-times"></i> Hết hàng</button>
                                 }
 
                                 @if (User.Identity?.IsAuthenticated ?? false)
@@ -62,83 +139,6 @@
     </div>
 </div>
 
-<style>
-    .product-card {
-        border: 1px solid #f0f0f0;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.05);
-        transition: transform 0.2s;
-        background-color: #fff;
-        height: 565px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: 180px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-    .product-info {
-        text-align: center;
-        flex-grow: 1;
-    }
-
-    .product-price {
-        font-size: 18px;
-        font-weight: bold;
-        color: #FE980F;
-    }
-
-    .btn-group-custom {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .add-to-cart, .add-btn-wishlist {
-        width: 100%;
-        border-radius: 20px;
-        padding: 10px;
-        font-size: 14px;
-        transition: all 0.2s;
-    }
-
-    .add-to-cart {
-        background-color: #FE980F;
-        color: #fff;
-        border: none;
-    }
-
-        .add-to-cart:hover {
-            background-color: #e67e22;
-        }
-
-    .add-btn-wishlist {
-        background-color: #f5f5f5;
-        color: #FE980F;
-        border: 1px solid #ddd;
-    }
-
-        .add-btn-wishlist i {
-            margin-right: 5px;
-        }
-
-        .add-btn-wishlist:hover {
-            background-color: #ffe9d6;
-        }
-</style>
 
 @section Scripts {
     <script>

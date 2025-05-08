@@ -1,72 +1,5 @@
 ﻿@model IEnumerable<ProductModel>
 <style>
-    h2.title{
-        color: black
-    }
-</style>
-<!-- SLIDER ĐƯỢC ĐẶT Ở TRÊN CÙNG -->
-<div class="row">
-    <div class="col-12">
-        <partial name="_Slider" />
-    </div>
-</div>
-
-<!-- PHẦN CHÍNH GỒM SIDEBAR VÀ DANH SÁCH SẢN PHẨM -->
-<div class="row">
-    <!-- SIDEBAR -->
-    <div class="col-sm-3 sticky-sidebar">
-        @Html.Partial("_SidebarPartial")
-    </div>
-
-    <!-- DANH SÁCH SẢN PHẨM -->
-    <div class="col-sm-9 padding-right">
-        <partial name="_FilterProductsPartial" />
-        <div class="features_items">
-            <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm</h2>
-
-            <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-sm-4">
-                        <div class="product-card">
-                            <a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Id">
-                                <img src="~/media/products/@item.Image" alt="@item.Name" />
-                            </a>
-                            <div class="product-info">
-                                <p class="product-price">@item.Price.ToString("#,##0 vnđ")</p>
-                                <p><strong>@item.Name</strong></p>
-                                <p>Danh mục: @item.Category.Name</p>
-                                <p>Thương hiệu: @item.Brand.Name</p>
-                            </div>
-
-                            <div class="btn-group-custom">
-                                @if (item.Quantity > 0)
-                                {
-                                    <button class="btn add-to-cart" data-product_id="@item.Id">
-                                        <i class="fa fa-shopping-cart"></i> Thêm giỏ hàng
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button class="btn btn-default">Hết hàng</button>
-                                }
-
-                                @if (User.Identity?.IsAuthenticated ?? false)
-                                {
-                                    <button class="btn add-btn-wishlist" data-product_id="@item.Id">
-                                        <i class="fa fa-heart"></i> Yêu thích
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-</div>
-
-<style>
     .product-card {
         border: 1px solid #f0f0f0;
         border-radius: 8px;
@@ -143,6 +76,69 @@
             background-color: #ffe9d6;
         }
 </style>
+
+<!-- SLIDER ĐƯỢC ĐẶT Ở TRÊN CÙNG -->
+<div class="row">
+    <div class="col-12">
+        <partial name="_Slider" />
+    </div>
+</div>
+
+<!-- PHẦN CHÍNH GỒM SIDEBAR VÀ DANH SÁCH SẢN PHẨM -->
+<div class="row">
+    <!-- SIDEBAR -->
+    <div class="col-sm-3 sticky-sidebar">
+        @Html.Partial("_SidebarPartial")
+    </div>
+
+    <!-- DANH SÁCH SẢN PHẨM -->
+    <div class="col-sm-9 padding-right">
+        <partial name="_FilterProductsPartial" />
+        <div class="features_items">
+            <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm</h2>
+
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-4">
+                        <div class="product-card">
+                            <a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Id">
+                                <img src="~/media/products/@item.Image" alt="@item.Name" />
+                            </a>
+                            <div class="product-info">
+                                <p class="product-price">@item.Price.ToString("#,##0 vnđ")</p>
+                                <p><strong>@item.Name</strong></p>
+                                <p>Danh mục: @item.Category.Name</p>
+                                <p>Thương hiệu: @item.Brand.Name</p>
+                            </div>
+
+                            <div class="btn-group-custom">
+                                @if (item.Quantity > 0)
+                                {
+                                    <button class="btn add-to-cart" data-product_id="@item.Id">
+                                        <i class="fa fa-shopping-cart"></i> Thêm giỏ hàng
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="btn btn-danger disabled"><i class="fa fa-times"></i> Hết hàng</button>
+                                }
+
+                                @if (User.Identity?.IsAuthenticated ?? false)
+                                {
+                                    <button class="btn add-btn-wishlist" data-product_id="@item.Id">
+                                        <i class="fa fa-heart"></i> Yêu thích
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @section Scripts {
     <script>

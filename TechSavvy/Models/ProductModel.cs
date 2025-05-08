@@ -8,7 +8,7 @@ namespace TechSavvy.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required, MinLength(4, ErrorMessage = "Yêu cầu nhập tên sản phẩm từ 4 ký tự trở lên")]
+        [Required(ErrorMessage = "Yêu cầu nhập tên sản phẩm")]
         public string Name { get; set; }
         public string Slug { get; set; }
         public string Description { get; set; }

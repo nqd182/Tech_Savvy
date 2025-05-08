@@ -1,22 +1,47 @@
 ﻿@model ContactModel
-<div class="row">
-	
-	<div class="col-sm-3">
-		<div class="companyinfo">
-			<p><img src="~/media/logo/@Model.LogoImg" width="200px" height="120px" /></p>
-			<p>@Html.Raw(@Model.Description)</p>
-		</div>
-	</div>
-	<div class="col-sm-5 col-md-5">
-			@Html.Raw(@Model.Map)
-	</div>
-	<div class="col-sm-4">
-		<div class="address">
-			<h5><b>Name : @Model.Name</b></h5>
-			<h5>Email : @Model.Email</h5>
-			<h5>@Model.Phone</h5>
-			
-		</div>
-	</div>
-	
-</div>
+<style>
+    a {
+        padding: 0 10px;
+    }
+</style>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- Logo và mô tả -->
+            <div class="col-md-4 mb-4">
+                <img src="~/media/logo/@Model.LogoImg" alt="Logo" width="180" class="mb-3" />
+                <p style="font-size:22px; line-height:1.6">@Html.Raw(Model.Description)</p>
+            </div>
+
+            <!-- Bản đồ -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase mb-3">Địa chỉ</h5>
+                <div class="ratio ratio-4x3 rounded overflow-hidden shadow-sm">
+                    @Html.Raw(Model.Map)
+                </div>
+            </div>
+
+            <!-- Thông tin liên hệ -->
+            <div class="col-md-4 mb-4" style="font-size: 20px">
+                <h5 class="text-uppercase mb-3" style="font-size: 20px; font-weight:bold">Thông tin liên hệ</h5>
+                <ul class=" mb-3">
+                    <li><i class="fa-solid fa-location-dot"></i> @Model.Name</li>
+                    <li><i class="fa-solid fa-envelope"> </i> @Model.Email</li>
+                    <li><i class="fa fa-phone"></i> @Model.Phone</li>
+                </ul>
+
+                <!-- Icon mạng xã hội -->
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank" class="text-light me-3">
+                        <i class="fa-brands fa-square-facebook fa-2x"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="text-light">
+                        <i class="fa-brands fa-square-instagram fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-light" />
+    </div>
+</footer>

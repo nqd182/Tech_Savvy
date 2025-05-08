@@ -84,8 +84,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>32wxe0dmup</Fingerprint>
-      <Integrity>iz5+POVw95hk6y2hKQafQ4biobcMrla5e5GdVdx6cTQ=</Integrity>
+      <Fingerprint>8f4t7u4imo</Fingerprint>
+      <Integrity>pBoqx1zFt9pa3jfyhlMadrmZOiPm29jgv8C/Ky/FSQo=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\main.css'))</OriginalItemSpec>
@@ -1493,6 +1493,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\media\logo\430c737c-9ea8-4708-9e94-5f8ae90bd66a_a.webp'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\media\logo\cf6c017c-22aa-4cb9-8aea-de7c8b20dd3b_TechSavvy-removebg-preview.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>TechSavvy</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/TechSavvy</BasePath>
+      <RelativePath>media/logo/cf6c017c-22aa-4cb9-8aea-de7c8b20dd3b_TechSavvy-removebg-preview.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>q5fj0q0kqw</Fingerprint>
+      <Integrity>goQWC4l9+JCmMGAmDONQqD4/807pvr/I8nc/Io0ZhqY=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\media\logo\cf6c017c-22aa-4cb9-8aea-de7c8b20dd3b_TechSavvy-removebg-preview.png'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\media\products\150bd77d-cd11-4487-9bb4-5a30078dece7_1.jpg'))">
       <SourceType>Package</SourceType>

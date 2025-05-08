@@ -159,6 +159,7 @@ wwwroot\lib\jquery-validation-unobtrusive\dist\jquery.validate.unobtrusive.min.j
 wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt
 wwwroot\media\logo\3136f539-108b-48eb-a066-eefbe43614b3_2.webp
 wwwroot\media\logo\430c737c-9ea8-4708-9e94-5f8ae90bd66a_a.webp
+wwwroot\media\logo\cf6c017c-22aa-4cb9-8aea-de7c8b20dd3b_TechSavvy-removebg-preview.png
 wwwroot\media\products\150bd77d-cd11-4487-9bb4-5a30078dece7_1.jpg
 wwwroot\media\products\25e312db-23ae-4b32-a122-f84cf2b51ccd_d.webp
 wwwroot\media\products\38851f5b-ca60-4d36-ad2f-2d1edb547751_6.webp
