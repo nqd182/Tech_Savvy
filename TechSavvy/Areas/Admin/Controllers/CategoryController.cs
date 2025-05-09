@@ -8,8 +8,10 @@ using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Category")]
+
     public class CategoryController : Controller
 
     {
@@ -18,16 +20,18 @@ namespace TechSavvy.Areas.Admin.Controllers
         {
             _dataContext = dataContext;
         }
-
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return View(await _dataContext.Categories.OrderByDescending(p => p.Id).ToListAsync());
         }
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CategoryModel category)
         {
@@ -63,6 +67,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             }
             return View(category);
         }
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int Id)
         {
             CategoryModel category = await _dataContext.Categories.FindAsync(Id);
@@ -70,6 +75,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(category);
         }
         [HttpPost]
+        [Route("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, CategoryModel category)
         {
@@ -103,7 +109,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return BadRequest(errorMessage);
             }
         }
-
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             CategoryModel category = await _dataContext.Categories.FindAsync(Id);

@@ -1,52 +1,51 @@
-﻿@model IEnumerable<AppUserModel>
-@{
-    ViewData["title"] = "User Listed";
+﻿@{
+    ViewData["title"] = "List User";
 }
 
-<div class="p-3 bg-light rounded shadow-sm mb-4">
-    <h3 class="fw-bold">Danh sách người dùng</h3>
-</div>
+<!DOCTYPE html>
 
-<div class="text-right mb-3">
-    <a class="btn btn-success" asp-action="Create" asp-controller="User">
-        <i class="fa fa-plus"></i> Thêm người dùng
-    </a>
-</div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h3>List User</h3>
 
-<table class="table table-striped table-bordered shadow-sm" id="myTable">
-    <thead class="table-dark text-center">
-        <tr>
-            <th>ID</th>
-            <th>Tên người dùng</th>
-            <th>Email</th>
-            <th>Số điện thoại</th>
-            <th>Quyền</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <th scope="row">@item.Id</th>
-                <td>@item.UserName</td>
-                <td>@item.Email</td>
-                <td>@item.PhoneNumber</td>
-                <td></td>
-                @* <td>@item.Role</td> <!-- Assuming "Role" is part of AppUserModel --> *@
-                <td class="text-center">
-                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="User" asp-route-Id="@item.Id">
-                        <i class="fa fa-edit"></i> Sửa
-                    </a>
-                    <a onclick="return confirm('Bạn có chắc chắn muốn xóa?')"
-                       class="btn btn-danger btn-sm"
-                       asp-action="Delete"
-                       asp-controller="User"
-                       asp-route-Id="@item.Id">
-                        <i class="fa fa-trash"></i> Xóa
-                    </a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <a class="btn btn-primary" asp-action="Create" asp-controller="User">Add User</a>
+    <div class="table table-responsive">
+        <table class="table table-responsive" id="myTable">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>PasswordHash</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usersWithRoles in Model)
+                {
+                    <tr>
+                        <td>@usersWithRoles.User.Id</td>
+                        <td>@usersWithRoles.User.UserName</td>
+                        <td>@usersWithRoles.User.Email</td>
+                        <td>@usersWithRoles.User.PasswordHash</td>
+                        <td>@usersWithRoles.User.PhoneNumber</td>
+                        <td>
+                            @usersWithRoles.RoleName
+                        </td>
+                        <td>
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="User" asp-route-Id="@usersWithRoles.User.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm confirmDeletion" asp-action="Delete" asp-controller="User" asp-route-Id="@usersWithRoles.User.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

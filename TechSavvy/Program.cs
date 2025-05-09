@@ -29,7 +29,7 @@ namespace TechSavvy
             });
             // Add Identity
             builder.Services.AddIdentity<AppUserModel, IdentityRole>()
-            .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders(); // LoginPath mặc định sAccount/Login
+            .AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders(); // LoginPath mặc định Account/Login
 
             builder.Services.Configure<IdentityOptions>(options =>
             {
@@ -67,8 +67,7 @@ namespace TechSavvy
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "Areas",
-                pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}");
 
             app.MapControllerRoute(
                 name: "category",

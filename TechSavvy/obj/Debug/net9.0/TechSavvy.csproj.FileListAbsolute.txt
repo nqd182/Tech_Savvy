@@ -255,8 +255,8 @@ D:\C_Sharp\TechSavvy\TechSavvy\obj\Debug\net9.0\compressed\c2cjylzygj-jjsuc0puko
 D:\C_Sharp\TechSavvy\TechSavvy\obj\Debug\net9.0\compressed\vpy1qxiq9n-9vr69e8ynj.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\appsettings.Development.json
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\appsettings.json
-D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.staticwebassets.endpoints.json
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.staticwebassets.runtime.json
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.staticwebassets.endpoints.json
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.exe
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.deps.json
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\bin\Debug\net9.0\TechSavvy.runtimeconfig.json
@@ -408,6 +408,7 @@ D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.csproj.CoreCompil
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.MvcApplicationPartsAssemblyInfo.cache
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.RazorAssemblyInfo.cache
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.RazorAssemblyInfo.cs
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.sourcelink.json
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\scopedcss\Areas\Admin\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\scopedcss\bundle\TechSavvy.styles.css
@@ -416,10 +417,12 @@ D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\mkueyqslea-gk43q
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\c1j9v1q7fn-asz0ryz58u.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\2zkkgyss7o-hg3sgtwp0h.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\gpt6dhdtth-d7jvq8guow.gz
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\g7iuhkfrm3-8f4t7u4imo.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\xfg8dfq7uu-54yact5az6.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\kga7vofz5y-b4f196mlq9.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\v86wdcrwvb-kmdfs8y6v3.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\e1w33vn793-61n19gt1b8.gz
+D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\bifhqashv0-cz0d83xhdd.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\pvxl384xrz-ub5n4hru4k.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\01eoy57m99-h6otjrzjhc.gz
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\t35i67toib-b3dn95sml0.gz
@@ -506,6 +509,3 @@ D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\refint\TechSavvy.dll
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.pdb
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.genruntimeconfig.cache
 D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\ref\TechSavvy.dll
-D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\TechSavvy.sourcelink.json
-D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\bifhqashv0-cz0d83xhdd.gz
-D:\C_Sharp\TechSavvy_Copy\TechSavvy\obj\Debug\net9.0\compressed\g7iuhkfrm3-8f4t7u4imo.gz

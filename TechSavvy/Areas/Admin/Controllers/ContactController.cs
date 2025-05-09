@@ -6,8 +6,10 @@ using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Contact")]
+
     public class ContactController : Controller
     {
         private readonly DataContext _dataContext;

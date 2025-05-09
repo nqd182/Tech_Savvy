@@ -6,6 +6,7 @@ using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/Coupon")]
     public class CouponController : Controller

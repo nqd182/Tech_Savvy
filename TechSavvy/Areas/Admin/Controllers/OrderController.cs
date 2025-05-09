@@ -6,8 +6,10 @@ using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Order")]
+
     public class OrderController : Controller
     {
 
@@ -16,10 +18,14 @@ namespace TechSavvy.Areas.Admin.Controllers
         {
             _dataContext = dataContext;
         }
+        [HttpGet]
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return View(await _dataContext.Orders.OrderByDescending(p => p.Id).ToListAsync());
         }
+        [HttpGet]
+        [Route("ViewOrder/{ordercode}")]
         public async Task<IActionResult> ViewOrder(string ordercode)
         {
             var detailsOrder = await _dataContext.OrderDetails.Include(od => od.Product).Where(od=>od.OrderCode == ordercode).ToListAsync();
@@ -29,7 +35,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(detailsOrder);
         }
         [HttpPost]
-        [Route("UpdateOrder")]
+        [Route("UpdateOrder/{ordercode}")]
         public async Task<IActionResult> UpdateOrder(string ordercode, int status)
         {
             var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.OrderCode == ordercode);

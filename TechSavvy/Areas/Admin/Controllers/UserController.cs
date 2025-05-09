@@ -3,30 +3,39 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TechSavvy.Models;
 using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/User")]
-    [Authorize]
     public class UserController : Controller
     {
         private readonly UserManager<AppUserModel> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         private readonly DataContext _dataContext;
-        public UserController(UserManager<AppUserModel> userManager, RoleManager<IdentityRole> roleManager)
+        public UserController(UserManager<AppUserModel> userManager, RoleManager<IdentityRole> roleManager, DataContext dataContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _dataContext = dataContext;
         }
         [HttpGet]
-        [Route("Index")]
+        [Route("")]
         public async Task<IActionResult> Index()
         {
-            return View(await _userManager.Users.OrderByDescending(u => u.Id).ToListAsync());
+            var usersWithRoles = await (from u in _dataContext.Users
+                                        join ur in _dataContext.UserRoles on u.Id equals ur.UserId
+                                        join r in _dataContext.Roles on ur.RoleId equals r.Id
+                                        select new { User = u, RoleName = r.Name })
+                                           .ToListAsync();
+            var loggedUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            return View(usersWithRoles);
         }
         [HttpGet]
         [Route("Create")]
@@ -42,9 +51,20 @@ namespace TechSavvy.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var createUserResult = await _userManager.CreateAsync(user);
+                var createUserResult = await _userManager.CreateAsync(user, user.PasswordHash);
                 if (createUserResult.Succeeded)
                 {
+                    var createUser = await _userManager.FindByEmailAsync(user.Email); //tìm user dựa vào email
+                    var userId = createUser.Id; // lấy user Id
+                    var role = _roleManager.FindByIdAsync(user.RoleId); //lấy RoleId
+                    var addToRoleResult = await _userManager.AddToRoleAsync(createUser, role.Result.Name); // thêm user vào role
+                    if (!addToRoleResult.Succeeded)
+                    {
+                        foreach (var error in createUserResult.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                    }
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -73,7 +93,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             }
         }
         [HttpGet]
-        [Route("Delete")]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -96,7 +116,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Edit")]
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(string id, AppUserModel user)
         {
             
@@ -141,7 +161,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(user);
         }
         [HttpGet]
-        [Route("Edit")]
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(string id)
         {
             if (string.IsNullOrEmpty(id))

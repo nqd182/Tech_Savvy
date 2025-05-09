@@ -9,8 +9,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Product")]
+
     public class ProductController : Controller
     {
         private readonly DataContext _dataContext;
@@ -20,11 +22,12 @@ namespace TechSavvy.Areas.Admin.Controllers
             _dataContext = dataContext;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             return View(await _dataContext.Products.OrderByDescending(p => p.Id).Include(p => p.Category).Include(p => p.Brand).ToListAsync());
         }
+        [Route("Create")]
         public IActionResult Create()
         {
             ViewBag.Categories = new SelectList(_dataContext.Categories, "Id", "Name");
@@ -34,6 +37,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken] // yêu cầu token hợp lệ khi rq post
         public async Task<IActionResult> Create(ProductModel product)
         {
@@ -84,6 +88,8 @@ namespace TechSavvy.Areas.Admin.Controllers
             }
             return View(product);
         }
+
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int Id)
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
@@ -94,6 +100,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, ProductModel product)
         {
@@ -147,6 +154,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return BadRequest(errorMessage);
             }
         }
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int Id)
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
@@ -165,7 +173,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         // Tạo số lượng sản phẩm
-        [Route("CreateProductQuantity")]
+        [Route("AddQuantity/{id}")]
         [HttpGet]
         public async Task<IActionResult> AddQuantity(int Id)
         {
@@ -174,8 +182,8 @@ namespace TechSavvy.Areas.Admin.Controllers
             ViewBag.Id = Id;
             return View();
         }
-        [Route("UpdateMoreQuantity")]
         [HttpPost]
+        [Route("UpdateMoreQuantity")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateMoreQuantity(ProductQuantityModel productQuantityModel)
         {

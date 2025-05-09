@@ -6,8 +6,8 @@ using TechSavvy.Repository;
 using TechSavvy.Models;
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
     [Route("Admin/Shipping")]
     public class ShippingController : Controller
     {

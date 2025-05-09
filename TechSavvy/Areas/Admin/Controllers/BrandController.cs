@@ -6,8 +6,9 @@ using TechSavvy.Repository;
 
 namespace TechSavvy.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
-    [Authorize]
+    [Route("Admin/Brand")]
     public class BrandController : Controller
     {
         private readonly DataContext _dataContext;
@@ -16,22 +17,21 @@ namespace TechSavvy.Areas.Admin.Controllers
         {
             _dataContext = dataContext;
         }
-
-        // GET: Admin/Brand
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             var brands = await _dataContext.Brands.OrderByDescending(b => b.Id).ToListAsync();
             return View(brands);
         }
 
-        // GET: Admin/Brand/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Brand/Create
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BrandModel brand)
         {
@@ -55,7 +55,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(brand);
         }
 
-        // GET: Admin/Brand/Edit/5
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var brand = await _dataContext.Brands.FindAsync(id);
@@ -68,6 +68,7 @@ namespace TechSavvy.Areas.Admin.Controllers
 
         // POST: Admin/Brand/Edit/5
         [HttpPost]
+        [Route("Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, BrandModel brand)
         {
@@ -93,7 +94,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(brand);
         }
 
-        // GET: Admin/Brand/Delete/5
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var brand = await _dataContext.Brands.FindAsync(id);
