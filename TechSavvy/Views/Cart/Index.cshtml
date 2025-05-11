@@ -8,41 +8,6 @@
                 <li class="breadcrumb-item active">Giỏ hàng</li>
             </ol>
         </div>
-
-        @if (Model.CartItems.Any())
-        {
-            <div class="row mt-4">
-                <div class="col-md-4 mb-3">
-                    <label for="tinh">Tỉnh/Thành phố</label>
-                    <select class="form-control" id="tinh" name="tinh">
-                        <option value="0">Chọn tỉnh/thành</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="quan">Quận/Huyện</label>
-                    <select class="form-control" id="quan" name="quan">
-                        <option value="0">Chọn quận/huyện</option>
-                    </select>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="phuong">Phường/Xã</label>
-                    <select class="form-control" id="phuong" name="phuong">
-                        <option value="0">Chọn phường/xã</option>
-                    </select>
-                </div>
-            </div>
-            <div class="text-right">
-                <button type="button" class="btn btn-success btn-sm btn-add-shipping">Tính phí ship</button>
-            </div>
-
-            <div class="mt-4">
-                <label>Mã giảm giá:</label>
-                <form>
-                    Coupon Code: <input type="text" class="form-control coupon-value" /><span class="text text-success">@Model.CouponCode</span> <br />
-                    <input type="button" value="Apply" class="btn btn-sm btn-primary btn-apply-coupon" />
-                </form>
-            </div>
-        }
     </div>
 
         <div class="table-responsive bg-white shadow-sm rounded" style="margin-top: 10px">
@@ -84,43 +49,14 @@
                                 </td>
                             </tr>
                         }
-
-                       
                         <tr class="bg-light font-weight-bold">
-                            <td colspan="4" class="text-right">Phí ship:</td>
-                            <td class="text-left">@Model.ShippingCost.ToString("#,##0 đ")</td>
-                            <td>
-                                <a class="btn btn-sm btn-warning" asp-action="DeleteShipping" asp-controller="Cart">Xóa phí</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-light font-weight-bold">
-                            <td colspan="4" class="text-right">Tổng cộng:</td>
-                            @{
-                                
-                                var grandTotal = Model.GrandTotal + Model.ShippingCost;
-                            }
-                            <td colspan="2" class="text-left">@grandTotal.ToString("#,##0 đ")</td>
+                        <td colspan="2" class="text-left">@Model.GrandTotal.ToString("#,##0 đ")</td>
                         </tr>
                         <tr>
                             <td colspan="6">
                                 <div class="text-right">
                                     <a class="btn btn-sm btn-danger" asp-controller="Cart" asp-action="Clear">Xóa tất cả</a>
-                                    @if (Model.ShippingCost > 0)
-                                    {
-                                        <a class="btn btn-sm btn-primary" asp-controller="Checkout" asp-action="Checkout">Đặt hàng</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-sm btn-primary disabled" aria-disabled="true">Đặt hàng</a>
-                                        <br />
-                                        <small class="text-danger">Vui lòng tính phí ship trước</small>
-                                    }
-                                    <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment">
-                                        <input type="hidden" name="FullName" value="@User.Identity.Name" />
-                                        <input type="hidden" name="Amount" value="@Model.GrandTotal" />
-                                        <input type="hidden" name="OrderInfo" value="Thanh toán qua Momo Payment tại HieuTanStore" />
-                                        <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button>
-                                    </form>
+                                    <a class="btn btn-sm btn-primary" asp-controller="Checkout" asp-action="Index">Thanh toán</a>
                                 </div>
                             </td>
                         </tr>
@@ -140,82 +76,3 @@
 </section>
 
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $(".btn-apply-coupon").click(function () {
-                var coupon_value = $(".coupon-value").val();
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("GetCoupon", "Cart")",
-                    data: { coupon_value: coupon_value },
-                    success: function (result) {
-                        if (result.success) {
-                            Swal.fire(result.message);
-                            location.reload();
-                        } else {
-                            Swal.fire(result.message);
-                        }
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        $(function () {
-            $(".btn-add-shipping").click(function () {
-                var tinh = $("#tinh option:selected").text();
-                var quan = $("#quan option:selected").text();
-                var phuong = $("#phuong option:selected").text();
-
-                if (tinh === '' || quan === '' || phuong === '') {
-                    Swal.fire("Làm ơn không bỏ trống.");
-                } else {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("GetShipping", "Cart")",
-                        data: { tinh: tinh, quan: quan, phuong: phuong },
-                        success: function (result) {
-                            if (result) {
-                                location.reload();
-                            }
-                        }
-                    });
-                }
-            });
-
-            $.getJSON('https://esgoo.net/api-tinhthanh/1/0.htm', function (data_tinh) {
-                if (data_tinh.error === 0) {
-                    $.each(data_tinh.data, function (key, val) {
-                        $("#tinh").append('<option value="' + val.id + '">' + val.full_name + '</option>');
-                    });
-
-                    $("#tinh").change(function () {
-                        var idtinh = $(this).val();
-                        $.getJSON('https://esgoo.net/api-tinhthanh/2/' + idtinh + '.htm', function (data_quan) {
-                            if (data_quan.error === 0) {
-                                $("#quan").html('<option value="0">Quận Huyện</option>');
-                                $("#phuong").html('<option value="0">Phường Xã</option>');
-                                $.each(data_quan.data, function (key, val) {
-                                    $("#quan").append('<option value="' + val.id + '">' + val.full_name + '</option>');
-                                });
-
-                                $("#quan").change(function () {
-                                    var idquan = $(this).val();
-                                    $.getJSON('https://esgoo.net/api-tinhthanh/3/' + idquan + '.htm', function (data_phuong) {
-                                        if (data_phuong.error === 0) {
-                                            $("#phuong").html('<option value="0">Phường Xã</option>');
-                                            $.each(data_phuong.data, function (key, val) {
-                                                $("#phuong").append('<option value="' + val.id + '">' + val.full_name + '</option>');
-                                            });
-                                        }
-                                    });
-                                });
-                            }
-                        });
-                    });
-                }
-            });
-        });
-    </script>
-}

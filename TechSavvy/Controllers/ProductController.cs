@@ -23,7 +23,7 @@ namespace TechSavvy.Controllers
         {
 
             ProductModel productById = _dataContext.Products.Include(p => p.Ratings).FirstOrDefault(p => p.Id == Id);
-            if (productById == null) RedirectToAction("Index");
+            if (productById == null) return RedirectToAction("Index");
             var relatedProduct = await _dataContext.Products
                 .Where(p => p.CategoryId == productById.CategoryId && p.Id != productById.Id)
                 .Take(4)

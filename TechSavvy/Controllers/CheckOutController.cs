@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using TechSavvy.Models;
+using TechSavvy.Models.ViewModels;
 using TechSavvy.Repository;
 
 namespace TechSavvy.Controllers
@@ -27,9 +28,9 @@ namespace TechSavvy.Controllers
                 var orderCode = Guid.NewGuid().ToString();
                 var orderItem = new OrderModel();
                 orderItem.OrderCode = orderCode;
-                var shippingPriceCookie = Request.Cookies["ShippingPrice"];
-                // Nhận coupon từ cookie
-                var coupon_code = Request.Cookies["CouponTitle"];
+                var shippingPriceCookie = Request.Cookies["ShippingPrice"];// Nhận shipping giá từ cookie
+                var shippingAddress = Request.Cookies["ShippingAddress"];// Nhận địa chỉ từ cookie
+                var coupon_code = Request.Cookies["CouponTitle"]; // Nhận coupon từ cookie
                 decimal shippingPrice = 0;
                 if (shippingPriceCookie != null)
                 {
@@ -51,13 +52,17 @@ namespace TechSavvy.Controllers
                     orderdetail.ProductId = cart.ProductId;
                     orderdetail.Price = cart.Price;
                     orderdetail.Quantity = cart.Quantity;
+                    orderdetail.ShippingAddress = shippingAddress;
                     var product = await _dataContext.Products.Where(p => p.Id == cart.ProductId).FirstAsync();
                     product.Quantity -= cart.Quantity;
-                    product.Sold = (product.Sold ?? 0) + cart.Quantity; ;
+                    product.Sold = (product.Sold ?? 0) + cart.Quantity;
                     _dataContext.Add(orderdetail);
                     _dataContext.SaveChanges();
                 }
                 HttpContext.Session.Remove("Cart");
+                Response.Cookies.Delete("ShippingPrice");
+                Response.Cookies.Delete("CouponTitle");
+                Response.Cookies.Delete("ShippingAddress");
                 TempData["success"] = "Thanh toán thành công vui lòng chờ duyệt đơn hàng";
                 return RedirectToAction("History", "Account");
             }
@@ -65,7 +70,28 @@ namespace TechSavvy.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+
+            // Nhận shipping giá từ cookie
+            var shippingPriceCookie = Request.Cookies["ShippingPrice"];
+            decimal shippingPrice = 0;
+            // Nhận coupon từ cookie
+            var coupon_code = Request.Cookies["CouponTitle"];
+
+            if (shippingPriceCookie != null)
+            {
+                var shippingPriceJson = shippingPriceCookie;
+                shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
+            }
+            CartItemViewModel cartVM = new()
+            {
+                CartItems = cartItems,
+                GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
+                ShippingCost = shippingPrice,
+                CouponCode = coupon_code
+            };
+            return View(cartVM);
+
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TechSavvy.Models
         [Required(ErrorMessage = "Yêu cầu nhập email ")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
-        public string Star { get; set; }
+        public int Star { get; set; }
         [ForeignKey("ProductId")]
         public ProductModel Product { get; set; }
     }

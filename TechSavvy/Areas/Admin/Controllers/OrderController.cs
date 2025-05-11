@@ -35,7 +35,6 @@ namespace TechSavvy.Areas.Admin.Controllers
             return View(detailsOrder);
         }
         [HttpPost]
-        [Route("UpdateOrder/{ordercode}")]
         public async Task<IActionResult> UpdateOrder(string ordercode, int status)
         {
             var order = await _dataContext.Orders.FirstOrDefaultAsync(o => o.OrderCode == ordercode);
@@ -90,11 +89,10 @@ namespace TechSavvy.Areas.Admin.Controllers
             {
                 await _dataContext.SaveChangesAsync();
                 return Ok(new { success = true, message = "Order status updated successfully" });
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 return StatusCode(500, "An Error occured while updating the order status");
             }
-            return View();
         }
     }
 }

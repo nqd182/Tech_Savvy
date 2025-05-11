@@ -147,9 +147,8 @@ namespace TechSavvy.Controllers
         // tính phí shipping sử dụng cookies
         [HttpPost]
         [Route("Cart/GetShipping")]
-        public async Task<IActionResult> GetShipping(ShippingModel shippingModel, string quan, string tinh, string phuong)
+        public async Task<IActionResult> GetShipping(ShippingModel shippingModel, string quan, string tinh, string phuong, string diachi)
         {
-
             var existingShipping = await _dataContext.Shippings
                 .FirstOrDefaultAsync(x => x.City == tinh && x.District == quan && x.Ward == phuong);  
 
@@ -162,9 +161,10 @@ namespace TechSavvy.Controllers
             else
             {
                 //Set mặc định phí ship nếu ko tìm thấy
-                shippingPrice = 50000;
+                shippingPrice = 15000;
             }
             var shippingPriceJson = JsonConvert.SerializeObject(shippingPrice); // chuyển đổi thành chuỗi JSON
+            var fullAddress = $"{diachi}, {phuong}, {quan}, {tinh}";
             try
             {
                 var cookieOptions = new CookieOptions // tạo cookie
@@ -174,6 +174,7 @@ namespace TechSavvy.Controllers
                     Secure = true // using HTTPS
                 };
                 Response.Cookies.Append("ShippingPrice", shippingPriceJson, cookieOptions); // đẩy shippingPriceJson vào cookie với tên là "ShippingPrice"
+                Response.Cookies.Append("ShippingAddress", fullAddress, cookieOptions);
             }
             catch (Exception ex)
             {
