@@ -25,6 +25,28 @@
             background-color: darkblue;
             color: white;
         }
+
+    .rating {
+        direction: rtl;
+        unicode-bidi: bidi-override;
+        display: inline-flex;
+    }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            font-size: 24px;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+            .rating input:checked ~ label,
+            .rating label:hover,
+            .rating label:hover ~ label {
+                color: gold;
+            }
 </style>
 
 
@@ -112,10 +134,21 @@
                             @* <li><a href=""><i class="fa fa-clock-o"></i> 12:41 PM</a></li> *@
                             @* <li><a href=""><i class="fa fa-calendar-o"></i> 31 DEC 2014</a></li> *@
                         </ul>
-                        <p><strong>Viết đánh giá của bạn:</strong></p>
+                        <p ><strong>Viết đánh giá của bạn</strong></p>
                         <form asp-action="CommentProduct" asp-controller="Product" method="POST">
                             <input asp-for="@Model.ProductDetails.Id" name="ProductId" type="hidden" />
-                            <input name="Star" type="hidden" value="4" />
+                            <div class="form-group mt-2">
+                                <label>Chọn số sao đánh giá:</label>
+                                <div class="rating">
+                                    @for (int i = 5; i >= 1; i--)
+                                    {
+                                        <input type="radio" id="star-@i" name="Star" value="@i" />
+                                        <label for="star-@i" title="@i sao">&#9733;</label>
+                                    }
+                                </div>
+                                <span asp-validation-for="Star" class="text-danger"></span>
+                            </div>
+
                             <input asp-for="@Model.Name" class="form-control" type="text" placeholder="Tên của bạn" />
                             <span asp-validation-for="@Model.Name" class="text-danger"></span>
                             <input asp-for="@Model.Email" class="form-control mt-2" type="email" placeholder="Email của bạn" />

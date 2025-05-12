@@ -13,6 +13,5 @@ namespace TechSavvy.Models
 
         [ForeignKey("ProductId")]
         public ProductModel Product { get; set; }
-
     }
 }

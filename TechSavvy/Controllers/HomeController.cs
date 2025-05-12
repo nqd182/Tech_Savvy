@@ -70,7 +70,13 @@ public class HomeController : Controller
     public async Task<IActionResult> AddWishlist(int Id, WishlistModel wishlist)
     {
         var user = await _userManager.GetUserAsync(User);
+        var exists = await _dataContext.Wishlists
+        .AnyAsync(w => w.ProductId == Id && w.UserId == user.Id);
 
+        if (exists)
+        {
+            return Ok(new { success = false, message = "Sản phẩm đã có trong danh sách yêu thích." });
+        }
         var wishlistProduct = new WishlistModel
         {
             ProductId = Id,
@@ -81,7 +87,7 @@ public class HomeController : Controller
         try
         {
             await _dataContext.SaveChangesAsync();
-            return Ok(new { success = true, message = "Add to wishlisht Successfully" });
+            return Ok(new { success = true, message = "Thêm sản phẩm vào danh sách yêu thích thành công" });
         }
         catch (Exception)
         {
@@ -90,10 +96,16 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Wishlist()
     {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Account"); 
+        }
         var wishlist_product = await (from w in _dataContext.Wishlists
                                       join p in _dataContext.Products on w.ProductId equals p.Id
+                                      where w.UserId == user.Id 
                                       select new { Product = p, Wishlists = w })
-                           .ToListAsync();
+                          .ToListAsync();
 
         return View(wishlist_product);
     }

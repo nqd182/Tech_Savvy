@@ -174,14 +174,21 @@
                     data: { Id: Id },
                     success: function (result) {
                         Swal.fire({
-                            title: "Thêm sản phẩm thành công",
-                            icon: "success",
+                            title: result.message,
+                            icon: result.success ? "success" : "info",
                             draggable: true
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "Sản phẩm đã có trong yêu thích",
+                            icon: "warning"
                         });
                     }
                 });
             });
         });
+
     </script>
 
     <script type="text/javascript">

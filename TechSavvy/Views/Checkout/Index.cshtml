@@ -99,20 +99,32 @@
                 <ul class="list-group mt-3">
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Tạm tính</span>
-                        <strong>@Model.GrandTotal.ToString("#,##0 VNĐ")</strong>
+                        @{
+                            var subTotal = Model.CartItems.Sum(x => x.Quantity * x.Price);
+                        }
+                        <strong>@subTotal.ToString("#,##0 VNĐ")</strong>
                     </li>
+
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Phí vận chuyển</span>
                         <strong>@Model.ShippingCost.ToString("#,##0 VNĐ")</strong>
                     </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Mã giảm giá</span>
+                        <strong class="text-danger">- @Model.Discount.ToString("#,##0 VNĐ")</strong>
+                        </li>
+
+                   
+
                     <li class="list-group-item d-flex justify-content-between bg-light font-weight-bold">
                         <span>Tổng cộng</span>
                         @{
-                            var grandTotal = Model.GrandTotal + Model.ShippingCost;
+                            var finalTotal = Model.GrandTotal + Model.ShippingCost - Model.Discount;
                         }
-                        <strong>@grandTotal.ToString("#,##0 VNĐ")</strong>
+                        <strong>@finalTotal.ToString("#,##0 VNĐ")</strong>
                     </li>
                 </ul>
+
             </div>
         </div>
     </div>
@@ -131,8 +143,16 @@
                     data: { coupon_value: coupon_value },
                     success: function (result) {
                         if (result.success) {
-                            Swal.fire(result.message);
-                            location.reload();
+                                    Swal.fire({
+                                            title: result.message,
+                                            icon: "success"
+                                        }).then(() => {
+                                            // Delay reload nhẹ để cookie kịp lưu vào browser
+                                            setTimeout(() => {
+                                                location.reload();
+                                            }, 200);
+                                        });
+
                         } else {
                             Swal.fire(result.message);
                         }

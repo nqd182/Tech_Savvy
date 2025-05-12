@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Security.Claims;
 using TechSavvy.Models;
 using TechSavvy.Models.ViewModels;
@@ -63,6 +64,7 @@ namespace TechSavvy.Controllers
                 Response.Cookies.Delete("ShippingPrice");
                 Response.Cookies.Delete("CouponTitle");
                 Response.Cookies.Delete("ShippingAddress");
+                Response.Cookies.Delete("ShippingPrice");
                 TempData["success"] = "Thanh toán thành công vui lòng chờ duyệt đơn hàng";
                 return RedirectToAction("History", "Account");
             }
@@ -77,6 +79,14 @@ namespace TechSavvy.Controllers
             decimal shippingPrice = 0;
             // Nhận coupon từ cookie
             var coupon_code = Request.Cookies["CouponTitle"];
+            var couponPriceCookie = Request.Cookies["CouponPrice"];
+            decimal couponPrice = 0;
+
+            if (!string.IsNullOrEmpty(couponPriceCookie))
+            {
+                var couponPriceJson = couponPriceCookie;
+                decimal.TryParse(couponPriceCookie, NumberStyles.Any, CultureInfo.InvariantCulture, out couponPrice);
+            }
 
             if (shippingPriceCookie != null)
             {
@@ -88,7 +98,9 @@ namespace TechSavvy.Controllers
                 CartItems = cartItems,
                 GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
                 ShippingCost = shippingPrice,
-                CouponCode = coupon_code
+                CouponCode = coupon_code,
+                Discount = couponPrice
+
             };
             return View(cartVM);
 

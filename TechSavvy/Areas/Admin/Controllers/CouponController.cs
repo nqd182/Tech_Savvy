@@ -55,5 +55,26 @@ namespace TechSavvy.Areas.Admin.Controllers
             }
             return View();
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var coupon = _dataContext.Coupons.Find(id); // Giả sử bạn dùng EF
+            if (coupon == null) return NotFound();
+
+            return View(coupon);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(CouponModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _dataContext.Coupons.Update(model);
+                _dataContext.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Globalization;
 using TechSavvy.Models;
 using TechSavvy.Models.ViewModels;
 using TechSavvy.Repository;
@@ -18,27 +19,16 @@ namespace TechSavvy.Controllers
         public IActionResult Index()
         {
             List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
-            
-            // Nhận shipping giá từ cookie
-            var shippingPriceCookie = Request.Cookies["ShippingPrice"];
-            decimal shippingPrice = 0;
-            // Nhận coupon từ cookie
-            var coupon_code = Request.Cookies["CouponTitle"];
-
-            if (shippingPriceCookie != null)
-            {
-                var shippingPriceJson = shippingPriceCookie;
-                shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
-            }
             CartItemViewModel cartVM = new()
             {
                 CartItems = cartItems,
                 GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
-                ShippingCost = shippingPrice,
-                CouponCode = coupon_code
-            };  
+
+            };
+
             return View(cartVM);
         }
+
         public IActionResult Checkout()
         {
             return View("~/Views/Checkout/Index.cshtml");
@@ -198,7 +188,15 @@ namespace TechSavvy.Controllers
         {
             var validCoupon = await _dataContext.Coupons
                 .FirstOrDefaultAsync(x => x.Name == coupon_value);
-
+            if (validCoupon == null)
+            {
+                return Ok(new { success = false, message = "Mã giảm giá không tồn tại" });
+            }
+            decimal couponPrice = 0;
+            if (validCoupon != null)
+            {
+                couponPrice = validCoupon.Price;
+            }
             string couponTitle = validCoupon.Name + " | " + validCoupon?.Description;
 
             if (couponTitle != null)
@@ -213,13 +211,14 @@ namespace TechSavvy.Controllers
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
-                            Expires = DateTimeOffset.UtcNow.AddMinutes(30),// thời gian sống của cookie
-                            Secure = true,
+                            Expires = DateTimeOffset.UtcNow.AddYears(1),// thời gian sống của cookie
+                            Secure = false,
                             SameSite = SameSiteMode.Strict // Kiểm tra tính tương thích trình duyệt
                         };
 
                         Response.Cookies.Append("CouponTitle", couponTitle, cookieOptions);
-                        return Ok(new { success = true, message = "Apply mã giảm giá thành công" });
+                        Response.Cookies.Append("CouponPrice", couponPrice.ToString(CultureInfo.InvariantCulture), cookieOptions);
+                        return Ok(new { success = true, message = "Apply mã giảm giá thành công"});
                     }
                     catch (Exception ex)
                     {

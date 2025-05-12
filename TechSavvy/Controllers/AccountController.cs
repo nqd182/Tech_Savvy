@@ -106,6 +106,14 @@ namespace TechSavvy.Controllers
             await _signInManager.SignOutAsync();
             return Redirect(returnUrl);
         }
+        public async Task<IActionResult> DetailOrder(string ordercode)
+        {
+            var detailsOrder = await _dataContext.OrderDetails.Include(od => od.Product).Where(od => od.OrderCode == ordercode).ToListAsync();
+            // lấy giá ship
+            var shippingCost = _dataContext.Orders.Where(o => o.OrderCode == ordercode).First();
+            ViewBag.ShippingCost = shippingCost.ShippingCost;
+            return View(detailsOrder);
+        }
 
     }
 }
