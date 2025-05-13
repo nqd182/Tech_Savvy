@@ -31,6 +31,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             var usersWithRoles = await (from u in _dataContext.Users
                                         join ur in _dataContext.UserRoles on u.Id equals ur.UserId
                                         join r in _dataContext.Roles on ur.RoleId equals r.Id
+                                        where !u.IsDeleted
                                         select new { User = u, RoleName = r.Name })
                                            .ToListAsync();
             var loggedUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -65,6 +66,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                             ModelState.AddModelError(string.Empty, error.Description);
                         }
                     }
+                    TempData["success"] = "User đã tạo thành công";
                     return RedirectToAction("Index", "User");
                 }
                 else
@@ -73,6 +75,8 @@ namespace TechSavvy.Areas.Admin.Controllers
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
+                    var roles = await _roleManager.Roles.ToListAsync();
+                    ViewBag.Roles = new SelectList(roles, "Id", "Name");
                     return View(user);
 
                 }
@@ -106,11 +110,9 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var deleteResult = await _userManager.DeleteAsync(user);
-            if (!deleteResult.Succeeded)
-            {
-                return View("Error");
-            }
+            //var deleteResult = await _userManager.DeleteAsync(user);
+            user.IsDeleted = true; // Xóa mềm
+            await _dataContext.SaveChangesAsync();
             TempData["success"] = "User đã xóa thành công";
             return RedirectToAction("Index");
         }
@@ -178,5 +180,53 @@ namespace TechSavvy.Areas.Admin.Controllers
 
             return View(user);
         }
+        [HttpGet]
+        [Route("Trash")]
+        public async Task<IActionResult>
+    Trash()
+        {
+            var deletedUsers = await _dataContext.Users
+            .Where(u => u.IsDeleted)
+            .ToListAsync();
+
+            return View(deletedUsers);
+        }
+
+        [HttpGet]
+        [Route("Restore/{id}")]
+        public async Task<IActionResult>
+            Restore(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null || !user.IsDeleted) return NotFound();
+
+            user.IsDeleted = false;
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã khôi phục người dùng";
+            return RedirectToAction("Trash");
+        }
+
+        [HttpGet]
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult>
+            DeletePermanent(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) return NotFound();
+
+            var deleteResult = await _userManager.DeleteAsync(user);
+            if (deleteResult.Succeeded)
+            {
+                TempData["success"] = "Đã xóa vĩnh viễn người dùng";
+            }
+            else
+            {
+                TempData["error"] = "Có lỗi xảy ra khi xóa người dùng";
+            }
+
+            return RedirectToAction("Trash");
+        }
+
     }
 }

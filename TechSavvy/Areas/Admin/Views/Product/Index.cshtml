@@ -1,23 +1,28 @@
 ﻿@model IEnumerable<ProductModel>
 @{
-    ViewData["title"] = "Product Listed";
+    ViewData["Title"] = "Product Listed";
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h3 class="mb-0">Danh sách sản phẩm</h3>
-    <a class="btn btn-success" asp-action="Create" asp-controller="Product">
-        <i class="fa fa-plus"></i> Thêm sản phẩm
-    </a>
+    <div class="d-flex gap-2">
+        <a class="btn btn-success" asp-action="Create" asp-controller="Product">
+            <i class="fa fa-plus"></i> Thêm sản phẩm
+        </a>
+        <a asp-action="Trash" class="btn btn-outline-secondary">
+            <i class="fa fa-trash"></i> Xem sản phẩm đã xóa
+        </a>
+    </div>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-bordered table-hover align-middle" id="myTable">
-        <thead class="table-dark" style="text-align:center">
+    <table class="table table-bordered table-hover align-middle text-center" id="myTable">
+        <thead class="table-dark">
             <tr>
                 <th>Id</th>
                 <th>Tên sản phẩm</th>
-                <th width="70px">Còn lại</th>
-                <th width="70px">Đã bán</th>
+                <th width="80px">Còn lại</th>
+                <th width="80px">Đã bán</th>
                 <th>Giá</th>
                 <th>Giá vốn</th>
                 <th>Danh mục</th>
@@ -31,25 +36,29 @@
             {
                 <tr>
                     <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td align="center">
-                        <span class="fw-bold" >@item.Quantity</span><br />
-                        <a asp-action="AddQuantity" asp-controller="Product" asp-route-Id="@item.Id" class="btn btn-sm btn-outline-secondary mt-1">Thêm</a>
+                    <td class="text-start">@item.Name</td>
+
+                    <td>
+                        <div class="fw-bold">@item.Quantity</div>
+                        <a asp-action="AddQuantity" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary mt-1">Thêm</a>
                     </td>
-                    <td align ="center" class="fw-bold">@item.Sold</td>
+
+                    <td class="fw-bold">@item.Sold</td>
                     <td>@item.Price.ToString("#,##0 vnđ")</td>
                     <td>@item.CapitalPrice.ToString("#,##0 vnđ")</td>
                     <td>@item.Category?.Name</td>
                     <td>@item.Brand?.Name</td>
-                    <td>
-                        <img src="~/media/products/@item.Image" alt="Ảnh sản phẩm" width="500" class="img-thumbnail rounded" />
+
+                    <td >
+                        <img src="~/media/products/@item.Image" alt="Ảnh sản phẩm" width="200px" class="img-thumbnail rounded" />
                     </td>
+
                     <td>
-                        <div class="d-flex gap-2 flex-wrap">
-                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id">
+                        <div class="d-flex flex-column gap-1">
+                            <a class="btn btn-warning btn-sm" asp-action="Edit" asp-controller="Product" asp-route-id="@item.Id">
                                 <i class="fa fa-pencil"></i> Sửa
                             </a>
-                            <a class="btn btn-danger btn-sm confirmDeletion" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id">
+                            <a class="btn btn-danger btn-sm confirmDeletion" asp-action="Delete" asp-controller="Product" asp-route-id="@item.Id">
                                 <i class="fa fa-trash"></i> Xóa
                             </a>
                         </div>

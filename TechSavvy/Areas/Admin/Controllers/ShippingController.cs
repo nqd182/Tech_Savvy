@@ -20,7 +20,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var shippingList = await _dataContext.Shippings.ToListAsync();
+            var shippingList = await _dataContext.Shippings.Where(b => !b.IsDeleted).ToListAsync();
             ViewBag.Shippings = shippingList;
             return View();
         }
@@ -53,6 +53,19 @@ namespace TechSavvy.Areas.Admin.Controllers
             {
                 return StatusCode(500, "An error occurred while adding shipping.");
             }
+        }
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var shipping = await _dataContext.Shippings.FindAsync(id);
+            if (shipping == null)
+            {
+                return NotFound();
+            }
+            shipping.IsDeleted = true; // Xóa mềm
+            await _dataContext.SaveChangesAsync();
+            TempData["success"] = "Xóa shipping thành công";
+            return RedirectToAction("Index");
         }
     }
 }

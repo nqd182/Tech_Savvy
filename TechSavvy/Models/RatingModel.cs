@@ -18,6 +18,8 @@ namespace TechSavvy.Models
         [Required(ErrorMessage = "Yêu cầu chọn số sao")]
         [Range(1, 5, ErrorMessage = "Chỉ được chọn từ 1 đến 5 sao")]
         public int Star { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
         [ForeignKey("ProductId")]
         public ProductModel Product { get; set; }
     }

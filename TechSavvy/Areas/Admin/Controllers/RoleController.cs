@@ -64,7 +64,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                     try
                     {
                         await _roleManager.UpdateAsync(role);
-                        TempData["success"] = "Role updated successfully!";
+                        TempData["success"] = "Cập nhật role thành công";
                         return RedirectToAction("Index"); 
                     }
                     catch (Exception)
@@ -87,10 +87,11 @@ namespace TechSavvy.Areas.Admin.Controllers
                 {
                     _roleManager.CreateAsync(new IdentityRole(model.Name)).GetAwaiter().GetResult();
                 }
-                return Redirect("Index");
-            }
+                TempData["success"] = "Tạo role thành công!";
+                return RedirectToAction("Index");
+             }
 
-            [HttpGet]
+        [HttpGet]
             [Route("Delete/{id}")]
             public async Task<IActionResult> Delete(string id)
             {
@@ -109,15 +110,15 @@ namespace TechSavvy.Areas.Admin.Controllers
                 try
                 {
                     await _roleManager.DeleteAsync(role);
-                    TempData["success"] = "Role deleted successfully!";
+                    TempData["success"] = "Xóa role thành công!";
                 }
                 catch (Exception)
                 {
                     ModelState.AddModelError("", "An error occurred while deleting the role.");
                 }
 
-                return Redirect("Index");
-            }
+                return RedirectToAction("Index");
+        }   
 
-        }
+    }
 }

@@ -18,6 +18,7 @@ namespace TechSavvy.Models
         [Required(ErrorMessage = "Yêu cầu nhập số điện thoại liên hệ ")]
         public string Phone { get; set; }
         public string LogoImg { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
         [NotMapped] // ko ánh xạ vào csdl
         [FileExtension]

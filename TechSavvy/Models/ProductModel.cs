@@ -26,6 +26,7 @@ namespace TechSavvy.Models
         public CategoryModel Category { get; set; }
         public BrandModel Brand { get; set; }
         public RatingModel Ratings { get; set; }
+        public bool IsDeleted { get; set; } = false;
         [NotMapped] // ko ánh xạ vào csdl
         [FileExtension]
         public IFormFile ImageUpload  { get; set; }

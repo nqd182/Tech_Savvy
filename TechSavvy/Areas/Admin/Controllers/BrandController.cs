@@ -20,7 +20,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            var brands = await _dataContext.Brands.OrderByDescending(b => b.Id).ToListAsync();
+            var brands = await _dataContext.Brands.Where(b => !b.IsDeleted).OrderByDescending(b => b.Id).ToListAsync();
             return View(brands);
         }
 
@@ -103,10 +103,50 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            _dataContext.Brands.Remove(brand);
+            //_dataContext.Brands.Remove(brand);
+
+            brand.IsDeleted = true; // Xóa mềm
             await _dataContext.SaveChangesAsync();
             TempData["success"] = "Xóa thương hiệu thành công";
             return RedirectToAction("Index");
         }
+        [Route("Trash")]
+        public async Task<IActionResult> Trash()
+        {
+            var deletedBrands = await _dataContext.Brands
+                .Where(b => b.IsDeleted)
+                .ToListAsync();
+
+            return View(deletedBrands);
+        }
+        // Khôi phục thương hiệu đã xóa mềm
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var brand = await _dataContext.Brands.FindAsync(id);
+            if (brand == null || !brand.IsDeleted) return NotFound();
+
+            brand.IsDeleted = false;
+            _dataContext.Brands.Update(brand);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã khôi phục thương hiệu";
+            return RedirectToAction("Trash");
+        }
+
+        // Xóa vĩnh viễn thương hiệu
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var brand = await _dataContext.Brands.FindAsync(id);
+            if (brand == null) return NotFound();
+
+            _dataContext.Brands.Remove(brand);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn thương hiệu";
+            return RedirectToAction("Trash");
+        }
+
     }
 }

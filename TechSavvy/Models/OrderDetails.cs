@@ -10,6 +10,8 @@ namespace TechSavvy.Models
         public decimal Price { get; set; }
         public int Quantity { get; set; }
         public string? ShippingAddress { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
 
         [ForeignKey("ProductId")]
         public ProductModel Product { get; set; }

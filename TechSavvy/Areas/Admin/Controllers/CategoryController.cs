@@ -23,7 +23,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            return View(await _dataContext.Categories.OrderByDescending(p => p.Id).ToListAsync());
+            return View(await _dataContext.Categories.Where(c => !c.IsDeleted).OrderByDescending(p => p.Id).ToListAsync());
         }
         [Route("Create")]
         public IActionResult Create()
@@ -113,10 +113,47 @@ namespace TechSavvy.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int Id)
         {
             CategoryModel category = await _dataContext.Categories.FindAsync(Id);
-            _dataContext.Categories.Remove(category);
+            //_dataContext.Categories.Remove(category);
+            category.IsDeleted = true; // Xóa mềm
             await _dataContext.SaveChangesAsync();
             TempData["success"] = "Đã xóa danh mục thành công";
             return RedirectToAction("Index");
+        }
+        [Route("Trash")]
+        public async Task<IActionResult> Trash()
+        {
+            var deletedCategories = await _dataContext.Categories
+                .Where(c => c.IsDeleted)
+                .ToListAsync();
+
+            return View(deletedCategories);
+        }
+
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var category = await _dataContext.Categories.FindAsync(id);
+            if (category == null || !category.IsDeleted) return NotFound();
+
+            category.IsDeleted = false;
+            _dataContext.Categories.Update(category);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã khôi phục danh mục";
+            return RedirectToAction("Trash");
+        }
+
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var category = await _dataContext.Categories.FindAsync(id);
+            if (category == null) return NotFound();
+
+            _dataContext.Categories.Remove(category);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn danh mục";
+            return RedirectToAction("Trash");
         }
 
     }

@@ -19,7 +19,7 @@ namespace TechSavvy.Areas.Admin.Controllers
             [Route("Index")]
             public async Task<IActionResult> Index()
             {
-                var coupon_list = await _dataContext.Coupons.ToListAsync();
+                var coupon_list = await _dataContext.Coupons.Where(b => !b.IsDeleted).ToListAsync();
                 ViewBag.Coupons = coupon_list;
                 return View();
             }

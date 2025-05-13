@@ -1,0 +1,30 @@
+﻿@model IEnumerable<BrandModel>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tên thương hiệu</th>
+                <th>Mô tả</th>
+                <th>Slug</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Slug</td>
+                    <td>
+                        <a asp-action="Restore" asp-route-id="@item.Id" class="btn btn-success btn-sm">Khôi phục</a>
+                        <a asp-action="DeletePermanent" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa vĩnh viễn</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

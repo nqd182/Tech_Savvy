@@ -17,6 +17,7 @@ namespace TechSavvy.Models
         [Required(ErrorMessage = "Yêu cầu số lượng coupon")]
         public int Quantity { get; set; }
         public int Status { get; set; }
+        public bool IsDeleted { get; set; } = false;
 
     }
 }

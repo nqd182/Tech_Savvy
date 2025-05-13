@@ -25,7 +25,14 @@ namespace TechSavvy.Areas.Admin.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            return View(await _dataContext.Products.OrderByDescending(p => p.Id).Include(p => p.Category).Include(p => p.Brand).ToListAsync());
+            var products = await _dataContext.Products
+                    .Where(p => !p.IsDeleted)
+                    .OrderByDescending(p => p.Id)
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .ToListAsync();
+
+            return View(products);
         }
         [Route("Create")]
         public IActionResult Create()
@@ -158,18 +165,22 @@ namespace TechSavvy.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(int Id)
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
-            if (!string.Equals(product.Image, "test.jpg"))
-            {
-                string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
-                string oldfileImage= Path.Combine(uploadsDir, product.Image);
-                if (System.IO.File.Exists(oldfileImage))
-                {
-                    System.IO.File.Delete(oldfileImage);
-                }
-            }
-            _dataContext.Products.Remove(product);
+            //if (!string.Equals(product.Image, "test.jpg"))
+            //{
+            //    string uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "media/products");
+            //    string oldfileImage= Path.Combine(uploadsDir, product.Image);
+            //    if (System.IO.File.Exists(oldfileImage))
+            //    {
+            //        System.IO.File.Delete(oldfileImage);
+            //    }
+            //}
+            //_dataContext.Products.Remove(product);
+
+            product.IsDeleted = true; // Xóa mềm
+            _dataContext.Products.Update(product);
             await _dataContext.SaveChangesAsync();
-            TempData["success"] = "Đã xóa sản phẩm thành công";
+
+            TempData["success"] = "Đã xóa sản phẩm (mềm) thành công";
             return RedirectToAction("Index");
         }
         // Tạo số lượng sản phẩm
@@ -203,5 +214,32 @@ namespace TechSavvy.Areas.Admin.Controllers
             TempData["success"] = "Thêm số lượng sản phẩm thành công";
             return RedirectToAction("AddQuantity", "Product", new { Id = productQuantityModel.ProductId });
         }
+        [Route("Trash")]
+        public IActionResult Trash()
+        {
+            var deletedProducts = _dataContext.Products
+                .Where(p => p.IsDeleted)
+                .ToList();
+
+            return View(deletedProducts);
+        }
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var product = await _dataContext.Products.FindAsync(id);
+            if (product == null || !product.IsDeleted)
+            {
+                return NotFound();
+            }
+
+            product.IsDeleted = false;
+            _dataContext.Products.Update(product);
+            await _dataContext.SaveChangesAsync();
+            TempData["success"] = "Sản phẩm đã được khôi phục";
+            return RedirectToAction("Trash");
+        }
+      
+
+
     }
 }

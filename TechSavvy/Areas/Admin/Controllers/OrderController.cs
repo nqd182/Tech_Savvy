@@ -22,7 +22,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         [Route("")]
         public async Task<IActionResult> Index()
         {
-            return View(await _dataContext.Orders.OrderByDescending(p => p.Id).ToListAsync());
+            return View(await _dataContext.Orders.Where(b => !b.IsDeleted).OrderByDescending(p => p.Id).ToListAsync());
         }
         [HttpGet]
         [Route("ViewOrder/{ordercode}")]
@@ -93,6 +93,59 @@ namespace TechSavvy.Areas.Admin.Controllers
             {
                 return StatusCode(500, "An Error occured while updating the order status");
             }
+        }
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var order = await _dataContext.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            //_dataContext.Brands.Remove(brand);
+
+            order.IsDeleted = true; // Xóa mềm
+            await _dataContext.SaveChangesAsync();
+            TempData["success"] = "Xóa đơn hàng thành công";
+            return RedirectToAction("Index");
+        }
+        [Route("Trash")]
+        public async Task<IActionResult> Trash()
+        {
+            var deletedOrders = await _dataContext.Orders
+                .Where(o => o.IsDeleted)
+                .OrderByDescending(o => o.Id)
+                .ToListAsync();
+
+            return View(deletedOrders);
+        }
+
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var order = await _dataContext.Orders.FindAsync(id);
+            if (order == null || !order.IsDeleted) return NotFound();
+
+            order.IsDeleted = false;
+            _dataContext.Orders.Update(order);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã khôi phục đơn hàng";
+            return RedirectToAction("Trash");
+        }
+
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var order = await _dataContext.Orders.FindAsync(id);
+            if (order == null) return NotFound();
+
+            _dataContext.Orders.Remove(order);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn đơn hàng";
+            return RedirectToAction("Trash");
         }
     }
 }

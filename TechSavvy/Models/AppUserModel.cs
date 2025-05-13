@@ -6,5 +6,6 @@ namespace TechSavvy.Models
     {
         public string Occupation { get; set; }
         public string RoleId { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

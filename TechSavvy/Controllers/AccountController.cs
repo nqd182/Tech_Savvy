@@ -91,8 +91,10 @@ namespace TechSavvy.Controllers
                 IdentityResult result = await _userMangage.CreateAsync(newUser,user.Password);
                 if (result.Succeeded)
                 {
+                    await _userMangage.AddToRoleAsync(newUser, "User");
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
                     TempData["success"] = "Đăng ký tài khoản thành công";
-                    return Redirect("/account/login");
+                    return RedirectToAction("Index", "Home");
                 }
                 foreach (IdentityError error in result.Errors)
                 {

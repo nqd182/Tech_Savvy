@@ -12,7 +12,10 @@
 <body>
     <h3>List User</h3>
 
-    <a class="btn btn-primary" asp-action="Create" asp-controller="User">Add User</a>
+    <a class="btn btn-primary" asp-action="Create" asp-controller="User">Thêm tài khoản</a>
+    <a class="btn btn-secondary" asp-action="Trash" asp-controller="User">
+        <i class="fa fa-trash"></i> Thùng rác
+    </a>
     <div class="table table-responsive">
         <table class="table table-responsive" id="myTable">
             <thead>
