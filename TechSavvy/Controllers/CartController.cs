@@ -29,11 +29,6 @@ namespace TechSavvy.Controllers
             return View(cartVM);
         }
 
-        public IActionResult Checkout()
-        {
-            return View("~/Views/Checkout/Index.cshtml");
-        }
-
         public async Task<IActionResult> Add(int Id)
         {
             ProductModel product = await _dataContext.Products.FindAsync(Id);
@@ -130,6 +125,11 @@ namespace TechSavvy.Controllers
         public async Task<IActionResult> Clear(int Id)
         {
             HttpContext.Session.Remove("Cart");
+            Response.Cookies.Delete("ShippingPrice");
+            Response.Cookies.Delete("CouponTitle");
+            Response.Cookies.Delete("ShippingAddress");
+            Response.Cookies.Delete("CouponPrice");
+
             TempData["success"] = "Xóa giỏ hàng thành công";
             return RedirectToAction("Index");
 
@@ -204,14 +204,14 @@ namespace TechSavvy.Controllers
                 TimeSpan remainingTime = validCoupon.DateExpired - DateTime.Now;
                 int daysRemaining = remainingTime.Days;
 
-                if (daysRemaining >= 0)
+                if (daysRemaining >= 0 && validCoupon.Quantity > 0)
                 {
                     try
                     {
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true,
-                            Expires = DateTimeOffset.UtcNow.AddYears(1),// thời gian sống của cookie
+                            Expires = DateTimeOffset.UtcNow.AddMinutes(30),
                             Secure = false,
                             SameSite = SameSiteMode.Strict // Kiểm tra tính tương thích trình duyệt
                         };
@@ -228,7 +228,7 @@ namespace TechSavvy.Controllers
                 }
                 else
                 {
-                    return Ok(new { success = false, message = "Mã giảm giá đã hết hạn" });
+                    return Ok(new { success = false, message = "Mã giảm giá đã hết hạn hoặc hết số lượng" });
                 }
 
             }

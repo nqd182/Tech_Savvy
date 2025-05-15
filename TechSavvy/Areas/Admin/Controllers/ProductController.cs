@@ -238,7 +238,20 @@ namespace TechSavvy.Areas.Admin.Controllers
             TempData["success"] = "Sản phẩm đã được khôi phục";
             return RedirectToAction("Trash");
         }
-      
+        // Xóa vĩnh viễn 
+        [Route("DeletePermanent/{id}")]
+
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var brand = await _dataContext.Products.FindAsync(id);
+            if (brand == null) return NotFound();
+
+            _dataContext.Products.Remove(brand);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn sản phẩm";
+            return RedirectToAction("Trash");
+        }
 
 
     }

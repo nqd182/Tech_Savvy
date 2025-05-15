@@ -1,10 +1,11 @@
 ﻿using TechSavvy.Models;
+using TechSavvy.Models.Momo;
 
 namespace TechSavvy.Services.Momo
 {
     public interface IMomoService
     {
-        Task<MomoCreatePaymentResponseModel> CreatePaymentMomo(OrderInfo model);
+        Task<MomoCreatePaymentResponseModel> CreatePaymentAsync(OrderInfo model);
         MomoExecuteResponseModel PaymentExecuteAsync(IQueryCollection collection);
     }
 }

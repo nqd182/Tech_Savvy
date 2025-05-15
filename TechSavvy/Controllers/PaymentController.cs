@@ -11,14 +11,10 @@ namespace TechSavvy.Controllers
         {
             _momoService = momoService;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
         [HttpPost]
         public async Task<IActionResult> CreatePaymentMomo(OrderInfo model)
         {
-            var response = await _momoService.CreatePaymentMomo(model);
+            var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }
         [HttpGet]

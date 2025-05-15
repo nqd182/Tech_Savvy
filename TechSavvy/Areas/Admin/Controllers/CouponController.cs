@@ -75,6 +75,52 @@ namespace TechSavvy.Areas.Admin.Controllers
             }
             return View(model);
         }
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var coupon = await _dataContext.Coupons.FindAsync(id);
+            if (coupon == null) return NotFound();
 
+            coupon.IsDeleted = true; // Đánh dấu là đã xóa
+            _dataContext.Coupons.Update(coupon);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa coupon thành công";
+            return RedirectToAction("Index");
+        }
+        [Route("Trash")]
+        public async Task<IActionResult> Trash()
+        {
+            var deletedCoupons = await _dataContext.Coupons
+                .Where(c => c.IsDeleted)
+                .ToListAsync();
+
+            return View(deletedCoupons);
+        }
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var coupon = await _dataContext.Coupons.FindAsync(id);
+            if (coupon == null || !coupon.IsDeleted) return NotFound();
+
+            coupon.IsDeleted = false; // Bỏ đánh dấu xóa
+            _dataContext.Coupons.Update(coupon);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Coupon đã được khôi phục";
+            return RedirectToAction("Trash");
+        }
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var coupon = await _dataContext.Coupons.FindAsync(id);
+            if (coupon == null) return NotFound();
+
+            _dataContext.Coupons.Remove(coupon); // Xóa khỏi database
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn coupon";
+            return RedirectToAction("Trash");
+        }
     }
 }

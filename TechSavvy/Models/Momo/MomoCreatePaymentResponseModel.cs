@@ -1,4 +1,4 @@
-﻿namespace TechSavvy.Services.Momo
+﻿namespace TechSavvy.Models.Momo
 {
     public class MomoCreatePaymentResponseModel
     {

@@ -35,7 +35,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+	font-family: 'Roboto', sans-serif;
 }
 
 .btn:hover, 
@@ -52,7 +52,7 @@ a#scrollUp {
   bottom: 0px;
   right: 10px;
   padding: 5px 10px;
-  background: #FE980F;
+  background: #1d3bc7;
   color: #FFF;
   -webkit-animation: bounce 2s ease infinite;
   animation: bounce 2s ease infinite;
@@ -179,7 +179,7 @@ a#scrollUp i{
 }
 
 .dropdown-menu  li  a:hover, .dropdown-menu  li  a:focus {
-  background-color: #FE980F;
+  background-color: #DCDCDC;
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   text-decoration: none;
@@ -1214,7 +1214,6 @@ h2.title {
 }
 
 .product-information {
-  border: 1px solid #F7F7F0;
   overflow: hidden;
   padding-bottom: 60px;
   padding-left: 60px;
@@ -1372,7 +1371,7 @@ h2.title {
 }
 
 #reviews button {
-  background: #FE980F;
+  background: #000;
   border: 0 none;
   border-radius: 0;
   color: #FFFFFF;

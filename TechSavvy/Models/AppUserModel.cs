@@ -6,6 +6,10 @@ namespace TechSavvy.Models
     {
         public string Occupation { get; set; }
         public string RoleId { get; set; }
-        public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; }
+
+        public int BirthYear { get; set; }
+        public string Gender { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

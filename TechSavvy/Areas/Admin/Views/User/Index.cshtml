@@ -10,9 +10,9 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>List User</h3>
+    <h3>Danh sách người dùng</h3>
 
-    <a class="btn btn-primary" asp-action="Create" asp-controller="User">Thêm tài khoản</a>
+    <a class="btn btn-success" asp-action="Create" asp-controller="User"><i class="fa fa-plus"></i> Thêm tài khoản</a>
     <a class="btn btn-secondary" asp-action="Trash" asp-controller="User">
         <i class="fa fa-trash"></i> Thùng rác
     </a>
@@ -21,11 +21,10 @@
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>UserName</th>
+                    <th>Tên tài khoản</th>
                     <th>Email</th>
-                    <th>PasswordHash</th>
-                    <th>Phone</th>
-                    <th>Role</th>
+                    <th>Số điện thoại</th>
+                    <th>Quyền</th>
                     <th></th>
                 </tr>
             </thead>
@@ -36,7 +35,6 @@
                         <td>@usersWithRoles.User.Id</td>
                         <td>@usersWithRoles.User.UserName</td>
                         <td>@usersWithRoles.User.Email</td>
-                        <td>@usersWithRoles.User.PasswordHash</td>
                         <td>@usersWithRoles.User.PhoneNumber</td>
                         <td>
                             @usersWithRoles.RoleName

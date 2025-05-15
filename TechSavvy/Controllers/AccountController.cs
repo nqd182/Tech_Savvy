@@ -87,8 +87,15 @@ namespace TechSavvy.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUserModel newUser = new AppUserModel { UserName = user.UserName, Email = user.Email};
-                IdentityResult result = await _userMangage.CreateAsync(newUser,user.Password);
+                AppUserModel newUser = new AppUserModel
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    BirthYear = user.BirthYear, // Lưu năm sinh
+                    Gender = user.Gender,       // Lưu giới tính
+                    PhoneNumber = user.PhoneNumber // Lưu số điện thoại
+                };
+                IdentityResult result = await _userMangage.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)
                 {
                     await _userMangage.AddToRoleAsync(newUser, "User");
@@ -116,6 +123,50 @@ namespace TechSavvy.Controllers
             ViewBag.ShippingCost = shippingCost.ShippingCost;
             return View(detailsOrder);
         }
+        public async Task<IActionResult> UpdateAccount()
+        {
+            if ((bool)!User.Identity?.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            var user = await _dataContext.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+            return View(user);  
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateInforAccount(AppUserModel user)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["error"] = "Vui lòng kiểm tra lại thông tin.";
+                return View("UpdateAccount", user);
+            }
 
+            var userInDb = await _dataContext.Users.FindAsync(user.Id);
+            if (userInDb == null)
+            {
+                TempData["error"] = "Không tìm thấy người dùng.";
+                return RedirectToAction("UpdateAccount");
+            }
+
+            // Cập nhật thông tin
+            userInDb.PhoneNumber = user.PhoneNumber;
+            userInDb.BirthYear = user.BirthYear;
+            userInDb.Gender = user.Gender;
+
+            try
+            {
+                _dataContext.Users.Update(userInDb);
+                await _dataContext.SaveChangesAsync();
+                TempData["success"] = "Cập nhật thông tin thành công.";
+            }
+            catch (Exception ex)
+            {
+                TempData["error"] = "Đã xảy ra lỗi khi cập nhật thông tin.";
+            }
+
+            return RedirectToAction("UpdateAccount");
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<OrderDetails>
 @{
-    ViewData["title"] = "Order Detail Listed";
+    ViewData["title"] = "Chi tiết đơn hàng";
     decimal total = 0;
     decimal subtotal = 0;
 
@@ -14,25 +14,20 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card shadow-sm p-4">
-            <h5 class="mb-4 fw-bold">Thông tin chi tiết đơn hàng</h5>
             @if (firstItem != null)
             {
                 <p><strong>ID:</strong> @firstItem.Id</p>
-                //<p><strong>UserName:</strong> @firstItem.UserName</p>
                 <p><strong>Mã đơn hàng:</strong> @firstItem.OrderCode</p>
-                <p><strong>Giá:</strong> @firstItem.Price.ToString("#,##0 vnđ")</p>
-                <p><strong>Số lượng:</strong> @firstItem.Quantity</p>
-                <p><strong>Địa chỉ giao hàng:</strong> @firstItem.ShippingAddress</p>
             }
 
             <hr />
 
-            <h6 class="fw-bold">Danh sách sản phẩm trong đơn:</h6>
+            <h5 class="fw-bold">Danh sách sản phẩm:</h5>
             <table class="table table-bordered text-center">
                 <thead class="table-dark">
                     <tr>
                         <th>Id</th>
-                        <th>Id sản phẩm</th>
+                        <th>Tên sản phẩm</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Thành tiền</th>
@@ -41,27 +36,19 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        subtotal = item.Quantity * item.Price;
+                        subtotal = item.Quantity * item.UnitPrice;
                         total += subtotal;
                         <tr>
-                            <input type="hidden" asp-for="@item.OrderCode" class="getId" />
                             <td>@item.Id</td>
-                            <td>@item.ProductId</td>
-                            <td>@item.Price.ToString("#,##0 vnđ")</td>
+                            <td>@(item.Product?.Name ?? "N/A")</td> 
+                            <td>@item.UnitPrice.ToString("#,##0 vnđ")</td>
                             <td>@item.Quantity</td>
                             <td>@subtotal.ToString("#,##0 vnđ")</td>
                         </tr>
                     }
                 </tbody>
             </table>
-
             <p><strong>Tổng tiền hàng:</strong> @total.ToString("#,##0 vnđ")</p>
-            <p><strong>Phí vận chuyển:</strong> @ViewBag.ShippingCost.ToString("#,##0 vnđ")</p>
-
-            <div class="form-group mt-3">
-                <label><strong>Trạng thái đơn hàng:</strong></label>
-            </div>
         </div>
     </div>
 </div>
-

@@ -17,7 +17,7 @@ namespace TechSavvy.Areas.Admin.Controllers
         {
             _dataContext = dataContext;
         }
-        [Route("Index")]
+        [Route("")]
         public async Task<IActionResult> Index()
         {
             var shippingList = await _dataContext.Shippings.Where(b => !b.IsDeleted).ToListAsync();
@@ -66,6 +66,42 @@ namespace TechSavvy.Areas.Admin.Controllers
             await _dataContext.SaveChangesAsync();
             TempData["success"] = "Xóa shipping thành công";
             return RedirectToAction("Index");
+        }
+        [Route("Trash")]
+        public IActionResult Trash()
+        {
+            var deletedShipping = _dataContext.Shippings
+                .Where(p => p.IsDeleted)
+                .ToList();
+
+            return View(deletedShipping);
+        }
+        [Route("Restore/{id}")]
+        public async Task<IActionResult> Restore(int id)
+        {
+            var shipping = await _dataContext.Shippings.FindAsync(id);
+            if (shipping == null || !shipping.IsDeleted)
+            {
+                return NotFound();
+            }
+
+            shipping.IsDeleted = false;
+            _dataContext.Shippings.Update(shipping);
+            await _dataContext.SaveChangesAsync();
+            TempData["success"] = "Shipping đã được khôi phục";
+            return RedirectToAction("Trash");
+        }
+        [Route("DeletePermanent/{id}")]
+        public async Task<IActionResult> DeletePermanent(int id)
+        {
+            var category = await _dataContext.Categories.FindAsync(id);
+            if (category == null) return NotFound();
+
+            _dataContext.Categories.Remove(category);
+            await _dataContext.SaveChangesAsync();
+
+            TempData["success"] = "Đã xóa vĩnh viễn danh mục";
+            return RedirectToAction("Trash");
         }
     }
 }

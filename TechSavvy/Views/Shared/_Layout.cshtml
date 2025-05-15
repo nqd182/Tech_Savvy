@@ -106,10 +106,17 @@
 							<li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
 							@if (User.Identity?.IsAuthenticated ?? false)
 							{
-								<li><a asp-controller="Account" asp-action="History"><i class="fa-solid fa-cart-flatbed"></i> Đơn hàng</a></li>
 								<li><a asp-controller="Home" asp-action="Wishlist"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li>
-								<li><a href="#"><i class="fa fa-user"></i> Tài khoản</a></li>
+								@* <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li> *@
+								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">
+										<i class="fa fa-user"></i> Tài khoản <span class="caret"></span>
+								</a>
+									<ul class="dropdown-menu">
+										<li><a asp-controller="Account" asp-action="History"><i class="fa-solid fa-cart-flatbed"></i> Đơn hàng</a></li>
+										<li><a asp-controller="Account" asp-action="UpdateAccount"><i class="fa fa-user"></i> Cập nhật tài khoản</a></li>
+									</ul>
+								</li>
+								
 								<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Xin chào @User.Identity.Name, Đăng xuất</a></li>
 							}
 							else
@@ -147,11 +154,14 @@
 
 	</footer><!--/Footer-->
 
-
+	@* Bot chat *@
+	<script>
+		(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="kzDod5OD9ySk8OFs1CMe0";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+	</script>	@await RenderSectionAsync("Scripts", required: false)
 
 	<script src="~/js/jquery.js"></script>
 	<script src="~/js/bootstrap.min.js"></script>
-	<script src="~/js/jquery.scrollUp.min.js"></script>
+	@* <script src="~/js/jquery.scrollUp.min.js"></script> *@
 	<script src="~/js/price-range.js"></script>
 	<script src="~/js/jquery.prettyPhoto.js"></script>
 	<script src="~/js/main.js"></script>
@@ -179,7 +189,6 @@
 		}
 		);
 	</script>
-	@await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html> 

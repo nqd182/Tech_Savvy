@@ -9,7 +9,7 @@
         <a class="btn btn-success" asp-action="Create" asp-controller="Product">
             <i class="fa fa-plus"></i> Thêm sản phẩm
         </a>
-        <a asp-action="Trash" class="btn btn-outline-secondary">
+        <a asp-action="Trash" class="btn btn-secondary">
             <i class="fa fa-trash"></i> Xem sản phẩm đã xóa
         </a>
     </div>
@@ -43,7 +43,7 @@
                         <a asp-action="AddQuantity" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-sm btn-outline-secondary mt-1">Thêm</a>
                     </td>
 
-                    <td class="fw-bold">@item.Sold</td>
+                    <td class="fw-bold">@(item.Sold  ?? 0)</td>
                     <td>@item.Price.ToString("#,##0 vnđ")</td>
                     <td>@item.CapitalPrice.ToString("#,##0 vnđ")</td>
                     <td>@item.Category?.Name</td>

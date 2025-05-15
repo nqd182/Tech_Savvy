@@ -47,6 +47,8 @@
             .rating label:hover ~ label {
                 color: gold;
             }
+
+
 </style>
 
 
@@ -62,7 +64,7 @@
             <!-- Product images and zoom -->
             <div class="col-md-5">
                 <div class="view-product">
-                    <img src="~/media/products/@Model.ProductDetails.Image" alt="@Model.ProductDetails.Name" class="img-fluid" />
+                    <img src="~/media/products/@Model.ProductDetails.Image" alt="@Model.ProductDetails.Name" class="img-fluid" style=" width: 420px !important;" />
                 </div>
                 <div id="similar-product" class="carousel slide mt-4" data-ride="carousel">
                     <a class="carousel-control-prev" href="#similar-product" role="button" data-slide="prev">
@@ -155,7 +157,7 @@
                             <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             <textarea asp-for="@Model.Comment" class="form-control mt-2" placeholder="Viết đánh giá"></textarea>
                             <span asp-validation-for="@Model.Comment" class="text-danger"></span>
-                            <button type="submit" class="btn btn-primary mt-3 pull-right">Submit</button>
+                            <button type="submit" class="btn btn-primary mt-3 pull-right">Gửi</button>
                         </form>
                     </div>
                 </div>
@@ -189,8 +191,8 @@
 
                     </div>
                 </div>
-                <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
-                <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+                @* <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a> *@
+                @* <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a> *@
             </div>
         </div>
     </div>

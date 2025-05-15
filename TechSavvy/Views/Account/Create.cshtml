@@ -93,6 +93,26 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
+                <label asp-for="BirthYear" class="form-label">Năm sinh</label>
+                <input asp-for="BirthYear" class="form-control" placeholder="Nhập năm sinh" />
+                <span asp-validation-for="BirthYear" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Gender" class="form-label">Giới tính</label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">-- Chọn giới tính --</option>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                    <option value="Khác">Khác</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label">Số điện thoại</label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="Nhập số điện thoại" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
                 <label asp-for="Password" class="form-label">Mật khẩu</label>
                 <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
                 <span asp-validation-for="Password" class="text-danger"></span>

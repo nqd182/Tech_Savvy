@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ShippingModel>
+
+<div class="p-3 bg-light rounded shadow-sm mb-4">
+    <h3 class="text-dark fw-bold">Shipping đã xóa</h3>
+    <a class="btn btn-primary mt-2" asp-action="Index" asp-controller="Shipping">
+        <i class="fa fa-arrow-left"></i> Quay lại danh sách
+    </a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Thành phố</th>
+            <th>Huyện</th>
+            <th>Phường</th>
+            <th>Phí vận chuyển</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.City</td>
+                <td>@item.District</td>
+                <td>@item.Ward</td>
+                <td>@item.Price</td>
+                <td>
+                    <a asp-action="Restore" asp-route-id="@item.Id" class="btn btn-success btn-sm">Khôi phục</a>
+                    <a asp-action="DeletePermanent" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete Permanent</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

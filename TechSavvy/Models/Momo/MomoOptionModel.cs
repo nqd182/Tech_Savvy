@@ -1,4 +1,4 @@
-﻿namespace TechSavvy.Models
+﻿namespace TechSavvy.Models.Momo
 {
     public class MomoOptionModel
     {

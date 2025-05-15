@@ -20,6 +20,9 @@
 
 <div class="p-3 bg-light rounded shadow-sm mb-4">
     <h3 class="fw-bold">Thêm thông tin vận chuyển</h3>
+    <a asp-action="Trash" class="btn btn-secondary">
+        <i class="fa fa-trash"></i> Thùng rác
+    </a>
 </div>
 
 <div class="col-md-9">
@@ -91,9 +94,7 @@
     </table>
 </div>
 
-<div class="mt-4 text-center">
-    <a asp-controller="Shipping" asp-action="Index" class="btn btn-secondary">Về trang danh sách vận chuyển</a>
-</div>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

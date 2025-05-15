@@ -1,27 +1,33 @@
 ﻿@model IEnumerable<OrderModel>
 
 @{
-    ViewData["Title"] = "Danh sách đặt hàng của" + @ViewBag.UserEmail;
-
+    ViewData["Title"] = "Danh sách đặt hàng của " + @ViewBag.UserEmail;
 }
-
+<style>
+    .action-btn {
+    width: 120px; /* Đặt chiều rộng cố định */
+    text-align: center; /* Căn giữa nội dung */
+    display: inline-block; /* Đảm bảo các nút hiển thị theo hàng ngang */
+    }
+</style>
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-
 </head>
 <body>
     <h3>Lịch sử đơn hàng của tài khoản @ViewBag.UserEmail</h3>
 
-    <table class="table" id="myTable" >
-        <thead >
+    <table class="table table-bordered" id="myTable">
+        <thead class="thead-dark">
             <tr>
-                <th>Id</th>
-                <th>Order Code</th>
+                <th>Mã đơn hàng</th>
+                <th>Tên người dùng</th>
+                <th>Địa chỉ giao hàng</th>
                 <th>Giá ship</th>
                 <th>Phiếu giảm giá</th>
+                <th>Giá giảm</th>
+                <th>Tổng tiền</th>
                 <th>Trạng thái</th>
                 <th>Ngày tạo</th>
                 <th>Hành động</th>
@@ -31,10 +37,13 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Id</td>
                     <td>@item.OrderCode</td>
+                    <td>@item.UserName</td>
+                    <td>@item.ShippingAddress</td>
                     <td>@item.ShippingCost.ToString("#,##0 đ")</td>
                     <td>@item.CouponCode</td>
+                    <td>@item.CouponPrice.ToString("#,##0 đ")</td>
+                    <td>@item.TotalPrice.ToString("#,##0 đ")</td>
                     <td>
                         @if (item.Status == 1)
                         {
@@ -44,35 +53,33 @@
                         {
                             <span class="text text-success">Đã xác nhận</span>
                         }
-                        else{
-
+                        else
+                        {
                             <span class="text text-danger">Đã hủy</span>
                         }
                     </td>
                     <td>@item.CreatedDate.ToString("dd-MM-yyyy")</td>
                     <td>
-                        @if(item.Status == 3){
-                            <a class="btn btn-warning btn-sm" asp-action="DetailOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
-                                <i class="fa fa-eye"></i> Xem
-                            </a>                            
-                            <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-warning btn-sm disabled" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">Hủy đơn hàng</a>
+                        <a class="btn btn-primary btn-sm" asp-action="DetailOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
+                            <i class="fa fa-eye"></i> Xem
+                        </a>
+                        @if (item.Status == 1) 
+                        {
 
+                            <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-danger btn-sm" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
+                                Hủy đơn hàng
+                            </a>
                         }
                         else
                         {
-                            <a class="btn btn-warning btn-sm" asp-action="DetailOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
-                                <i class="fa fa-eye"></i> Xem
-                            </a>                            
-                            <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-warning btn-sm" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">Hủy đơn hàng</a>
-
+                            <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-danger btn-sm disabled" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
+                                Hủy đơn hàng
+                            </a>
                         }
-                        
-
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-
 </body>
 </html>

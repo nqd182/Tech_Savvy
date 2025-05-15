@@ -14,18 +14,17 @@
     <title>Index</title>
 </head>
 <body>
-    <h3>List Role</h3>
+    <h3>Danh sách quyền</h3>
 
-    <a class="btn btn-primary" asp-action="Create" asp-controller="Role">Add Role</a>
-    <a asp-action="Trash" class="btn btn-outline-secondary">
-        <i class="fa fa-trash"></i> Xem quyền đã xóa
-    </a>
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Role">Thêm quyền</a>
+    @* <a asp-action="Trash" class="btn btn-outline-secondary"> *@
+    @*     <i class="fa fa-trash"></i> Xem quyền đã xóa *@
+    @* </a> *@
     <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Role Name</th>
-                <th>Role</th>
+                <th>Tên quyền</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -35,7 +34,6 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
-                    <td>@item.NormalizedName</td>
 
 
                     <td>

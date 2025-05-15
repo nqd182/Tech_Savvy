@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TechSavvy.Models;
+using TechSavvy.Models.Momo;
 using TechSavvy.Repository;
 using TechSavvy.Services.Momo;
 
@@ -14,8 +15,7 @@ namespace TechSavvy
 
             //Connect MomoAPI
             builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
-            //builder.Services.AddScoped<IMomoService, MomoService>();
-            // Connection Db 
+            builder.Services.AddScoped<IMomoService, MomoService>();            // Connection Db 
             builder.Services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectDb")));
             // Add services to the container.

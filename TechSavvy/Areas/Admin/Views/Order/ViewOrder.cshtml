@@ -18,11 +18,9 @@
             @if (firstItem != null)
             {
                 <p><strong>ID:</strong> @firstItem.Id</p>
-                //<p><strong>UserName:</strong> @firstItem.UserName</p>
                 <p><strong>Mã đơn hàng:</strong> @firstItem.OrderCode</p>
-                <p><strong>Giá:</strong> @firstItem.Price.ToString("#,##0 vnđ")</p>
+                <p><strong>Giá:</strong> @firstItem.UnitPrice.ToString("#,##0 vnđ")</p>
                 <p><strong>Số lượng:</strong> @firstItem.Quantity</p>
-                <p><strong>Địa chỉ giao hàng:</strong> @firstItem.ShippingAddress</p>
             }
 
             <hr />
@@ -41,15 +39,14 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        subtotal = item.Quantity * item.Price;
-                        total += subtotal;
+                        total += item.Total;
                         <tr>
                             <input type="hidden" asp-for="@item.OrderCode" class="getId" />
                             <td>@item.Id</td>
                             <td>@item.ProductId</td>
-                            <td>@item.Price.ToString("#,##0 vnđ")</td>
+                            <td>@item.UnitPrice.ToString("#,##0 vnđ")</td>
                             <td>@item.Quantity</td>
-                            <td>@subtotal.ToString("#,##0 vnđ")</td>
+                            <td>@total.ToString("#,##0 vnđ")</td>
                         </tr>
                     }
                 </tbody>

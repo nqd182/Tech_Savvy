@@ -6,8 +6,10 @@
         public string OrderCode { get; set; }
         public string UserName { get; set; }
         public string CouponCode { get; set; }
-
+        public decimal CouponPrice { get; set; }
         public decimal ShippingCost { get; set; }
+        public string? ShippingAddress { get; set; }
+        public decimal TotalPrice { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

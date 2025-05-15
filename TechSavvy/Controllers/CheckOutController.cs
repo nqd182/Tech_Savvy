@@ -19,57 +19,116 @@ namespace TechSavvy.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            var userEmail = User.FindFirstValue(ClaimTypes.Email); // Claims là những thông tin về người dùng
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
             if (userEmail == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            else
+
+            var orderCode = Guid.NewGuid().ToString();
+            var orderItem = new OrderModel
             {
-                var orderCode = Guid.NewGuid().ToString();
-                var orderItem = new OrderModel();
-                orderItem.OrderCode = orderCode;
-                var shippingPriceCookie = Request.Cookies["ShippingPrice"];// Nhận shipping giá từ cookie
-                var shippingAddress = Request.Cookies["ShippingAddress"];// Nhận địa chỉ từ cookie
-                var coupon_code = Request.Cookies["CouponTitle"]; // Nhận coupon từ cookie
-                decimal shippingPrice = 0;
-                if (shippingPriceCookie != null)
-                {
-                    var shippingPriceJson = shippingPriceCookie;
-                    shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
-                }
-                orderItem.ShippingCost = shippingPrice;
-                orderItem.CouponCode = coupon_code;
-                orderItem.UserName = userEmail;
-                orderItem.Status = 1;
-                orderItem.CreatedDate = DateTime.Now;
-                _dataContext.Add(orderItem);
-                _dataContext.SaveChanges();
-                List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
-                foreach(var cart in cartItems)
-                {
-                    var orderdetail = new OrderDetails();
-                    orderdetail.OrderCode = orderCode;
-                    orderdetail.ProductId = cart.ProductId;
-                    orderdetail.Price = cart.Price;
-                    orderdetail.Quantity = cart.Quantity;
-                    orderdetail.ShippingAddress = shippingAddress;
-                    var product = await _dataContext.Products.Where(p => p.Id == cart.ProductId).FirstAsync();
-                    product.Quantity -= cart.Quantity;
-                    product.Sold = (product.Sold ?? 0) + cart.Quantity;
-                    _dataContext.Add(orderdetail);
-                    _dataContext.SaveChanges();
-                }
-                HttpContext.Session.Remove("Cart");
-                Response.Cookies.Delete("ShippingPrice");
-                Response.Cookies.Delete("CouponTitle");
-                Response.Cookies.Delete("ShippingAddress");
-                Response.Cookies.Delete("ShippingPrice");
-                TempData["success"] = "Thanh toán thành công vui lòng chờ duyệt đơn hàng";
-                return RedirectToAction("History", "Account");
+                OrderCode = orderCode,
+                UserName = userEmail,
+                Status = 1,
+                CreatedDate = DateTime.Now,
+                IsDeleted = false
+            };
+
+            // 1. Nhận giá trị từ cookie
+            var shippingPriceCookie = Request.Cookies["ShippingPrice"];
+            var shippingAddress = Request.Cookies["ShippingAddress"];
+            var couponCodeFull = Request.Cookies["CouponTitle"];
+            var couponPriceCookie = Request.Cookies["CouponPrice"];
+
+            decimal shippingPrice = 0;
+            decimal couponDiscount = 0;
+
+            if (!string.IsNullOrEmpty(shippingPriceCookie))
+                shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceCookie);
+
+            if (!string.IsNullOrEmpty(couponPriceCookie))
+                couponDiscount = JsonConvert.DeserializeObject<decimal>(couponPriceCookie);
+
+            orderItem.ShippingCost = shippingPrice;
+            orderItem.CouponCode = couponCodeFull ?? "";
+            orderItem.CouponPrice = couponDiscount;
+            orderItem.ShippingAddress = shippingAddress;
+
+            // 2. Giảm số lượng coupon nếu có mã hợp lệ
+            string couponCode = null;
+            if (!string.IsNullOrEmpty(couponCodeFull))
+            {
+                // Tách chuỗi "GIAM100K | Giảm giá 100k tổng sản phẩm" => "GIAM100K"
+                couponCode = couponCodeFull.Split('|')[0].Trim();
             }
-            return View();
+            if (!string.IsNullOrEmpty(couponCode))
+            {
+                var coupon = await _dataContext.Coupons
+                    .FirstOrDefaultAsync(c => c.Name == couponCode && c.Quantity > 0);
+
+                if (coupon != null)
+                {
+                    coupon.Quantity -= 1;
+                    _dataContext.Coupons.Update(coupon);
+                    await _dataContext.SaveChangesAsync();
+                    TempData["success"] = coupon.Name;
+                }
+                else
+                {
+                    TempData["warning"] = "Mã giảm giá không hợp lệ hoặc đã hết lượt sử dụng.";
+                }
+            }
+
+
+            // 3. Lấy giỏ hàng từ session
+            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+
+            // 4. Tính tổng tiền sản phẩm
+            decimal totalProductPrice = 0;
+            foreach (var cart in cartItems)
+            {
+                totalProductPrice += cart.Price * cart.Quantity;
+            }
+
+            // 5. Tính tổng tiền cuối cùng
+            orderItem.TotalPrice = totalProductPrice + shippingPrice - couponDiscount;
+
+            // 6. Lưu đơn hàng
+            _dataContext.Orders.Add(orderItem);
+            await _dataContext.SaveChangesAsync();
+
+            // 7. Lưu chi tiết đơn hàng và cập nhật tồn kho sản phẩm
+            foreach (var cart in cartItems)
+            {
+                var orderDetail = new OrderDetails
+                {
+                    OrderCode = orderCode,
+                    ProductId = cart.ProductId,
+                    UnitPrice = cart.Price,
+                    Quantity = cart.Quantity
+                };
+
+                var product = await _dataContext.Products.FirstAsync(p => p.Id == cart.ProductId);
+                product.Quantity -= cart.Quantity;
+                product.Sold = (product.Sold ?? 0) + cart.Quantity;
+
+                _dataContext.OrderDetails.Add(orderDetail);
+                _dataContext.Products.Update(product);
+            }
+
+            await _dataContext.SaveChangesAsync();
+
+            // 8. Xóa session và cookie
+            HttpContext.Session.Remove("Cart");
+            Response.Cookies.Delete("ShippingPrice");
+            Response.Cookies.Delete("CouponTitle");
+            Response.Cookies.Delete("ShippingAddress");
+            Response.Cookies.Delete("CouponPrice");
+            TempData["success"] = "Đặt hàng thành công vui lòng chờ duyệt đơn hàng!";
+            return RedirectToAction("History", "Account");
         }
+
         public IActionResult Index()
         {
             List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();

@@ -97,9 +97,17 @@
     <div class="col-sm-9 padding-right">
         <partial name="_FilterProductsPartial" />
         <div class="features_items">
-            <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm</h2>
+            <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm @ViewBag.Keyword</h2>
 
             <div class="row">
+                  @if (!Model.Any())
+            {
+                <div class="col-12 text-center">
+                    <h4>Không có sản phẩm nào phù hợp với từ khóa "<strong>@ViewBag.Keyword</strong>"</h4>
+                </div>
+            }
+            else
+                {
                 @foreach (var item in Model)
                 {
                     <div class="col-sm-4">
@@ -135,6 +143,7 @@
                             </div>
                         </div>
                     </div>
+                }
                 }
             </div>
         </div>

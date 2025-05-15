@@ -37,10 +37,15 @@
                     <label>Phương thức thanh toán</label>
                     <select class="form-control">
                         <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                        <option value="momo">Thanh toán qua MoMo</option>
                     </select>
                 </div>
+                @* <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment"> *@
+                @*     <input type="hidden" name="FullName" value="@User.Identity.Name" /> *@
+                @*     <input type="hidden" name="Amount" value="@Model.GrandTotal" /> *@
+                @*     <input type="hidden" name="OrderInfo" value="Thanh toán qua Momo Payment " /> *@
 
+                @*     <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button> *@
+                @* </form> *@
                 <div class="text-right mt-3">
                     @if (Model.ShippingCost > 0)
                     {
@@ -53,7 +58,7 @@
                     }
                 </div>
             </div>
-
+             
             <!-- Right Side: Order Summary -->
             <div class="col-md-6">
                 <h4 class="mb-3">Đơn hàng của bạn</h4>
