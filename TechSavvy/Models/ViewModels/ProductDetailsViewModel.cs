@@ -15,6 +15,6 @@ namespace TechSavvy.Models.ViewModels
         [Required(ErrorMessage = "Yêu cầu chọn số sao")]
         [Range(1, 5, ErrorMessage = "Chỉ được chọn từ 1 đến 5 sao")]
         public int Star { get; set; }
-
+        public List<RatingModel> Reviews { get; set; }
     }
 }

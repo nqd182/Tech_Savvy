@@ -1,52 +1,87 @@
 ﻿@model ProductDetailsViewModel
 <style>
     .collapsed-description {
-        max-height: 200px;
-        overflow: hidden;
-        position: relative;
-        transition: max-height 0.4s ease-in-out;
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+    transition: max-height 0.4s ease-in-out;
     }
 
     .expanded-description {
-        max-height: none;
+    max-height: none;
     }
 
     #toggle-description-btn {
-        padding: 8px 24px;
-        font-weight: 500;
-        border-radius: 25px;
-        background-color: white;
-        border: 2px solid;
-        color: darkblue;
-        transition: all 0.3s ease;
+    padding: 8px 24px;
+    font-weight: 500;
+    border-radius: 25px;
+    background-color: white;
+    border: 2px solid;
+    color: darkblue;
+    transition: all 0.3s ease;
     }
 
-        #toggle-description-btn:hover {
-            background-color: darkblue;
-            color: white;
-        }
+    #toggle-description-btn:hover {
+    background-color: darkblue;
+    color: white;
+    }
 
     .rating {
-        direction: rtl;
-        unicode-bidi: bidi-override;
-        display: inline-flex;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    display: inline-flex;
     }
 
-        .rating input {
-            display: none;
-        }
+    .rating input {
+    display: none;
+    }
 
-        .rating label {
-            font-size: 24px;
-            color: #ccc;
-            cursor: pointer;
-        }
+    .rating label {
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    }
 
-            .rating input:checked ~ label,
-            .rating label:hover,
-            .rating label:hover ~ label {
-                color: gold;
-            }
+    .rating input:checked ~ label,
+    .rating label:hover,
+    .rating label:hover ~ label {
+    color: gold;
+    }
+
+    .review-item {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 16px 0;
+    gap: 15px;
+    }
+
+    .review-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: url('/images/avatardefault.webp') center center / cover no-repeat;
+    }
+
+    .review-content {
+    flex: 1;
+    }
+
+    .review-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+    }
+
+    .review-stars {
+    color: gold;
+    margin-bottom: 6px;
+    }
+
+    .review-comment {
+    margin: 0;
+    white-space: pre-line;
+    }
+
 
 
 </style>
@@ -130,35 +165,69 @@
 
                 <!-- Reviews tab -->
                 <div class="tab-pane" id="reviews">
+                     @if (User.Identity.IsAuthenticated)
+                        {
                     <div class="col-md-12 ">
                         <ul>
                             @* <li><a href=""><i class="fa fa-user"></i> EUGEN</a></li> *@
                             @* <li><a href=""><i class="fa fa-clock-o"></i> 12:41 PM</a></li> *@
                             @* <li><a href=""><i class="fa fa-calendar-o"></i> 31 DEC 2014</a></li> *@
                         </ul>
-                        <p ><strong>Viết đánh giá của bạn</strong></p>
-                        <form asp-action="CommentProduct" asp-controller="Product" method="POST">
-                            <input asp-for="@Model.ProductDetails.Id" name="ProductId" type="hidden" />
-                            <div class="form-group mt-2">
-                                <label>Chọn số sao đánh giá:</label>
-                                <div class="rating">
-                                    @for (int i = 5; i >= 1; i--)
-                                    {
-                                        <input type="radio" id="star-@i" name="Star" value="@i" />
-                                        <label for="star-@i" title="@i sao">&#9733;</label>
-                                    }
-                                </div>
-                                <span asp-validation-for="Star" class="text-danger"></span>
-                            </div>
+                       
 
-                            <input asp-for="@Model.Name" class="form-control" type="text" placeholder="Tên của bạn" />
-                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
-                            <input asp-for="@Model.Email" class="form-control mt-2" type="email" placeholder="Email của bạn" />
-                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                            <textarea asp-for="@Model.Comment" class="form-control mt-2" placeholder="Viết đánh giá"></textarea>
-                            <span asp-validation-for="@Model.Comment" class="text-danger"></span>
-                            <button type="submit" class="btn btn-primary mt-3 pull-right">Gửi</button>
-                        </form>
+                            <p ><strong>Viết đánh giá của bạn</strong></p>
+                            <form asp-action="CommentProduct" asp-controller="Product" method="POST">
+                                <input asp-for="@Model.ProductDetails.Id" name="ProductId" type="hidden" />
+                                <div class="form-group mt-2">
+                                    <label>Chọn số sao đánh giá:</label>
+                                    <div class="rating">
+                                        @for (int i = 5; i >= 1; i--)
+                                        {
+                                            <input type="radio" id="star-@i" name="Star" value="@i" />
+                                            <label for="star-@i" title="@i sao">&#9733;</label>
+                                        }
+                                    </div>
+                                    <span asp-validation-for="Star" class="text-danger"></span>
+                                </div>
+
+                                <input asp-for="@Model.Name" class="form-control" type="text" value="@User.Identity.Name" readonly />
+                                <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                <input asp-for="@Model.Email" class="form-control mt-2" type="email" value="@User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value" readonly />
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                                <textarea asp-for="@Model.Comment" class="form-control mt-2" placeholder="Viết đánh giá"></textarea>
+                                <span asp-validation-for="@Model.Comment" class="text-danger"></span>
+                                <button type="submit" class="btn btn-primary mt-3 pull-right">Gửi</button>
+                            </form>
+                    </div>
+                    }
+
+                    <div class="product-reviews">
+                        <h3>Đánh giá sản phẩm</h3>
+                        @if (Model.Reviews.Any())
+                        {
+                            <div class="review-list">
+                                @foreach (var review in Model.Reviews)
+                                {
+                                    <div class="review-item">
+                                        <div class="review-avatar"></div>
+                                        <div class="review-content">
+                                            <div class="review-name">@review.Name</div>
+                                            <div class="review-stars">
+                                                @for (int i = 1; i <= 5; i++)
+                                                {
+                                                    <i class="fa fa-star @(i <= review.Star ? "" : "text-muted")"></i>
+                                                }
+                                            </div>
+                                            <p class="review-comment">@review.Comment</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <p>Chưa có đánh giá nào cho sản phẩm này.</p>
+                        }
                     </div>
                 </div>
             </div>

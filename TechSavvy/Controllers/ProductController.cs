@@ -28,10 +28,15 @@ namespace TechSavvy.Controllers
                 .Where(p => p.CategoryId == productById.CategoryId && p.Id != productById.Id)
                 .Take(4)
                 .ToListAsync();
+            // Lấy danh sách đánh giá cho sản phẩm
+            var reviews = _dataContext.Ratings
+                .Where(r => r.ProductId == Id)
+                .OrderByDescending(r => r.Id)
+                .ToList();
             var viewModel = new ProductDetailsViewModel
             {
                 ProductDetails = productById,
-
+                Reviews = reviews
             };
             ViewBag.RelatedProducts = relatedProduct;
             return View(viewModel);

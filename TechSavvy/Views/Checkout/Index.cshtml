@@ -39,13 +39,13 @@
                         <option value="cod">Thanh toán khi nhận hàng (COD)</option>
                     </select>
                 </div>
-                @* <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment"> *@
-                @*     <input type="hidden" name="FullName" value="@User.Identity.Name" /> *@
-                @*     <input type="hidden" name="Amount" value="@Model.GrandTotal" /> *@
-                @*     <input type="hidden" name="OrderInfo" value="Thanh toán qua Momo Payment " /> *@
+                <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment">
+                    <input type="hidden" name="FullName" value="@User.Identity.Name" />
+                    <input type="hidden" name="Amount" value="@Model.GrandTotal" />
+                    <input type="hidden" name="OrderInformation" value="Thanh toán qua Momo Payment " />
 
-                @*     <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button> *@
-                @* </form> *@
+                    <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button>
+                </form>
                 <div class="text-right mt-3">
                     @if (Model.ShippingCost > 0)
                     {

@@ -91,9 +91,9 @@ namespace TechSavvy.Controllers
                 {
                     UserName = user.UserName,
                     Email = user.Email,
-                    BirthYear = user.BirthYear, // Lưu năm sinh
-                    Gender = user.Gender,       // Lưu giới tính
-                    PhoneNumber = user.PhoneNumber // Lưu số điện thoại
+                    BirthYear = user.BirthYear,
+                    Gender = user.Gender,      
+                    PhoneNumber = user.PhoneNumber 
                 };
                 IdentityResult result = await _userMangage.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)

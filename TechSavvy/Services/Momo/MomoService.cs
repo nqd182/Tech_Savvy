@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using TechSavvy.Models;
@@ -17,18 +18,43 @@ namespace TechSavvy.Services.Momo
         }
         public async Task<MomoCreatePaymentResponseModel> CreatePaymentAsync(OrderInfo model)
         {
+            System.IO.File.AppendAllText("debug_amount_log.txt", $"model.Amount = '{model.Amount}' at {DateTime.Now}\n");
             model.OrderId = DateTime.UtcNow.Ticks.ToString();
             model.OrderInformation = "Khách hàng: " + model.FullName + ". Nội dung: " + model.OrderInformation;
+            decimal decimalAmount;
+            long amountValue;
+
+            if (!decimal.TryParse(model.Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimalAmount))
+            {
+                amountValue = 49999;
+            }
+            else
+            {
+                amountValue = (long)decimalAmount;
+            }
+
+            string partnerCode = _options.Value.PartnerCode;
+            string accessKey = _options.Value.AccessKey;
+            string requestId = model.OrderId;
+            string amount = amountValue.ToString();
+            string orderId = model.OrderId;
+            string orderInfo = Uri.EscapeDataString(model.OrderInformation);
+            string returnUrl = Uri.EscapeDataString(_options.Value.ReturnUrl);
+            string notifyUrl = Uri.EscapeDataString(_options.Value.NotifyUrl);
+            string extraData = ""; // encode nếu có
+
             var rawData =
-                $"partnerCode={_options.Value.PartnerCode}" +
-                $"&accessKey={_options.Value.AccessKey}" +
-                $"&requestId={model.OrderId}" +
-                $"&amount={model.Amount}" +
-                $"&orderId={model.OrderId}" +
-                $"&orderInfo={model.OrderInformation}" +
-                $"&returnUrl={_options.Value.ReturnUrl}" +
-                $"&notifyUrl={_options.Value.NotifyUrl}" +
-                $"&extraData=";
+                    $"partnerCode={partnerCode}" +
+                    $"&accessKey={accessKey}" +
+                    $"&requestId={requestId}" +
+                    $"&amount={amount}" +
+                    $"&orderId={orderId}" +
+                    $"&orderInfo={model.OrderInformation}" +   // KHÔNG encode
+                    $"&returnUrl={_options.Value.ReturnUrl}" +  // KHÔNG encode
+                    $"&notifyUrl={_options.Value.NotifyUrl}" +  // KHÔNG encode
+                    $"&extraData={extraData}";                   // KHÔNG encode (vẫn rỗng)
+
+            System.IO.File.AppendAllText("momo_rawdata_log.txt", rawData + Environment.NewLine);
             var signature = ComputeHmacSha256(rawData, _options.Value.SecretKey);
             var client = new RestClient(_options.Value.MomoApiUrl);
             var request = new RestRequest() { Method = Method.Post };
@@ -36,21 +62,21 @@ namespace TechSavvy.Services.Momo
             // Create an object representing the request data
             var requestData = new
             {
-                accessKey = _options.Value.AccessKey,
-                partnerCode = _options.Value.PartnerCode,
+                accessKey = accessKey,
+                partnerCode = partnerCode,
                 requestType = _options.Value.RequestType,
                 notifyUrl = _options.Value.NotifyUrl,
                 returnUrl = _options.Value.ReturnUrl,
-                orderId = model.OrderId,
-                amount = model.Amount.ToString(),
+                orderId = orderId,
+                amount = amount,
                 orderInfo = model.OrderInformation,
-                requestId = model.OrderId,
-                extraData = "",
+                requestId = requestId,
+                extraData = extraData,
                 signature = signature
             };
             request.AddParameter("application/json", JsonConvert.SerializeObject(requestData), ParameterType.RequestBody);
             var response = await client.ExecuteAsync(request);
-
+            System.IO.File.AppendAllText("momo_log.txt", response.Content + Environment.NewLine);
             return JsonConvert.DeserializeObject<MomoCreatePaymentResponseModel>(response.Content);
 
 
