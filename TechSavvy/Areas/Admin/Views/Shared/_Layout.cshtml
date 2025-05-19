@@ -50,6 +50,27 @@
 			.logo img {
 				width: 50px;
 			}
+
+		.dropdown-sidebar a.dropdown-toggle::after {
+			font-family: "Font Awesome 6 Free";
+			font-weight: 900;
+		}
+
+		.dropdown-sidebar ul {
+			padding-left: 20px;
+		}
+
+			.dropdown-sidebar ul li a {
+				padding: 5px 20px;
+				display: block;
+				color: #ccc;
+				font-size: 14px;
+			}
+
+				.dropdown-sidebar ul li a:hover {
+					background-color: #495057;
+					color: #fff;
+				}
 	</style>
 </head>
 <body>
@@ -60,8 +81,15 @@
 			<div style="border-bottom : groove"><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home"> </i> Trang chủ</a></div>
 		</div>
 		<a asp-controller="Dashboard" asp-action="Index" class="active"><i class="fa-solid fa-chart-simple"></i> Thống kê</a>
-		<a asp-controller="Product" asp-action="Index"><i class="fa fa-cube"></i> Sản phẩm</a>
-		<a asp-controller="Category" asp-action="Index"><i class="fa fa-list"></i> Danh mục</a>
+		<div class="dropdown-sidebar">
+			<a href="#productSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+				<i class="fa fa-cube"></i> Sản phẩm
+			</a>
+			<ul class="collapse list-unstyled ps-4" id="productSubmenu">
+				<li><a asp-controller="Product" asp-action="Index" asp-route-category="MayTinh">Máy tính</a></li>
+				<li><a asp-controller="Product" asp-action="LinhKien">Linh kiện máy tính</a></li>
+			</ul>
+		</div>		<a asp-controller="Category" asp-action="Index"><i class="fa fa-list"></i> Danh mục</a>
 		<a asp-controller="Brand" asp-action="Index"><i class="fa fa-tags"></i> Thương hiệu</a>
 		<a asp-controller="User" asp-action="Index"><i class="fa fa-user"></i> Người dùng</a>
 		<a asp-controller="Role" asp-action="Index"><i class="fa fa-user"></i> Phân quyền</a>

@@ -7,17 +7,21 @@ using System.Security.Claims;
 using TechSavvy.Models;
 using TechSavvy.Models.ViewModels;
 using TechSavvy.Repository;
+using TechSavvy.Services.Momo;
 
 namespace TechSavvy.Controllers
 {
     public class CheckOutController : Controller
     {
         private readonly DataContext _dataContext;
-        public CheckOutController(DataContext dataContext)
+        private IMomoService _momoService;
+
+        public CheckOutController(DataContext dataContext, IMomoService momoService)
         {
             _dataContext = dataContext;
+            _momoService = momoService;
         }
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> Checkout(string OrderId)
         {
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
             if (userEmail == null)
@@ -54,6 +58,14 @@ namespace TechSavvy.Controllers
             orderItem.CouponCode = couponCodeFull ?? "";
             orderItem.CouponPrice = couponDiscount;
             orderItem.ShippingAddress = shippingAddress;
+            if(OrderId != null)
+            {
+                orderItem.PaymentMethod = "Momo: " + OrderId;
+            }
+            else
+            {
+                orderItem.PaymentMethod = "COD";
+            }
 
             // 2. Giảm số lượng coupon nếu có mã hợp lệ
             string couponCode = null;
@@ -163,6 +175,33 @@ namespace TechSavvy.Controllers
             };
             return View(cartVM);
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> PaymentCallBack(MomoInforModel model)
+        {
+            var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
+            var requestQuery = HttpContext.Request.Query;
+            if (requestQuery["resultCode"] != "0")
+            {
+                var newMomoInsert = new MomoInforModel
+                {
+                    OrderId = requestQuery["orderId"],
+                    FullName = User.FindFirstValue(ClaimTypes.Email),
+                    Amount = decimal.Parse(requestQuery["Amount"]),
+                    OrderInfo = requestQuery["orderInfo"],
+                    DatePaid = DateTime.Now,
+                };
+                TempData["success"] = "Thanh toán thành công, vui lòng chờ duyệt đơn hàng";
+                _dataContext.Add(newMomoInsert);
+                await _dataContext.SaveChangesAsync();
+                await Checkout(requestQuery["OrderId"]);
+            }
+            else
+            {
+                TempData["success"] = "Đã hủy giao dịch Momo";
+                return RedirectToAction("Index", "Checkout");
+            }
+            return View(response);
         }
     }
 }

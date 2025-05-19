@@ -32,13 +32,6 @@
                 <div class="text-right mb-3">
                     <button type="button" class="btn btn-success btn-sm btn-add-shipping">Lưu thông tin và tính phí ship</button>
                 </div>
-
-                <div class="form-group">
-                    <label>Phương thức thanh toán</label>
-                    <select class="form-control">
-                        <option value="cod">Thanh toán khi nhận hàng (COD)</option>
-                    </select>
-                </div>
                 <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment">
                     <input type="hidden" name="FullName" value="@User.Identity.Name" />
                     <input type="hidden" name="Amount" value="@Model.GrandTotal" />

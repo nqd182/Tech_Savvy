@@ -30,7 +30,6 @@
                     </p>
                 </div>
                 <div class="col-md-3"> 
-                    <h4>Tùy chọn: </h4>
                     <label>Từ ngày</label>
                     <input type="date" class="form-control" id="date_from" asp-for="@Model.DateCreated"/>
                     <label>Đến ngày</label>
@@ -60,7 +59,7 @@
                 parseTime: false
             });
 
-            // Fetching data and setting up the chart
+            // Initial data load
             $.ajax({
                 url: "@Url.Action("GetChartData", "Dashboard")",
                 type: "POST",

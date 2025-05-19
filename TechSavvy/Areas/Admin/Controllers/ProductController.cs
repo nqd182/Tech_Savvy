@@ -34,6 +34,19 @@ namespace TechSavvy.Areas.Admin.Controllers
 
             return View(products);
         }
+        [HttpGet]
+        [Route("LinhKien")]
+        public async Task<IActionResult> LinhKien()
+        {
+            // Giả sử Category.Name hoặc Slug là "Linh kiện máy tính"
+            var linhKienProducts = await _dataContext.Products
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+                .Where(p => p.Category.Name == "Linh kiện máy tính" && !p.IsDeleted)
+                .ToListAsync();
+
+            return View("LinhKien", linhKienProducts); // Tái sử dụng view Index
+        }
         [Route("Create")]
         public IActionResult Create()
         {
@@ -48,7 +61,10 @@ namespace TechSavvy.Areas.Admin.Controllers
         [ValidateAntiForgeryToken] // yêu cầu token hợp lệ khi rq post
         public async Task<IActionResult> Create(ProductModel product)
         {
-            ViewBag.Categories = new SelectList(_dataContext.Categories, "Id", "Name", product.CategoryId);
+            var categories = _dataContext.Categories
+                            .Where(c => c.Name != "Linh kiện máy tính")
+                            .ToList();
+            ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
             ViewBag.Brands = new SelectList(_dataContext.Brands, "Id", "Name", product.BrandId);
             if (ModelState.IsValid) // ktra trạng thái model
             {

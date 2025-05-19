@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using TechSavvy.Models;
+using TechSavvy.Repository;
 using TechSavvy.Services.Momo;
 
 namespace TechSavvy.Controllers
@@ -17,11 +20,6 @@ namespace TechSavvy.Controllers
             var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }
-        [HttpGet]
-        public IActionResult PaymentCallBack()
-        {
-            var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
-            return View(response);
-        }
+        
     }
 }

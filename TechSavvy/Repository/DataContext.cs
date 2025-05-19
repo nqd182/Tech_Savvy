@@ -24,7 +24,7 @@ namespace TechSavvy.Repository
 
         public DbSet<CouponModel> Coupons { get; set; }
         public DbSet<StatisticalModel> Statisticals { get; set; }
-
+        public DbSet<MomoInforModel> MomoInforModels { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
