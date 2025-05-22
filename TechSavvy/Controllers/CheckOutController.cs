@@ -21,6 +21,41 @@ namespace TechSavvy.Controllers
             _dataContext = dataContext;
             _momoService = momoService;
         }
+        public IActionResult Index()
+        {
+            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+
+            // Nhận shipping giá từ cookie
+            var shippingPriceCookie = Request.Cookies["ShippingPrice"];
+            decimal shippingPrice = 0;
+            // Nhận coupon từ cookie
+            var coupon_code = Request.Cookies["CouponTitle"];
+            var couponPriceCookie = Request.Cookies["CouponPrice"];
+            decimal couponPrice = 0;
+
+            if (!string.IsNullOrEmpty(couponPriceCookie))
+            {
+                var couponPriceJson = couponPriceCookie;
+                decimal.TryParse(couponPriceCookie, NumberStyles.Any, CultureInfo.InvariantCulture, out couponPrice);
+            }
+
+            if (shippingPriceCookie != null)
+            {
+                var shippingPriceJson = shippingPriceCookie;
+                shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
+            }
+            CartItemViewModel cartVM = new()
+            {
+                CartItems = cartItems,
+                GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
+                ShippingCost = shippingPrice,
+                CouponCode = coupon_code,
+                Discount = couponPrice
+
+            };
+            return View(cartVM);
+
+        }
         public async Task<IActionResult> Checkout(string OrderId)
         {
             var userEmail = User.FindFirstValue(ClaimTypes.Email);
@@ -141,41 +176,7 @@ namespace TechSavvy.Controllers
             return RedirectToAction("History", "Account");
         }
 
-        public IActionResult Index()
-        {
-            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
-
-            // Nhận shipping giá từ cookie
-            var shippingPriceCookie = Request.Cookies["ShippingPrice"];
-            decimal shippingPrice = 0;
-            // Nhận coupon từ cookie
-            var coupon_code = Request.Cookies["CouponTitle"];
-            var couponPriceCookie = Request.Cookies["CouponPrice"];
-            decimal couponPrice = 0;
-
-            if (!string.IsNullOrEmpty(couponPriceCookie))
-            {
-                var couponPriceJson = couponPriceCookie;
-                decimal.TryParse(couponPriceCookie, NumberStyles.Any, CultureInfo.InvariantCulture, out couponPrice);
-            }
-
-            if (shippingPriceCookie != null)
-            {
-                var shippingPriceJson = shippingPriceCookie;
-                shippingPrice = JsonConvert.DeserializeObject<decimal>(shippingPriceJson);
-            }
-            CartItemViewModel cartVM = new()
-            {
-                CartItems = cartItems,
-                GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
-                ShippingCost = shippingPrice,
-                CouponCode = coupon_code,
-                Discount = couponPrice
-
-            };
-            return View(cartVM);
-
-        }
+       
         [HttpGet]
         public async Task<IActionResult> PaymentCallBack(MomoInforModel model)
         {

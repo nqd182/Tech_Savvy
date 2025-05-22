@@ -16,7 +16,19 @@
     <meta name="viewport" content="width=device-width" />
 </head>
 <body>
-    <h3>Lịch sử đơn hàng của tài khoản @ViewBag.UserEmail</h3>
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
+                <li class="breadcrumb-item">
+                    <a href="/" class="d-flex align-items-center text-decoration-none text-dark">
+                        <i class="fas fa-home me-1"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">Danh sách đơn hàng</li>
+            </ol>
+        </nav>
+    </div>
+    <h3>Danh sách đơn hàng của: @ViewBag.UserEmail</h3>
 
     <table class="table table-bordered" id="myTable">
         <thead class="thead-dark">
@@ -30,7 +42,7 @@
                 <th>Tổng tiền</th>
                 <th>Trạng thái</th>
                 <th>Ngày tạo</th>
-                <th>Hành động</th>
+                <th width="150px">Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -67,13 +79,13 @@
                         {
 
                             <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-danger btn-sm" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
-                                Hủy đơn hàng
+                                <i class="fa fa-trash"></i> Hủy
                             </a>
                         }
                         else
                         {
                             <a onclick="return confirm('Bạn xác nhận muốn hủy?')" class="btn btn-danger btn-sm disabled" asp-action="CancelOrder" asp-controller="Account" asp-route-ordercode="@item.OrderCode">
-                                Hủy đơn hàng
+                                <i class="fa fa-trash"></i> Hủy
                             </a>
                         }
                     </td>

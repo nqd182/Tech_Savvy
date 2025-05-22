@@ -2,12 +2,18 @@
 @model CartItemViewModel
 <section id="cart_items" class="py-5">
     <div class="container">
-        <div class="breadcrumbs mb-4">
-            <ol class="breadcrumb bg-white p-2 rounded shadow-sm">
-                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Giỏ hàng</li>
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
+                <li class="breadcrumb-item">
+                    <a href="/" class="d-flex align-items-center">
+                        <i class="fas fa-home mr-1"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <a href="/cart" class="breadcrumb-item active text-muted" aria-current="page">Giỏ hàng</a>
+                </li>
             </ol>
-        </div>
+        </nav>
     </div>
 
         <div class="table-responsive bg-white shadow-sm rounded" style="margin-top: 10px">
@@ -23,54 +29,56 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model.CartItems.Any())
+                @if (Model.CartItems.Any())
+                {
+                    foreach (var item in Model.CartItems)
                     {
-                        foreach (var item in Model.CartItems)
-                        {
-                            var total = item.Quantity * item.Price;
-                            <tr>
-                                <td class="align-middle"><img src="~/media/products/@item.Image" width="70" height="70" class="rounded" /></td>
-                                <td class="align-middle">@item.ProductName</td>
-                                <td class="align-middle text-nowrap">@item.Price.ToString("#,##0 VNĐ")</td>
-                                <td class="align-middle">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <a class="btn btn-sm btn-outline-secondary mr-1"
-                                           asp-action="Increase" asp-controller="Cart" asp-route-id="@item.ProductId">+</a>
-                                        <input class="form-control form-control-sm text-center mx-1" value="@item.Quantity" readonly style="width: 50px;">
-                                        <a class="btn btn-sm btn-outline-secondary ml-1"
-                                           asp-action="Decrease" asp-controller="Cart" asp-route-id="@item.ProductId">-</a>
-                                    </div>
-                                </td>
-                                <td class="align-middle text-nowrap">@total.ToString("#,##0 VNĐ")</td>
-                                <td class="align-middle">
-                                    <a class="btn btn-sm btn-danger" asp-action="Remove" asp-controller="Cart" asp-route-id="@item.ProductId">
-                                        <i class="fa fa-trash"></i> Xóa
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                        <tr class="bg-light font-weight-bold">
-
-                        <td colspan="2" class="text-left"><div style="font-weight:bold">Tạm tính: </div> @Model.GrandTotal.ToString("#,##0 đ")</td>
-                        </tr>
+                        var total = item.Quantity * item.Price;
                         <tr>
-                            <td colspan="6">
+                            <td class="align-middle"><img src="~/media/products/@item.Image" width="70" height="70" class="rounded" /></td>
+                            <td class="align-middle">@item.ProductName</td>
+                            <td class="align-middle text-nowrap">@item.Price.ToString("#,##0 VNĐ")</td>
+                            <td class="align-middle">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <a class="btn btn-sm btn-outline-secondary mr-1"
+                                       asp-action="Increase" asp-controller="Cart" asp-route-id="@item.ProductId">+</a>
+                                    <input class="form-control form-control-sm text-center mx-1" value="@item.Quantity" readonly style="width: 50px;">
+                                    <a class="btn btn-sm btn-outline-secondary ml-1"
+                                       asp-action="Decrease" asp-controller="Cart" asp-route-id="@item.ProductId">-</a>
+                                </div>
+                            </td>
+                            <td class="align-middle text-nowrap">@total.ToString("#,##0 VNĐ")</td>
+                            <td class="align-middle">
+                                <a class="btn btn-sm btn-danger" asp-action="Remove" asp-controller="Cart" asp-route-id="@item.ProductId">
+                                    <i class="fa fa-trash"></i> Xóa
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                    <!-- HÀNG CHỨA TỔNG VÀ NÚT -->
+                    <tr>
+                        <td colspan="6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div></div> <!-- Cột bên trái trống -->
                                 <div class="text-right">
+                                    <div class="mb-2 font-weight-bold">Tạm tính: @Model.GrandTotal.ToString("#,##0 đ")</div>
                                     <a class="btn btn-sm btn-danger" asp-controller="Cart" asp-action="Clear">Xóa tất cả</a>
                                     <a class="btn btn-sm btn-primary" asp-controller="Checkout" asp-action="Index">Thanh toán</a>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="py-4">
+                            <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
+                        </td>
+                    </tr>
+                }
 
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="6" class="py-4">
-                                <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
-                            </td>
-                        </tr>
-                    }
                 </tbody>
             </table>
         </div>

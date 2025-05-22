@@ -3,6 +3,21 @@
 
 <section class="py-5">
     <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
+                <li class="breadcrumb-item">
+                    <a href="/" class="d-flex align-items-center">
+                        <i class="fas fa-home mr-1"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/cart" class="text-decoration-none">Giỏ hàng</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="container">
         <div class="row">
             <!-- Left Side: Shipping and Payment Info -->
             <div class="col-md-6 mb-4">
@@ -32,50 +47,25 @@
                 <div class="text-right mb-3">
                     <button type="button" class="btn btn-success btn-sm btn-add-shipping">Lưu thông tin và tính phí ship</button>
                 </div>
-                <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment">
-                    <input type="hidden" name="FullName" value="@User.Identity.Name" />
-                    <input type="hidden" name="Amount" value="@Model.GrandTotal" />
-                    <input type="hidden" name="OrderInformation" value="Thanh toán qua Momo Payment " />
-
-                    <button class="btn btn-danger" name="PayUrl" type="submit">Pay with MoMo</button>
-                </form>
-                <div class="text-right mt-3">
-                    @if (Model.ShippingCost > 0)
-                    {
-                        <a class="btn btn-primary" asp-controller="Checkout" asp-action="Checkout">Hoàn tất đặt hàng</a>
-                    }
-                    else
-                    {
-                        <button class="btn btn-primary" disabled>Hoàn tất đặt hàng</button>
-                        <small class="text-danger d-block">Vui lòng tính phí ship trước</small>
-                    }
-                </div>
             </div>
-             
+
             <!-- Right Side: Order Summary -->
-            <div class="col-md-6">
+            <div class="col-md-6" >
                 <h4 class="mb-3">Đơn hàng của bạn</h4>
 
                 <div class="bg-white rounded shadow-sm p-3 mb-3">
                     @foreach (var item in Model.CartItems)
                     {
                         <div class="d-flex align-items-center border-bottom py-2">
-                            <!-- Image + Name in a row -->
                             <div class="d-flex align-items-center flex-grow-1">
-                                <!-- Product Image -->
                                 <div class="mr-3">
-                                    @* <img src="~/media/products/@item.Image" alt="@item.ProductName" *@
-                                    @*      style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px;"> *@
+                                    <img src="~/media/products/@item.Image" alt="@item.ProductName" style="width: 50px; height: 60px; object-fit: cover; border-radius: 6px;">
                                 </div>
-
-                                <!-- Product Name and Quantity -->
                                 <div>
                                     <strong>@item.ProductName</strong><br />
                                     <small>Số lượng: @item.Quantity</small>
                                 </div>
                             </div>
-
-                            <!-- Product Price -->
                             <div class="text-right ml-3" style="min-width: 100px;">
                                 @{
                                     var tempTotal = item.Price * item.Quantity;
@@ -86,7 +76,6 @@
                     }
                 </div>
 
-
                 <div class="form-inline mb-3">
                     <label class="mr-2">Mã giảm giá:</label>
                     <input type="text" class="form-control form-control-sm mr-2 coupon-value" placeholder="Nhập mã">
@@ -94,7 +83,7 @@
                 </div>
                 <span class="text-success">@Model.CouponCode</span>
 
-                <ul class="list-group mt-3">
+                <ul class="list-group mt-3 mb-4">
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Tạm tính</span>
                         @{
@@ -102,31 +91,53 @@
                         }
                         <strong>@subTotal.ToString("#,##0 VNĐ")</strong>
                     </li>
-
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Phí vận chuyển</span>
                         <strong>@Model.ShippingCost.ToString("#,##0 VNĐ")</strong>
                     </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Mã giảm giá</span>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Mã giảm giá</span>
                         <strong class="text-danger">- @Model.Discount.ToString("#,##0 VNĐ")</strong>
-                        </li>
-
-                   
-
+                    </li>
                     <li class="list-group-item d-flex justify-content-between bg-light font-weight-bold">
                         <span>Tổng cộng</span>
-                        @{
-                            var finalTotal = Model.GrandTotal + Model.ShippingCost - Model.Discount;
-                        }
-                        <strong>@finalTotal.ToString("#,##0 VNĐ")</strong>
+                        <strong>@Model.FinalTotal.ToString("#,##0 VNĐ")</strong>
                     </li>
                 </ul>
 
+                <div class="text-right">
+                    @if (Model.ShippingCost > 0)
+                    {
+                      
+                        <a class="btn btn-primary" asp-controller="Checkout" asp-action="Checkout">
+                            Hoàn tất đặt hàng COD
+                        </a>
+                        <br />
+
+                        <span>hoặc</span>
+                        <form method="POST" asp-action="CreatePaymentMomo" asp-controller="Payment" class="d-inline">
+                            <input type="hidden" name="FullName" value="@User.Identity.Name" />
+                            <input type="hidden" name="Amount" value="@Model.FinalTotal" />
+                            <input type="hidden" name="OrderInformation" value="Thanh toán qua Momo Payment" />
+                            <button class="btn btn-danger mr-2" type="submit">Thanh toán qua MoMo</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <small class="text-danger d-block mt-2">Vui lòng tính phí ship trước</small>
+                        <br />
+                        <button class="btn btn-primary" disabled>Hoàn tất đặt hàng COD</button>
+                        <br />
+                        <br /><span>hoặc</span>
+                        <button class="btn btn-danger mr-2" disabled>Thanh toán qua MoMo</button>
+
+                    }
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 
 
 

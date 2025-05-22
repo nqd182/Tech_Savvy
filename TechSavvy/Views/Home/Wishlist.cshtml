@@ -2,7 +2,18 @@
     ViewData["title"] = "Danh sách yêu thích";
     var key = 0;
 }
-
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
+            <li class="breadcrumb-item">
+                <a href="/" class="d-flex align-items-center text-decoration-none text-dark">
+                    <i class="fas fa-home me-1"></i> Trang chủ
+                </a>
+            </li>
+            <li class="breadcrumb-item active text-muted" aria-current="page">Yêu thích</li>
+        </ol>
+    </nav>
+</div>
 <h3 class="mb-4 fw-bold text-dark">
     <i class="fa fa-heart-o text-danger"></i> Danh sách sản phẩm yêu thích
 </h3>
@@ -14,7 +25,7 @@
             <th>Tên sản phẩm</th>
             <th>Giá</th>
             <th>Ảnh</th>
-            <th width="130px">Hành động</th>
+            <th width="150px">Hành động</th>
         </tr>
     </thead>
     <tbody>

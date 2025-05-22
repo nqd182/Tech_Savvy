@@ -88,12 +88,25 @@
 
 
 <div class="row">
+    <div class="container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
+                <li class="breadcrumb-item">
+                    <a href="/" class="d-flex align-items-center text-decoration-none text-dark">
+                        <i class="fas fa-home me-1"></i> Trang chủ
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-muted" aria-current="page">Sản phẩm @Model.ProductDetails.Id</li>
+            </ol>
+        </nav>
+    </div>  
     <!-- Sidebar -->
     <div class="col-md-3">
         @Html.Partial("_SidebarPartial") <!-- Sidebar Partial View -->
     </div>
 
     <!-- Main content -->
+
     <div class="col-md-9 padding-right">
         <div class="product-details">
             <!-- Product images and zoom -->

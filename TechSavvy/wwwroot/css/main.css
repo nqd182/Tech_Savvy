@@ -12,7 +12,6 @@ body {
 	font-weight: 400px;
 	background-color: #F2F3F5; /*#263b96*/
 }
-
 ul li {
   list-style: none;
 }
@@ -639,10 +638,11 @@ ul.sub-menu {
 }
 
 .control-carousel {
-  position: absolute;
-  top: 50%;
-  font-size: 60px;
-  color: #C2C2C1;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 60px;
+	color: #C2C2C1;
 }
 
 .control-carousel:hover{
@@ -1535,23 +1535,12 @@ h2.title {
 }
 
 .breadcrumbs .breadcrumb li a {
-  background:#FE980F;
+  background:#000;
   color: #FFFFFF;
   padding: 3px 7px;
 }
 
-.breadcrumbs .breadcrumb li a:after {
-  content:"";
-  height:auto;
-  width: auto;
-  border-width: 8px;
-  border-style: solid;
-  border-color:transparent transparent transparent #FE980F;
-  position: absolute;
-  top: 11px;
-  left:48px;
 
-}
 
 .breadcrumbs .breadcrumb > li + li:before {
   content: " ";
@@ -2516,5 +2505,4 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
 }
-
 

@@ -161,7 +161,8 @@ namespace TechSavvy.Controllers
                 {
                     HttpOnly = true,
                     Expires = DateTimeOffset.UtcNow.AddMinutes(30),
-                    Secure = true // using HTTPS
+                    Secure = true, // using HTTPS
+                    SameSite = SameSiteMode.Lax
                 };
                 Response.Cookies.Append("ShippingPrice", shippingPriceJson, cookieOptions); // đẩy shippingPriceJson vào cookie với tên là "ShippingPrice"
                 Response.Cookies.Append("ShippingAddress", fullAddress, cookieOptions);
@@ -212,8 +213,8 @@ namespace TechSavvy.Controllers
                         {
                             HttpOnly = true,
                             Expires = DateTimeOffset.UtcNow.AddMinutes(30),
-                            Secure = false,
-                            SameSite = SameSiteMode.Strict // Kiểm tra tính tương thích trình duyệt
+                            Secure = true,
+                            SameSite = SameSiteMode.Lax // Kiểm tra tính tương thích trình duyệt
                         };
 
                         Response.Cookies.Append("CouponTitle", couponTitle, cookieOptions);
