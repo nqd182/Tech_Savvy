@@ -258,7 +258,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.CategoryModel", b =>
@@ -287,7 +287,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.ContactModel", b =>
@@ -326,7 +326,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.CouponModel", b =>
@@ -365,7 +365,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.MomoInforModel", b =>
@@ -393,7 +393,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MomoInforModels");
+                    b.ToTable("MomoInforModels", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.OrderDetails", b =>
@@ -423,7 +423,7 @@ namespace TechSavvy.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.OrderModel", b =>
@@ -469,7 +469,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.ProductModel", b =>
@@ -521,7 +521,7 @@ namespace TechSavvy.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.ProductQuantityModel", b =>
@@ -545,7 +545,7 @@ namespace TechSavvy.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductQuantities");
+                    b.ToTable("ProductQuantities", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.RatingModel", b =>
@@ -582,7 +582,7 @@ namespace TechSavvy.Migrations
                     b.HasIndex("ProductId")
                         .IsUnique();
 
-                    b.ToTable("Ratings");
+                    b.ToTable("Ratings", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.ShippingModel", b =>
@@ -610,7 +610,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shippings");
+                    b.ToTable("Shippings", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.StatisticalModel", b =>
@@ -641,7 +641,7 @@ namespace TechSavvy.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statisticals");
+                    b.ToTable("Statisticals", (string)null);
                 });
 
             modelBuilder.Entity("TechSavvy.Models.WishlistModel", b =>
@@ -662,7 +662,7 @@ namespace TechSavvy.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Wishlists");
+                    b.ToTable("Wishlists", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

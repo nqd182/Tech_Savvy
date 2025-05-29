@@ -1,0 +1,40 @@
+﻿@model List<CartItemModel>
+@{
+    var totalQuantity = Model.Sum(x => x.Quantity);
+    var grandTotal = Model.Sum(x => x.Total);
+}
+<div class="dropdown">
+    <a class="dropdown-toggle" href="#" id="cartDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-shopping-cart"></i>
+        <span>Giỏ hàng</span>
+        <div class="qty">@totalQuantity</div>
+    </a>
+
+    <div class="dropdown-menu cart-dropdown p-3" aria-labelledby="cartDropdown" style="min-width: 300px;">
+        <div class="cart-list">
+            @foreach (var item in Model)
+            {
+                <div class="product-widget">
+                    <div class="product-img">
+                        <img src="~/media/products/@item.Image" alt="@item.ProductName">
+                    </div>
+                    <div class="product-body">
+                        <h3 class="product-name">@item.ProductName</h3>
+                        <h4 class="product-price">
+                            <span class="qty">@item.Quantity x</span>
+                            @item.Price.ToString("#,##0 VNĐ")
+                        </h4>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="cart-summary">
+            <small>@totalQuantity sản phẩm</small>
+            <h5>Tổng: @grandTotal.ToString("#,##0 VNĐ")</h5>
+        </div>
+        <div class="cart-btns">
+            <a asp-controller="Cart" asp-action="Index">Xem giỏ hàng</a>
+            <a asp-controller="Checkout" asp-action="Index">Thanh toán <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>

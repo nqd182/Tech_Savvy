@@ -11,7 +11,18 @@ namespace TechSavvy.Repository.Components
         {
             _dataContext = context;
         }
-        public async Task<IViewComponentResult> InvokeAsync() => View(await _dataContext.Brands.Where(b => b.Status == 1).ToListAsync());
+        public IViewComponentResult Invoke(string viewName = null)
+        {
+            var brands = _dataContext.Brands
+                .Where(c => !c.IsDeleted && c.Status != 0)
+                .ToList();
+
+            // Nếu có viewName, trả về view đó, ngược lại trả về Default
+            if (!string.IsNullOrEmpty(viewName))
+                return View(viewName, brands);
+
+            return View(brands);
+        }
     }
 }
     

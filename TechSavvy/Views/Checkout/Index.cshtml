@@ -3,19 +3,25 @@
 
 <section class="py-5">
     <div class="container">
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
-                <li class="breadcrumb-item">
-                    <a href="/" class="d-flex align-items-center">
-                        <i class="fas fa-home mr-1"></i> Trang chủ
-                    </a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a href="/cart" class="text-decoration-none">Giỏ hàng</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
-            </ol>
-        </nav>
+        <!-- BREADCRUMB -->
+        <div id="breadcrumb" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb-tree">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li><a asp-action="Index" asp-controller="Cart">Giỏ hàng</a></li>
+                            <li class="active">Thanh toán</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /BREADCRUMB -->
     </div>
     <div class="container">
         <div class="row">

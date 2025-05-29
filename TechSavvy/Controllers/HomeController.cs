@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechSavvy.Models;
+using TechSavvy.Models.ViewModels;
 using TechSavvy.Repository;
+using TechSavvy.Repository.Components;
 
 namespace TechSavvy.Controllers;
 
@@ -24,7 +26,10 @@ public class HomeController : Controller
     {
         IQueryable<ProductModel> products = _dataContext.Products
             .Include(p => p.Category)
-            .Include(p => p.Brand);
+            .Include(p => p.Brand)
+            .Include(p => p.Ratings)
+            .OrderByDescending(p => p.Id)
+            .Where(p => p.Quantity > 0 && !p.IsDeleted);
 
         switch (sort_by)
         {
@@ -41,11 +46,32 @@ public class HomeController : Controller
                 products = products.OrderBy(p => p.Id);
                 break;
             default:
-                products = products.OrderBy(p => p.Name); // mặc định
+                products = products.OrderBy(p => p.Name); 
                 break;
         }
+        var productList = await products.ToListAsync();
 
-        return View(await products.ToListAsync());
+        var productWithRatings = productList.Select(p =>
+        {
+            var avgStar = p.Ratings.Any()
+                ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                : 0;
+
+            return new ProductWithRatingViewModel
+            {
+                Product = p,
+                AverageStar = avgStar
+            };
+        }).ToList();
+        List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+        CartItemViewModel cartVM = new()
+        {
+            CartItems = cartItems,
+            GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
+
+        };
+        ViewBag.CartHome = cartItems;
+        return View(productWithRatings);
     }
 
 

@@ -1,47 +1,59 @@
 ﻿@model ContactModel
-<style>
-    a {
-        padding: 0 10px;
-    }
-</style>
-<footer class="bg-dark text-light pt-5 pb-4 mt-5">
-    <div class="container">
-        <div class="row">
-            <!-- Logo và mô tả -->
-            <div class="col-md-4 mb-4">
-                <img src="~/media/logo/@Model.LogoImg" alt="Logo" width="180" class="mb-3" />
-                <p style="font-size:22px; line-height:1.6">@Html.Raw(Model.Description)</p>
-            </div>
 
-            <!-- Bản đồ -->
-            <div class="col-md-4 mb-4">
-                <h5 class="text-uppercase mb-3">Địa chỉ</h5>
-                <div class="ratio ratio-4x3 rounded overflow-hidden shadow-sm">
-                    @Html.Raw(Model.Map)
-                </div>
-            </div>
+<!-- top footer -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-3 col-xs-6">
+				<div class="footer">
+					<h3 class="footer-title">Về Tech Savvy</h3>
+					<p>@Html.Raw(Model.Description)</p>
+					<ul class="footer-links">
+						<li><a href="#"><i class="fa fa-map-marker"></i>@Model.Name</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i>@Model.Phone</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i>@Model.Email</a></li>
+					</ul>
+				</div>
+			</div>
 
-            <!-- Thông tin liên hệ -->
-            <div class="col-md-4 mb-4" style="font-size: 20px">
-                <h5 class="text-uppercase mb-3" style="font-size: 20px; font-weight:bold">Thông tin liên hệ</h5>
-                <ul class=" mb-3">
-                    <li><i class="fa-solid fa-location-dot"></i> @Model.Name</li>
-                    <li><i class="fa-solid fa-envelope"> </i> @Model.Email</li>
-                    <li><i class="fa fa-phone"></i> @Model.Phone</li>
-                </ul>
+			<div class="col-md-4 col-xs-6">
+				<div class="footer">
+					<h3 class="footer-title">Bản đồ cửa hàng</h3>
+					@Html.Raw(Model.Map)
+				</div>
+			</div>
 
-                <!-- Icon mạng xã hội -->
-                <div class="social-icons">
-                    <a href="https://facebook.com" target="_blank" class="text-light me-3">
-                        <i class="fa-brands fa-square-facebook fa-2x"></i>
-                    </a>
-                    <a href="https://instagram.com" target="_blank" class="text-light">
-                        <i class="fa-brands fa-square-instagram fa-2x"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+			<div class="clearfix visible-xs"></div>
 
-        <hr class="border-light" />
-    </div>
+			<div class="col-md-3 col-xs-6">
+				<div class="footer">
+					<h3 class="footer-title">Chính sách</h3>
+					<ul class="footer-links">
+						<li><a href="#">Chính Sách Bảo Mật</a></li>
+						<li><a href="#">Qui Định Bảo Hành</a></li>
+						<li><a href="#">Chính Sách Đổi Trả</a></li>
+						<li><a href="#">Điều khoản sử dụng</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="col-md-2 col-xs-6">
+				<div class="footer">
+					<h3 class="footer-title">Dịch vụ</h3>
+					<ul class="footer-links">
+						<li><a asp-action="UpdateAccount" asp-controller="Account">Tài khoản của tôi</a></li>
+						<li><a asp-action="Index" asp-controller="Cart">Giỏ hàng</a></li>
+						<li><a asp-action="Wishlist" asp-controller="Home">Yêu thích</a></li>
+						<li><a asp-action="History" asp-controller="Account">Theo dõi đơn hàng</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /top footer -->  
 </footer>

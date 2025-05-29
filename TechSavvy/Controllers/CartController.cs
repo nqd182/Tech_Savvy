@@ -40,8 +40,8 @@ namespace TechSavvy.Controllers
             }
             else
             {
-                cartItem.Quantity += 1;            
-                    
+                cartItem.Quantity += 1;
+
             }
             HttpContext.Session.SetJson("Cart", cart);
             TempData["success"] = "Thêm sản phẩm thành công";
@@ -51,7 +51,7 @@ namespace TechSavvy.Controllers
         {
             List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
             CartItemModel cartItem = cart.Where(c => c.ProductId == Id).FirstOrDefault();
-            if(cartItem.Quantity > 1)
+            if (cartItem.Quantity > 1)
             {
                 --cartItem.Quantity;
             }
@@ -60,7 +60,7 @@ namespace TechSavvy.Controllers
                 cart.RemoveAll(c => c.ProductId == Id);
             }
 
-            if(cart.Count == 0)
+            if (cart.Count == 0)
             {
                 HttpContext.Session.Remove("Cart");
 
@@ -91,7 +91,7 @@ namespace TechSavvy.Controllers
 
                 TempData["error"] = "Số lượng sản phẩm trong kho không đủ";
             }
-           
+
 
             if (cart.Count == 0)
             {
@@ -109,7 +109,7 @@ namespace TechSavvy.Controllers
         {
             List<CartItemModel> cart = HttpContext.Session.GetJson<List<CartItemModel>>("Cart");
             cart.RemoveAll(p => p.ProductId == Id);
-            if(cart.Count == 0)
+            if (cart.Count == 0)
             {
                 HttpContext.Session.Remove("Cart");
 
@@ -140,7 +140,7 @@ namespace TechSavvy.Controllers
         public async Task<IActionResult> GetShipping(ShippingModel shippingModel, string quan, string tinh, string phuong, string diachi)
         {
             var existingShipping = await _dataContext.Shippings
-                .FirstOrDefaultAsync(x => x.City == tinh && x.District == quan && x.Ward == phuong);  
+                .FirstOrDefaultAsync(x => x.City == tinh && x.District == quan && x.Ward == phuong);
 
             decimal shippingPrice = 0;
 
@@ -169,7 +169,7 @@ namespace TechSavvy.Controllers
             }
             catch (Exception ex)
             {
-               
+
                 Console.WriteLine($"Error adding shipping price cookie: {ex.Message}");
             }
             return Json(new { shippingPrice });
@@ -219,7 +219,7 @@ namespace TechSavvy.Controllers
 
                         Response.Cookies.Append("CouponTitle", couponTitle, cookieOptions);
                         Response.Cookies.Append("CouponPrice", couponPrice.ToString(CultureInfo.InvariantCulture), cookieOptions);
-                        return Ok(new { success = true, message = "Apply mã giảm giá thành công"});
+                        return Ok(new { success = true, message = "Apply mã giảm giá thành công" });
                     }
                     catch (Exception ex)
                     {
@@ -241,7 +241,11 @@ namespace TechSavvy.Controllers
 
             return Json(new { CouponTitle = couponTitle });
         }
+        public IActionResult GetCartView()
+        {
+            return ViewComponent("Cart");
 
+        }
     }
 }
     

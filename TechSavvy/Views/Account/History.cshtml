@@ -3,13 +3,7 @@
 @{
     ViewData["Title"] = "Danh sách đặt hàng của " + @ViewBag.UserEmail;
 }
-<style>
-    .action-btn {
-    width: 120px; /* Đặt chiều rộng cố định */
-    text-align: center; /* Căn giữa nội dung */
-    display: inline-block; /* Đảm bảo các nút hiển thị theo hàng ngang */
-    }
-</style>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,16 +11,25 @@
 </head>
 <body>
     <div class="container">
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
-                <li class="breadcrumb-item">
-                    <a href="/" class="d-flex align-items-center text-decoration-none text-dark">
-                        <i class="fas fa-home me-1"></i> Trang chủ
-                    </a>
-                </li>
-                <li class="breadcrumb-item active text-muted" aria-current="page">Danh sách đơn hàng</li>
-            </ol>
-        </nav>
+       <div class="row">
+            <!-- BREADCRUMB -->
+            <div id="breadcrumb" class="section">
+                <!-- container -->
+                <div class="container">
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="breadcrumb-tree">
+                                <li><a href="/">Trang chủ</a></li>
+                                <li class="active">Danh sách đơn hàng</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /BREADCRUMB -->
     </div>
     <h3>Danh sách đơn hàng của: @ViewBag.UserEmail</h3>
 
@@ -93,5 +96,6 @@
             }
         </tbody>
     </table>
+    </div>
 </body>
 </html>

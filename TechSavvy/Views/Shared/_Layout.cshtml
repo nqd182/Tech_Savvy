@@ -2,166 +2,311 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<title>Trang chủ | Tech Savvy</title>
-	<link href="~/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.19.1/dist/sweetalert2.min.css" rel="stylesheet">
-	<link href="~/css/prettyPhoto.css" rel="stylesheet">
-	<link href="~/css/price-range.css" rel="stylesheet">
-	<link href="~/css/animate.css" rel="stylesheet">
-	<link href="~/css/main.css" rel="stylesheet">
-	<link href="~/css/responsive.css" rel="stylesheet">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+	<title>Electro - HTML Ecommerce Template</title>
+
+	<!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+	<!-- Bootstrap -->
+	<link type="text/css" rel="stylesheet" href="~/css/bootstrap.min.css" />
+
+	<!-- Slick -->
+	<link type="text/css" rel="stylesheet" href="~/css/slick.css" />
+	<link type="text/css" rel="stylesheet" href="~/css/slick-theme.css" />
+
+	<!-- nouislider -->
+	<link type="text/css" rel="stylesheet" href="~/css/nouislider.min.css" />
+
+	<!-- Font Awesome Icon -->
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="~/css/style.css" />
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
-	<script src="js/html5shiv.js"></script>
-	<script src="js/respond.min.js"></script>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-	<link rel="shortcut icon" href="images/ico/favicon.ico">
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head-->
 
+</head>
 <body>
-	<style>
-		#header {
-			position: sticky;
-			top: 0;
-			z-index: 500;
-			background-color: #fff;
-			box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-		}
-
-		.header_top{
-            background-color: black;
-            color: white;
-            font-weight: bold;
-		}
-		.header-bottom {
-			background-color: #fff;
-		}
-		a{
-            color: #000;
-		}	
-
-		.left-sidebar h2, .brands_products h2{
-			color: #000
-		}
-
-
-		
-	</style>
-	<header id="header">
-		<!--header-->
-		<div class="header_top">
-			<!--header_top-->
+	<!-- HEADER -->
+	<header>
+		<!-- TOP HEADER -->
+		<div id="top-header">
 			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> Hotline: 036 668 3210</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> Email: nguyendung180203@gmail.com</a></li>
+				<ul class="header-links pull-left">
+					<li><a href="http://localhost:5252/admin/product"><i class="fa fa-user-md"></i></a></li>
+					<li><a href="#"><i class="fa fa-phone"></i> 036 668 3210</a></li>
+					<li><a href="#"><i class="fa fa-envelope-o"></i> nguyendung180203@gmail.com</a></li>
+					<li><a href="#"><i class="fa fa-map-marker"></i> 298 Cầu Diễn, Bắc Từ Liêm, Hà Nội</a></li>
+				</ul>
+				<ul class="header-links pull-right">
+					@if (User.Identity?.IsAuthenticated ?? false)
+					{
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown">
+								<i class="fa fa-user-o"></i> Tài khoản <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" style="background-color: #333">
+								<li><a asp-controller="Account" asp-action="History"><i class="fa fa-shopping-cart"></i> Đơn hàng</a></li>
+								<li><a asp-controller="Account" asp-action="UpdateAccount"><i class="fa fa-user"></i> Cập nhật tài khoản</a></li>
 							</ul>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="http://localhost:5252/admin/product"><i class="fa fa-user-md"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
+						</li>
+						<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Xin chào @User.Identity.Name, Đăng xuất</a></li>
+					}
+					else
+					{
+						<li><a asp-controller="Account" asp-action="Login"><i class="fa fa-lock"></i> Đăng nhập</a></li>
+					}
+				</ul>
 			</div>
-		</div><!--/header_top-->
-
-		<div class="header-middle" style="background: #DCDCDC;">
+		</div>
+		<!-- /TOP HEADER -->
+		<!-- MAIN HEADER -->
+		<div id="header">
+			<!-- container -->
 			<div class="container">
-				<div class="row" style="display: flex; align-items: center; justify-content: space-between; border:none;">
-					<!-- Trái -->
-					<div class="col-md-2 d-flex align-items-center">
-						<a href="/" class="d-block w-100">
-							<img src="~/images/TechSavvy-removebg-preview.png" alt="Logo" style=" max-width: 100%; object-fit: contain;">
-						</a>
-					</div>
-
-					<!-- Giữa -->
+				<!-- row -->
+				<div class="row">
+					<!-- LOGO -->
 					<div class="col-md-3">
-						<form asp-controller="Product" asp-action="Search" method="post" class="input-group">
-							<input type="text" name="searchItem" class="form-control" placeholder="Nhập từ khóa tìm kiếm">
-							<span class="input-group-btn">
-								<button class="btn btn-success" type="submit">Tìm kiếm</button>
-							</span>
-						</form>
+						<div class="header-logo">
+							<a href="#" class="logo">
+								<img src="./img/logo.png" alt="">
+							</a>
+						</div>
 					</div>
-
-					<!-- Phải: Menu tài khoản + giỏ hàng -->
-					<!-- Phải -->
-					<div class="col-md-7">
-						<ul class="nav navbar-nav navbar-right">
-							<li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
-							@if (User.Identity?.IsAuthenticated ?? false)
-							{
-								<li><a asp-controller="Home" asp-action="Wishlist"><i class="fa-regular fa-heart"></i> Yêu thích</a></li>
-								@* <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Thanh toán</a></li> *@
-								<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">
-										<i class="fa fa-user"></i> Tài khoản <span class="caret"></span>
+					<!-- /LOGO -->
+					<!-- SEARCH BAR -->
+					<div class="col-md-6">
+						<div class="header-search">
+							<form asp-controller="Product" asp-action="Search" method="get">
+								<select class="input-select">
+									<option value="0">Thương hiệu</option>
+									<option value="1">Category 01</option>
+									<option value="1">Category 02</option>
+								</select>
+								<input class="input" placeholder="Nhập từ khóa tìm kiếm" name="searchItem" type="text">
+								<button class="search-btn">Tìm kiếm</button>
+							</form>
+						</div>
+					</div>
+					<!-- /SEARCH BAR -->
+					<!-- ACCOUNT -->
+					<div class="col-md-3 clearfix">
+						<div class="header-ctn">
+							<!-- Wishlist -->
+							<div>
+								<a asp-controller="Home" asp-action="Wishlist">
+									<i class="fa fa-heart-o"></i>
+									<span>Yêu thích</span>
+									<div class="qty">2</div>
 								</a>
-									<ul class="dropdown-menu">
-										<li><a asp-controller="Account" asp-action="History"><i class="fa-solid fa-cart-flatbed"></i> Đơn hàng</a></li>
-										<li><a asp-controller="Account" asp-action="UpdateAccount"><i class="fa fa-user"></i> Cập nhật tài khoản</a></li>
-									</ul>
-								</li>
-								
-								<li><a asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Xin chào @User.Identity.Name, Đăng xuất</a></li>
-							}
-							else
-							{
-								<li><a asp-controller="Account" asp-action="Login"><i class="fa fa-lock"></i> Đăng nhập</a></li>
-							}
+							</div>
+							<!-- /Wishlist -->
+							<!-- Cart -->
+						
+
+							<div class="dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" >
+									<i class="fa fa-shopping-cart"></i>
+									<span>Giỏ hàng</span>
+									<div class="qty">3</div>
+								</a>
+
+								<div class="cart-dropdown">
+									@{
+										var homeCart = ViewBag.CartHome as IEnumerable<CartItemModel>;
+										var totalQuantity = homeCart?.Sum(x => x.Quantity) ?? 0;
+										var grandTotal = homeCart?.Sum(x => x.Total) ?? 0;
+									}
+
+									@if (homeCart != null && homeCart.Any())
+									{
+										<div class="cart-list">
+											@foreach (var item in homeCart)
+											{
+												<div class="product-widget">
+													<div class="product-img">
+														<img src="~/media/products/@item.Image" alt="@item.ProductName">
+													</div>
+													<div class="product-body">
+														<h3 class="product-name"><a href="#">@item.ProductName</a></h3>
+														<h4 class="product-price"><span class="qty">@item.Quantity x</span>@item.Price.ToString("#,##0 VNĐ")</h4>
+													</div>
+													<form asp-controller="Cart" asp-action="Remove" method="post">
+														<input type="hidden" name="id" value="@item.ProductId" />
+														<button class="delete"><i class="fa fa-close"></i></button>
+													</form>
+												</div>
+											}
+										</div>
+										<div class="cart-summary">
+											<small>@totalQuantity sản phẩm</small>
+											<h5>Tổng: @grandTotal.ToString("#,##0 VNĐ")</h5>
+										</div>
+									}
+									else
+									{
+										<div class="cart-list">
+											<p>Giỏ hàng trống.</p>
+										</div>
+									}
+
+									<div class="cart-btns">
+										<a asp-controller="Cart" asp-action="Index">Xem giỏ hàng</a>
+										<a asp-controller="Checkout" asp-action="Index">Thanh toán  <i class="fa fa-arrow-circle-right"></i></a>
+									</div>
+								</div>
+							</div>
+							<!-- /Cart -->
+							<!-- Menu Toogle -->
+							<div class="menu-toggle">
+								<a href="#">
+									<i class="fa fa-bars"></i>
+									<span>Menu</span>
+								</a>
+							</div>
+							<!-- /Menu Toogle -->
+						</div>
+					</div>
+					<!-- /ACCOUNT -->
+				</div>
+				<!-- row -->
+			</div>
+			<!-- container -->
+		</div>
+		<!-- /MAIN HEADER -->
+	</header>
+	<!-- /HEADER -->
+	<!-- NAVIGATION -->
+	<nav id="navigation">
+		<!-- container -->
+		<div class="container">
+			<!-- responsive-nav -->
+			<div id="responsive-nav">
+				<!-- NAV -->
+				<ul class="main-nav nav navbar-nav">
+					<li class="active"><a asp-action="Index" asp-controller="Home">Trang chủ</a></li>
+					<li class="dropdown category-dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Danh mục <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu category-menu">
+							@await Component.InvokeAsync("Categories", new { viewName = "DropdownPartial" })
+						</ul>
+					</li>
+					<li class="dropdown category-dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Thương hiệu <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu category-menu">
+							@await Component.InvokeAsync("Brands", new { viewName = "DropdownPartial" })
+						</ul>
+					</li>
+					<li><a asp-action="Index" asp-controller="Product">Máy tính</a></li>
+					<li><a asp-action="LinhKien" asp-controller="Product">Linh kiện</a></li>
+				</ul>
+				<!-- /NAV -->
+			</div>
+			<!-- /responsive-nav -->
+		</div>
+		<!-- /container -->
+	</nav>
+	<!-- /NAVIGATION -->
+
+	<section>
+		<div >
+				@Html.Partial("_NotificationPartial")
+				@RenderBody()
+		</div>
+	</section>
+	<!-- NEWSLETTER -->
+	<div id="newsletter" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="newsletter">
+						<p>Đăng ký để nhận thông báo <strong>khuyến mãi</strong></p>
+						<form id="newsletter-form">
+							<input class="input" type="email" id="newsletter-email" placeholder="Nhập email của bạn">
+							<button type="button" class="newsletter-btn" id="newsletter-submit">
+								<i class="fa fa-envelope"></i> Đăng ký
+							</button>
+						</form>
+						<ul class="newsletter-follow">
+							<li>
+								<a href="https://www.facebook.com/nqd1802"><i class="fa fa-facebook"></i></a>
+							</li>
+							<li>
+								<a href="https://x.com/nguyendung1802"><i class="fa fa-twitter"></i></a>
+							</li>
+							<li>
+								<a href="https://www.instagram.com/_huz0366"><i class="fa fa-instagram"></i></a>
+							</li>
+							<li>
+								<a href="https://www.pinterest.com/nguyendung180203/"><i class="fa fa-pinterest"></i></a>
+							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
+			<!-- /row -->
 		</div>
-
-	</header><!--/header-->
-
-	<section>
-
-		<div class="container">
-			<div class="row">
-				@Html.Partial("_NotificationPartial")
-				@RenderBody()
-			</div>
-		</div>
-	</section>
-
+		<!-- /container -->
+	</div>
+	<!-- /NEWSLETTER -->
+	<!-- FOOTER -->
 	<footer id="footer">
 		<partial name="_FooterPartial" />
-
-		<div class="footer-bottom">
+		
+		<!-- bottom footer -->
+		<div id="bottom-footer" class="section">
 			<div class="container">
+				<!-- row -->
 				<div class="row">
-					<p class="pull-left">Copyright © TechSavvy.</p>
+					<div class="col-md-12 text-center">
+						<ul class="footer-payments">
+							<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
+							<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
+							<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
+							<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
+							<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
+							<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+						</ul>
+						<span class="copyright">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
+					</div>
 				</div>
+				<!-- /row -->
 			</div>
+			<!-- /container -->
 		</div>
-
-	</footer><!--/Footer-->
-
-
-
-	<script src="~/js/jquery.js"></script>
+		<!-- /bottom footer -->
+	</footer>
+	<!-- /FOOTER -->
+	<!-- jQuery Plugins -->
+	<script src="~/js/jquery.min.js"></script>
 	<script src="~/js/bootstrap.min.js"></script>
+	<script src="~/js/slick.min.js"></script>
+	<script src="~/js/nouislider.min.js"></script>
+	<script src="~/js/jquery.zoom.min.js"></script>
+	<script src="~/js/main.js"></script>
 	@* <script src="~/js/jquery.scrollUp.min.js"></script> *@
 	<script src="~/js/price-range.js"></script>
 	<script src="~/js/jquery.prettyPhoto.js"></script>
-	<script src="~/js/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.19.1/dist/sweetalert2.all.min.js"></script>		
 	<script>
 		$(function (){
@@ -185,6 +330,33 @@
 				});
 		}
 		);
+	</script>
+	<script>
+		$(document).ready(function () {
+			$('#newsletter-submit').click(function () {
+				var email = $('#newsletter-email').val();
+
+				// Kiểm tra email có được nhập hay không
+				if (!email) {
+					Swal.fire({
+						icon: 'error',
+						title: 'Lỗi',
+						text: 'Vui lòng nhập email của bạn!',
+					});
+					return;
+				}
+
+				// Hiển thị thông báo thành công
+				Swal.fire({
+					icon: 'success',
+					title: 'Đăng ký thành công',
+					text: 'Cảm ơn bạn đã đăng ký nhận thông báo khuyến mãi!',
+				});
+
+				// Xóa nội dung email sau khi đăng ký
+				$('#newsletter-email').val('');
+			});
+		});
 	</script>
 	@* Bot chat *@
 	<script>

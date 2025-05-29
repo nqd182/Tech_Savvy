@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TechSavvy.Models;
 using TechSavvy.Repository;
+using TechSavvy.Repository.Components;
 
 namespace TechSavvy.Controllers
 {
@@ -13,12 +14,15 @@ namespace TechSavvy.Controllers
         {
             _dataContext = context;
         }
-
+        [Route("category/{slug}")]
         public async Task<IActionResult> Index(string Slug = "", string sort_by="")
         {
             CategoryModel category = _dataContext.Categories.FirstOrDefault(c => c.Slug == Slug);
-            if (category == null) return RedirectToAction("Index");
-            IQueryable<ProductModel> productsByCategory = _dataContext.Products.Where(p => p.CategoryId == category.Id);
+            if (category == null) return RedirectToAction("Index", "Home");
+            IQueryable<ProductModel> productsByCategory = _dataContext.Products
+                .Where(p => p.CategoryId == category.Id &&  p.Quantity > 0)
+                .Include(p => p.Brand)
+                .Include(p => p.Ratings);
             var count = await productsByCategory.CountAsync();
             if (count > 0) 
             {
@@ -43,7 +47,21 @@ namespace TechSavvy.Controllers
                     productsByCategory = productsByCategory.OrderBy(p => p.Price);
                 }
             }
-            return View(await productsByCategory.ToListAsync());
+            var productList = await productsByCategory.ToListAsync();
+            var productWithRatings = productList.Select(p =>
+            {
+                var avgStar = p.Ratings.Any()
+                    ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                    : 0;
+
+                return new ProductWithRatingViewModel
+                {
+                    Product = p,
+                    AverageStar = avgStar
+                };
+            }).ToList();
+
+            return View(productWithRatings);
         }
    
 

@@ -3,23 +3,32 @@
     var key = 0;
 }
 <div class="container">
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb bg-white p-3 rounded shadow-sm align-items-center">
-            <li class="breadcrumb-item">
-                <a href="/" class="d-flex align-items-center text-decoration-none text-dark">
-                    <i class="fas fa-home me-1"></i> Trang chủ
-                </a>
-            </li>
-            <li class="breadcrumb-item active text-muted" aria-current="page">Yêu thích</li>
-        </ol>
-    </nav>
+    <div class="row">
+        <!-- BREADCRUMB -->
+        <div id="breadcrumb" class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb-tree">
+                            <li><a href="/">Trang chủ</a></li>
+                            <li class="active">Yêu thích</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /BREADCRUMB -->
 </div>
 <h3 class="mb-4 fw-bold text-dark">
-    <i class="fa fa-heart-o text-danger"></i> Danh sách sản phẩm yêu thích
+    Danh sách sản phẩm yêu thích
 </h3>
 
-<table class="table table-bordered table-hover table-striped" id="myTable">
-    <thead class="bg-primary text-white">
+<table class="table table-bordered table-hover table-striped" id="myTable" >
+        <thead class="bg-primary text-white" style="background-color: #D10024; color: #fff;" >
         <tr>
             <th>STT</th>
             <th>Tên sản phẩm</th>
@@ -53,3 +62,4 @@
         }
     </tbody>
 </table>
+</div>

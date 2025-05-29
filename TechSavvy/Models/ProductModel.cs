@@ -16,16 +16,16 @@ namespace TechSavvy.Models
         public decimal Price { get; set; }
         [Required(ErrorMessage = "Yêu cầu nhập giá vốn")]
         public decimal CapitalPrice { get; set; }
-
+        [Required(ErrorMessage = "Yêu cầu chọn danh mục")]
         public int CategoryId { get; set; }
-        public int BrandId { get; set; }
+        public int? BrandId { get; set; }
         [Required(ErrorMessage = "Yêu cầu thêm ảnh sản phẩm")]
         public string Image { get; set; } = "test.jpg";
         public int? Quantity { get; set; }
         public int? Sold { get; set; }
         public CategoryModel Category { get; set; }
         public BrandModel Brand { get; set; }
-        public RatingModel Ratings { get; set; }
+        public ICollection<RatingModel> Ratings { get; set; } 
         public bool IsDeleted { get; set; } = false;
         [NotMapped] // ko ánh xạ vào csdl
         [FileExtension]

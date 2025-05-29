@@ -85,7 +85,7 @@ namespace TechSavvy.Areas.Admin.Controllers
                 return NotFound();
             }
             if (ModelState.IsValid)
-            {
+            { 
                 categoryInDb.Name = category.Name;
                 categoryInDb.Description = category.Description;
                 categoryInDb.Slug = category.Name.Replace(" ", "-");

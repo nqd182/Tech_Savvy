@@ -1,10 +1,53 @@
 ﻿@model IEnumerable<BrandModel>
+<style>
+    .sidebar-section {
+        margin-bottom: 32px;
+    }
 
-@foreach (var item in Model)
-{
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title"><a asp-action="Index" asp-controller="Brand" asp-route-Slug="@item.Slug">@item.Name</a></h4>
-		</div>
-	</div>
-}
+    .sidebar-title {
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 18px;
+        letter-spacing: 1px;
+        color: #222;
+    }
+
+    .brand-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .brand-link {
+        display: block;
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px 18px;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1rem;
+        color: #222;
+        text-decoration: none;
+        transition: all 0.2s;
+        font-weight: 500;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.01);
+    }
+
+        .brand-link:hover, .brand-link:focus {
+            background: #f5f5f5;
+            border-color: #ff4d4f;
+            color: #ff4d4f;
+            text-decoration: none;
+        }
+</style>
+
+<div class="sidebar-section">
+    <div class="sidebar-title">THƯƠNG HIỆU SẢN PHẨM</div>
+    <div class="brand-list">
+        @foreach (var item in Model)
+        {
+            <a class="brand-link" asp-action="Index" asp-controller="Brand" asp-route-Slug="@item.Slug">@item.Name</a>
+        }
+    </div>
+</div>

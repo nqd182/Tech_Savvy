@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 using System.Threading.Tasks;
 using TechSavvy.Models;
 using TechSavvy.Models.ViewModels;
 using TechSavvy.Repository;
+using TechSavvy.Repository.Components;
 
 namespace TechSavvy.Controllers
 {
@@ -14,10 +16,107 @@ namespace TechSavvy.Controllers
         {
             _dataContext = dataContext;
         }
-
-        public IActionResult Index()
+        [Route("Product")]
+        public async Task<IActionResult> Index(string sort_by = "")
         {
-            return View();
+            IQueryable<ProductModel> products = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.Ratings)
+            .Where(p => p.Quantity > 0 && !p.IsDeleted && p.Category.Name != "Linh kiện máy tính");
+
+            switch (sort_by)
+            {
+                case "price_increase":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_decrease":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "price_newest":
+                    products = products.OrderByDescending(p => p.Id);
+                    break;
+                case "price_oldest":
+                    products = products.OrderBy(p => p.Id);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name); // mặc định
+                    break;
+            }
+            var productList = await products.ToListAsync();
+
+            var productWithRatings = productList.Select(p =>
+            {
+                var avgStar = p.Ratings.Any()
+                    ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                    : 0;
+
+                return new ProductWithRatingViewModel
+                {
+                    Product = p,
+                    AverageStar = avgStar
+                };
+            }).ToList();
+            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+            CartItemViewModel cartVM = new()
+            {
+                CartItems = cartItems,
+                GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
+
+            };
+            ViewBag.CartHome = cartItems;
+            return View(productWithRatings);
+        }
+        [Route("LinhKien")]
+        public async Task<IActionResult> LinhKien(string sort_by = "")
+        {
+            IQueryable<ProductModel> products = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.Ratings)
+            .Where(p => p.Quantity > 0 && !p.IsDeleted && p.Category.Name == "Linh kiện máy tính");
+
+            switch (sort_by)
+            {
+                case "price_increase":
+                    products = products.OrderBy(p => p.Price);
+                    break;
+                case "price_decrease":
+                    products = products.OrderByDescending(p => p.Price);
+                    break;
+                case "price_newest":
+                    products = products.OrderByDescending(p => p.Id);
+                    break;
+                case "price_oldest":
+                    products = products.OrderBy(p => p.Id);
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name); // mặc định
+                    break;
+            }
+            var productList = await products.ToListAsync();
+
+            var productWithRatings = productList.Select(p =>
+            {
+                var avgStar = p.Ratings.Any()
+                    ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                    : 0;
+
+                return new ProductWithRatingViewModel
+                {
+                    Product = p,
+                    AverageStar = avgStar
+                };
+            }).ToList();
+            List<CartItemModel> cartItems = HttpContext.Session.GetJson<List<CartItemModel>>("Cart") ?? new List<CartItemModel>();
+            CartItemViewModel cartVM = new()
+            {
+                CartItems = cartItems,
+                GrandTotal = cartItems.Sum(x => x.Quantity * x.Price),
+
+            };
+            ViewBag.CartHome = cartItems;
+            return View(productWithRatings);
         }
         public async Task<IActionResult> Details(int Id)
         {
@@ -25,9 +124,11 @@ namespace TechSavvy.Controllers
             ProductModel productById = _dataContext.Products.Include(p => p.Ratings).FirstOrDefault(p => p.Id == Id);
             if (productById == null) return RedirectToAction("Index");
             var relatedProduct = await _dataContext.Products
-                .Where(p => p.CategoryId == productById.CategoryId && p.Id != productById.Id)
-                .Take(4)
-                .ToListAsync();
+              .Include(p => p.Category)
+              .Include(p => p.Brand)
+              .Where(p => p.CategoryId == productById.CategoryId && p.Id != productById.Id)
+              .Take(4)
+              .ToListAsync();
             // Lấy danh sách đánh giá cho sản phẩm
             var reviews = _dataContext.Ratings
                 .Where(r => r.ProductId == Id)
@@ -41,16 +142,57 @@ namespace TechSavvy.Controllers
             ViewBag.RelatedProducts = relatedProduct;
             return View(viewModel);
         }
-        public async Task<IActionResult> Search(string searchItem)
+        [Route("Search")]
+        public async Task<IActionResult> Search(string searchItem, string sort_by = "")
         {
-            // Xử lý khi searchItem là null hoặc rỗng
             if (string.IsNullOrEmpty(searchItem))
             {
-                return View(new List<ProductModel>());
+                return View(new List<ProductWithRatingViewModel>());
             }
-            var products = await _dataContext.Products.Where(p => p.Name.Contains(searchItem.ToLower()) || p.Description.Contains(searchItem)).ToListAsync();
+            IQueryable<ProductModel> productsBySearch =  _dataContext.Products.Where(p => p.Name.Contains(searchItem.ToLower()) || p.Description.Contains(searchItem) && p.Quantity > 0)
+                                                                           .Include(p => p.Brand)
+                                                                           .Include(p => p.Category)
+                                                                           .Include(p => p.Ratings);
             ViewBag.Keyword = searchItem;
-            return View(products);
+            var count = await productsBySearch.CountAsync();
+            if (count > 0)
+            {
+                if (sort_by == "price_increase")
+                {
+                    productsBySearch = productsBySearch.OrderBy(p => p.Price);
+                }
+                else if (sort_by == "price_decrease")
+                {
+                    productsBySearch = productsBySearch.OrderByDescending(p => p.Price);
+                }
+                else if (sort_by == "price_newest")
+                {
+                    productsBySearch = productsBySearch.OrderByDescending(p => p.Id);
+                }
+                else if (sort_by == "price_oldest")
+                {
+                    productsBySearch = productsBySearch.OrderBy(p => p.Id);
+                }
+                else
+                {
+                    productsBySearch = productsBySearch.OrderBy(p => p.Price);
+                }
+            }
+            var productList = await productsBySearch.ToListAsync();
+            var productWithRatings = productList.Select(p =>
+            {
+                var avgStar = p.Ratings.Any()
+                    ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                    : 0;
+
+                return new ProductWithRatingViewModel
+                {
+                    Product = p,
+                    AverageStar = avgStar
+                };
+            }).ToList();
+
+            return View(productWithRatings);
         }
 
         [HttpPost]

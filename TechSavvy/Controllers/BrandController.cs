@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using TechSavvy.Models;
 using TechSavvy.Repository;
+using TechSavvy.Repository.Components;
 
 namespace TechSavvy.Controllers
 {
@@ -12,6 +13,8 @@ namespace TechSavvy.Controllers
         {
             _dataContext = context;
         }
+
+        [Route("brand/{slug}")]
         public async Task<IActionResult> Index(string Slug = "", string sort_by = "")
         {
             var brand = _dataContext.Brands.FirstOrDefault(b => b.Slug == Slug);
@@ -20,7 +23,8 @@ namespace TechSavvy.Controllers
             IQueryable<ProductModel> products = _dataContext.Products
                 .Include(p => p.Category)
                 .Include(p => p.Brand)
-                .Where(p => p.BrandId == brand.Id);
+                .Include(p => p.Ratings)
+                .Where(p => p.BrandId == brand.Id && p.Quantity > 0);
 
             switch (sort_by)
             {
@@ -41,7 +45,21 @@ namespace TechSavvy.Controllers
                     break;
             }
 
-            return View(await products.ToListAsync());
+            var productList = await products.ToListAsync();
+            var productWithRatings = productList.Select(p =>
+            {
+                var avgStar = p.Ratings.Any()
+                    ? (int)Math.Ceiling(p.Ratings.Average(r => r.Star))
+                    : 0;
+
+                return new ProductWithRatingViewModel
+                {
+                    Product = p,
+                    AverageStar = avgStar
+                };
+            }).ToList();
+
+            return View(productWithRatings);
         }
 
     }

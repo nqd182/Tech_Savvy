@@ -1,148 +1,453 @@
-﻿@model IEnumerable<ProductModel>
-<style>
-    .product-card {
-        border: 1px solid #f0f0f0;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.05);
-        transition: transform 0.2s;
-        background-color: #fff;
-        height: 565px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+﻿@using TechSavvy.Repository.Components
+@model IEnumerable<ProductWithRatingViewModel>
 
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: 180px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-    .product-info {
-        text-align: center;
-        flex-grow: 1;
-    }
-
-    .product-price {
-        font-size: 18px;
-        font-weight: bold;
-        color: red;
-    }
-
-    .btn-group-custom {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    .add-to-cart, .add-btn-wishlist {
-        width: 100%;
-        border-radius: 20px;
-        padding: 10px;
-        font-size: 14px;
-        transition: all 0.2s;
-    }
-
-    .add-to-cart {
-        background-color: black;
-        color: #fff;
-        border: none;
-    }
-
-        .add-to-cart:hover {
-            background-color: darkblue;
-        }
-
-    .add-btn-wishlist {
-        background-color: #f5f5f5;
-        color: deeppink;
-        border: 1px solid #ddd;
-    }
-
-        .add-btn-wishlist i {
-            margin-right: 5px;
-        }
-
-        .add-btn-wishlist:hover {
-            background-color: #ffe9d6;
-        }
-</style>
-
-<!-- SLIDER ĐƯỢC ĐẶT Ở TRÊN CÙNG -->
-<div class="row">
-    <div class="col-12">
-        <partial name="_Slider" />
-    </div>
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<!-- shop -->
+			<div class="col-md-4 col-xs-6">
+				<div class="shop">
+					<div class="shop-img">
+						<img src="~/images/shop01.jpg" style="height:240px !important" alt="">
+					</div>
+					<div class="shop-body">
+						<h3>Danh sách<br>PC</h3>
+						<a asp-action="Index" asp-controller="Product" class="cta-btn">Mua ngay <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- /shop -->
+			<!-- shop -->
+			<div class="col-md-4 col-xs-6">
+				<div class="shop">
+					<div class="shop-img">
+						<img src="~/images/shop02.jpg" style="height:240px !important" alt="">
+					</div>
+					<div class="shop-body">
+						<h3>Danh sách<br>linh kiện</h3>
+						<a asp-action="LinhKien" asp-controller="Product" class="cta-btn">Mua ngay <i class="fa fa-arrow-circle-right"></i></a>
+					</div>
+				</div>
+			</div>
+			<!-- /shop -->
+			<!-- shop -->
+			
+			<!-- /shop -->
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
 </div>
-<!-- PHẦN CHÍNH GỒM SIDEBAR VÀ DANH SÁCH SẢN PHẨM -->
-<div class="row">
-    <!-- SIDEBAR -->
-    <div class="col-sm-3 sticky-sidebar">
-        @Html.Partial("_SidebarPartial")
-    </div>
+<!-- /SECTION -->
+<!-- SECTION -->
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<!-- section title -->
+			<div class="col-md-12">
+				<div class="section-title">
+					<h3 class="title">Sản phẩm mới</h3>
+					<div class="section-nav">
+						<ul class="section-tab-nav tab-nav">
+							<li class="active"><a data-toggle="tab" href="#tab-computer">Máy tính</a></li>
+							<li><a data-toggle="tab" href="#tab-component">Linh kiện</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
 
-    <!-- DANH SÁCH SẢN PHẨM -->
-    <div class="col-sm-9 padding-right">
-        <partial name="_FilterProductsPartial" />
-        <div class="features_items">
-            <h2 class="title text-center" style="padding-top: 20px;">Danh sách sản phẩm</h2>
+			<!-- Products tab -->
+			<div class="col-md-12">
+				<div class="row">
+					<div class="products-tabs tab-content">
+						<!-- Máy tính -->
+						<div id="tab-computer" class="tab-pane fade in active">
+							<div class="products-slick" data-nav="#slick-nav-1">
+								@foreach (var item in Model.Where(p => p.Product.Category.Name != "Linh kiện máy tính"))
+								{
+									<div class="product">
+										<div class="product-img">
+											<a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Product.Id">
+												<img src="~/media/products/@item.Product.Image" alt="@item.Product.Name" style="width: 263px" />
+											</a>
+											<div class="product-label">
+												<span class="sale">-30%</span>
+												<span class="new">NEW</span>
+											</div>
+										</div>
+										<div class="product-body">
+											<p>Danh mục: @item.Product.Category.Name</p>
+											<p><strong>@item.Product.Name</strong></p>
+											@{
+												var oldPrice = item.Product.Price / 70 * 100;
+											}
+											<h4 class="product-price">@item.Product.Price.ToString("#,##0 vnđ")<br /> <del class="product-old-price">@oldPrice.ToString("#,##0 vnđ")</del></h4>
+											<p class="product-sold">
+												Đã bán:
+												<strong>@(item.Product.Sold ?? 0) </strong>
+											</p>
+											<div class="product-rating">
+												@for (int i = 1; i <= 5; i++)
+												{
+													if (i <= item.AverageStar)
+													{
+														<i class="fa fa-star"></i>
+													}
+													else
+													{
+														<i class="fa fa-star-o"></i>
+													}
+												}
+											</div>
+											<div class="product-btns">
+												<button class="add-to-wishlist add-btn-wishlist" data-product_id="@item.Product.Id"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu thích</span></button>
+												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào so sánh</span></button>
+												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem sản phẩm</span></button>
+											</div>
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn add-to-cart2" data-product_id="@item.Product.Id"><i class="fa fa-shopping-cart"></i> Thêm giỏ hàng</button>
+										</div>
+									</div>
+								}
+							</div>
+							<div id="slick-nav-1" class="products-slick-nav"></div>
+						</div>
 
-            <div class="row">
-                @foreach (var item in Model)
-                {
-                    <div class="col-sm-4">
-                        <div class="product-card">
-                            <a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Id">
-                                <img src="~/media/products/@item.Image" alt="@item.Name"/>
-                            </a>
-                            <div class="product-info">
-                                <p class="product-price">@item.Price.ToString("#,##0 vnđ")</p>
-                                <p><strong>@item.Name</strong></p>
-                                <p>Danh mục: @item.Category.Name</p>
-                                <p>Thương hiệu: @item.Brand.Name</p>
-                            </div>
-
-                            <div class="btn-group-custom">
-                                @if (item.Quantity > 0)
-                                {
-                                    <button class="btn add-to-cart" data-product_id="@item.Id">
-                                        <i class="fa fa-shopping-cart"></i> Thêm giỏ hàng
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button class="btn btn-danger disabled"><i class="fa fa-times"></i> Hết hàng</button>
-                                }
-
-                                @if (User.Identity?.IsAuthenticated ?? false)
-                                {
-                                    <button class="btn add-btn-wishlist" data-product_id="@item.Id">
-                                        <i class="fa fa-heart"></i> Yêu thích
-                                    </button>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
+						<!-- Linh kiện -->
+						<div id="tab-component" class="tab-pane fade">
+							<div class="products-slick" data-nav="#slick-nav-component">
+								@foreach (var item in Model.Where(p => p.Product.Category.Name == "Linh kiện máy tính"))
+								{
+									<div class="product">
+										<div class="product-img">
+											<a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Product.Id">
+												<img src="~/media/products/@item.Product.Image" alt="@item.Product.Name" style="width: 263px" />
+											</a>
+											<div class="product-label">
+												<span class="sale">-30%</span>
+												<span class="new">NEW</span>
+											</div>
+										</div>
+										<div class="product-body">
+											<p>Danh mục: @item.Product.Category.Name</p>
+											<p><strong>@item.Product.Name</strong></p>
+											@{
+												var oldPrice = item.Product.Price / 70 * 100;
+											}
+											<h4 class="product-price">@item.Product.Price.ToString("#,##0 vnđ")<br /> <del class="product-old-price">@oldPrice.ToString("#,##0 vnđ")</del></h4>
+											<p class="product-sold">
+												Đã bán:
+												<strong>@(item.Product.Sold ?? 0) </strong>
+											</p>
+											<div class="product-rating">
+												@for (int i = 1; i <= 5; i++)
+												{
+													if (i <= item.AverageStar)
+													{
+														<i class="fa fa-star"></i>
+													}
+													else
+													{
+														<i class="fa fa-star-o"></i>
+													}
+												}
+											</div>
+											<div class="product-btns">
+												<button class="add-to-wishlist add-btn-wishlist" data-product_id="@item.Product.Id"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu thích</span></button>
+												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào so sánh</span></button>
+												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem sản phẩm</span></button>
+											</div>
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn add-to-cart2" data-product_id="@item.Product.Id"><i class="fa fa-shopping-cart"></i> Thêm giỏ hàng</button>
+										</div>
+									</div>
+								}
+							</div>
+							<div id="slick-nav-component" class="products-slick-nav"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Products tab -->
+		</div>
+	</div>
 </div>
+<!-- /SECTION -->
+<!-- HOT DEAL SECTION -->
+<div id="hot-deal" class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="hot-deal">
+					<ul class="hot-deal-countdown">
+						<li>
+							<div>
+								<h3 id="days">00</h3>
+								<span>Ngày</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3 id="hours">00</h3>
+								<span>Giờ</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3 id="minutes">00</h3>
+								<span>Phút</span>
+							</div>
+						</li>
+						<li>
+							<div>
+								<h3 id="seconds">00</h3>
+								<span>Giây</span>
+							</div>
+						</li>
+					</ul>
 
+					<h2 class="text-uppercase">khuyến mãi tuần này</h2>
+					<p>Giảm giá 30% tất cả sản phẩm</p>
+					<a class="primary-btn cta-btn" asp-action="Index" asp-controller="Product">Mua ngay</a>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /HOT DEAL SECTION -->
+<!-- SECTION -->
+<div class="section">
+	<div class="container">
+		<div class="row">
+			<!-- section title -->
+			<div class="col-md-12">
+				<div class="section-title">
+					<h3 class="title">Sản phẩm bán chạy</h3>
+					<div class="section-nav">
+						<ul class="section-tab-nav tab-nav">
+							<li class="active"><a data-toggle="tab" href="#tab-computer2">Máy tính</a></li>
+							<li><a data-toggle="tab" href="#tab-component2">Linh kiện</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Products tab -->
+			<div class="col-md-12">
+				<div class="row">
+					<div class="products-tabs tab-content">
+						<!-- Máy tính -->
+						<div id="tab-computer2" class="tab-pane fade in active">
+							<div class="products-slick" data-nav="#slick-nav-2">
+								@foreach (var item in Model.Where(p => p.Product.Category.Name != "Linh kiện máy tính" && p.Product.Sold > 0).OrderByDescending(p => p.Product.Sold).Take(10))
+								{
+									<div class="product">
+										<div class="product-img">
+											<a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Product.Id">
+												<img src="~/media/products/@item.Product.Image" alt="@item.Product.Name" style="width: 263px" />
+											</a>
+											<div class="product-label">
+												<span class="sale">-30%</span>
+												<span class="new">NEW</span>
+											</div>
+										</div>s
+										<div class="product-body">
+											<p>Danh mục: @item.Product.Category.Name</p>
+											<p><strong>@item.Product.Name</strong></p>
+											@{
+												var oldPrice = item.Product.Price / 70 * 100;
+											}
+											<h4 class="product-price">@item.Product.Price.ToString("#,##0 vnđ")<br /> <del class="product-old-price">@oldPrice.ToString("#,##0 vnđ")</del></h4>
+											<p class="product-sold">
+												Đã bán:
+												<strong>@(item.Product.Sold ?? 0) </strong>
+											</p>
+											<div class="product-rating">
+												@for (int i = 1; i <= 5; i++)
+												{
+													if (i <= item.AverageStar)
+													{
+														<i class="fa fa-star"></i>
+													}
+													else
+													{
+														<i class="fa fa-star-o"></i>
+													}
+												}
+											</div>
+											<div class="product-btns">
+												<button class="add-to-wishlist add-btn-wishlist" data-product_id="@item.Product.Id"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu thích</span></button>
+												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào so sánh</span></button>
+												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem sản phẩm</span></button>
+											</div>
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn add-to-cart2" data-product_id="@item.Product.Id"><i class="fa fa-shopping-cart"></i> Thêm giỏ hàng</button>
+										</div>
+									</div>
+								}
+							</div>
+							<div id="slick-nav-2" class="products-slick-nav"></div>
+						</div>
+
+						<!-- Linh kiện -->
+						<div id="tab-component2" class="tab-pane fade">
+							<div class="products-slick" data-nav="#slick-nav-2">
+								@foreach (var item in Model.Where(p => p.Product.Category.Name == "Linh kiện máy tính"))
+								{
+									<div class="product">
+										<div class="product-img">
+											<a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Product.Id">
+												<img src="~/media/products/@item.Product.Image" alt="@item.Product.Name" style="width: 263px" />
+											</a>
+											<div class="product-label">
+												<span class="sale">-30%</span>
+												<span class="new">NEW</span>
+											</div>
+										</div>
+										<div class="product-body">
+											<p>Danh mục: @item.Product.Category.Name</p>
+											<p><strong>@item.Product.Name</strong></p>
+											@{
+												var oldPrice = item.Product.Price / 70 * 100;
+											}
+											<h4 class="product-price">@item.Product.Price.ToString("#,##0 vnđ")<br /> <del class="product-old-price">@oldPrice.ToString("#,##0 vnđ")</del></h4>
+											<p class="product-sold">
+												Đã bán:
+												<strong>@(item.Product.Sold ?? 0) </strong>
+											</p>
+											<div class="product-rating">
+												@for (int i = 1; i <= 5; i++)
+												{
+													if (i <= item.AverageStar)
+													{
+														<i class="fa fa-star"></i>
+													}
+													else
+													{
+														<i class="fa fa-star-o"></i>
+													}
+												}
+											</div>
+											<div class="product-btns">
+												<button class="add-to-wishlist add-btn-wishlist" data-product_id="@item.Product.Id"><i class="fa fa-heart-o"></i><span class="tooltipp">Yêu thích</span></button>
+												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">Thêm vào so sánh</span></button>
+												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">Xem sản phẩm</span></button>
+											</div>
+										</div>
+										<div class="add-to-cart">
+											<button class="add-to-cart-btn add-to-cart2" data-product_id="@item.Product.Id"><i class="fa fa-shopping-cart"></i> Thêm giỏ hàng</button>
+										</div>
+									</div>
+								}
+							</div>
+							<div id="slick-nav-2" class="products-slick-nav"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /Products tab -->
+		</div>
+	</div>
+</div>
+<!-- /SECTION -->
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			<div class="col-md-4 col-xs-6">
+				<div class="section-title">
+					<h4 class="title">Top sản phẩm đánh giá cao mới</h4>
+					<div class="section-nav">
+						<div id="slick-nav-5-star" class="products-slick-nav"></div>
+					</div>
+				</div>
+
+				<div class="products-widget-slick" data-nav="#slick-nav-5-star">
+					<div>
+						<!-- product widget -->
+						@foreach (var item in Model.OrderByDescending(p => p.Product.Id).Where(p => p.AverageStar == 5).Take(3))
+						{
+							<div class="product-widget">
+								<div class="product-img">
+									<img src="~/media/products/@item.Product.Image" alt="@item.Product.Name" width="70px" height="60px">
+								</div>
+								<div class="product-body">
+									<p class="product-category">@item.Product.Category.Name</p>
+									<h3 class="product-name">
+										<a asp-action="Details" asp-controller="Product" asp-route-Id="@item.Product.Id">
+											@item.Product.Name
+										</a>
+									</h3>
+									<h4 class="product-price">@item.Product.Price.ToString("#,##0 vnđ")</h4>
+									<div class="product-rating">
+										@for (int i = 1; i <= 5; i++)
+										{
+											<i class="fa fa-star"></i>
+										}
+									</div>
+								</div>
+							</div>
+						}
+						<!-- /product widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
 
 @section Scripts {
+	<script>
+		// Mốc thời gian kết thúc (ví dụ: 3 ngày kể từ thời điểm hiện tại)
+		const countdownDate = new Date();
+		countdownDate.setDate(countdownDate.getDate() + 3); // đếm ngược 3 ngày
+
+		function updateCountdown() {
+			const now = new Date().getTime();
+			const distance = countdownDate.getTime() - now;
+
+			if (distance < 0) {
+				document.getElementById("days").innerHTML = "00";
+				document.getElementById("hours").innerHTML = "00";
+				document.getElementById("minutes").innerHTML = "00";
+				document.getElementById("seconds").innerHTML = "00";
+				return;
+			}
+
+			const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+			document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+			document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+			document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+			document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+		}
+
+		// Cập nhật mỗi giây
+		setInterval(updateCountdown, 1000);
+		updateCountdown();
+	</script>
+
     <script>
         $(document).ready(function () {
-            $('.add-to-cart').click(function () {
+            $('.add-to-cart2').click(function () {
                 var Id = $(this).data("product_id");
                 $.ajax({
                     type: "POST",
@@ -153,7 +458,8 @@
                             Swal.fire({
                                 title: "Thêm giỏ hàng thành công",
                                 icon: "success",
-                                draggable: true
+                                draggable: true,
+			
                             });
                         }
                     }

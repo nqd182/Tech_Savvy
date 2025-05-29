@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BrandModel>
+<style>
+    .brand-dropdown-menu {
+        min-width: 220px;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 10px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    .brand-dropdown-title {
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #222;
+        padding: 16px 20px 10px 20px;
+        border-bottom: 1px solid #f2f2f2;
+        background: #fff;
+        margin-bottom: 0;
+        letter-spacing: 1px;
+    }
+
+    .brand-dropdown-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .brand-dropdown-list li {
+            border-bottom: 1px solid #f6f6f6;
+        }
+
+            .brand-dropdown-list li:last-child {
+                border-bottom: none;
+            }
+
+    .brand-dropdown-link {
+        display: block;
+        padding: 12px 20px;
+        font-family: 'Montserrat', Arial, sans-serif;
+        font-size: 1rem;
+        color: #222;
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s;
+        border-radius: 0;
+        font-weight: 500;
+    }
+
+        .brand-dropdown-link:hover, .brand-dropdown-link:focus {
+            background: #ff4d4f;
+            color: #fff;
+            text-decoration: none;
+        }
+</style>
+
+<div class="brand-dropdown-menu">
+    <div class="brand-dropdown-title">THƯƠNG HIỆU SẢN PHẨM</div>
+    <ul class="brand-dropdown-list">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a class="brand-dropdown-link" asp-action="Index" asp-controller="Brand" asp-route-Slug="@item.Slug">@item.Name</a>
+            </li>
+        }
+    </ul>
+</div>

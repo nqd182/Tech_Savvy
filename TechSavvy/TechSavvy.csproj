@@ -28,7 +28,6 @@
     <Folder Include="Views\Rating\" />
     <Folder Include="wwwroot\backend\css\" />
     <Folder Include="wwwroot\backend\images\" />
-    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\media\logo\" />
     <Folder Include="wwwroot\media\products\" />
   </ItemGroup>
